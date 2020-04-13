@@ -1,0 +1,154 @@
+/* Current known or possible issues:
+* Attempted use of grid display, but it's questionable whether it's doing anything at all
+* background-video placement depends on the image _also_ being in the div, and that's why there's the negative margins
+* On the topic of background-video, it's possible that things would work better if it were . instead of #
+*  (the latter is, I assume, because of being a video element class, but just switch one for the other breaks things)
+ */
+
+body {
+  background-color: black;
+  color: white;
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+.full_grid {
+    display: grid;
+}
+
+.row_1 {
+    grid-row: 1;
+    display: grid;
+    justify-content: center;
+}
+
+.row_2 {
+    grid-row: 2;
+    display: grid;
+    justify-content: center;
+}
+
+.row_2_append_1 { /* Used for alternate mobile formatting */
+    grid-row: 2;
+    display: grid;
+    justify-content: center;
+}
+
+.row_2_append_2 { /* Used for alternate mobile formatting */
+    grid-row: 3;
+    display: grid;
+    justify-content: center;
+}
+
+.row_2_left {
+    grid-row: 2;
+    grid-column: 1;
+}
+
+.row_2_left_append { /* Used for alternate mobile formatting */
+    grid-row: 3;
+    grid-column: 1;
+}
+
+.row_2_right {
+    grid-row: 2;
+    grid-column: 3;
+}
+
+.bio-title {
+    font-size: xx-large;
+    font-weight: bolder;
+    text-decoration: none;
+}
+
+.bio-title:hover {
+    font-size: xx-large;
+    font-weight: bolder;
+    text-decoration: underline;
+}
+
+.projects-left {
+  font-size: xx-large;
+    text-decoration: none;
+}
+
+.projects-left:hover {
+    font-size: xx-large;
+    text-decoration: underline;
+}
+
+.projects-right {
+    font-size: xx-large;
+    text-decoration: none;
+}
+
+.projects-right:hover {
+    font-size: xx-large;
+    text-decoration: underline;
+}
+
+.project-text {
+    z-index: 5;
+}
+
+.image-div, .center-img, .background-video {
+    grid-row: 2;
+    grid-column: 2;
+}
+
+.image-div {
+  border-radius: 30%;
+    margin: 10pt;
+    height: 60vh;
+    width: 60vh;
+  overflow: hidden;
+}
+
+.center-img {
+   vertical-align: middle;
+   height: 60vh;
+   width: 60vh;
+    /*z-index: -1;*/
+ }
+
+.three-object {
+    margin-top: -5vh;
+    position: fixed;
+    z-index: -1;
+}
+
+/*Not actually in the background at this point. Margins are due to being in the same div with an image, and other
+formatting not working to just have it be over the top*/
+#background-video{
+    vertical-align: middle;
+    width: 110vh;
+    margin-top: -62.5vh;
+    margin-left: -20vh;
+    /* float: left;*/
+    /* top: 0; */
+    /* position: absolute;  optional depending on what you want to do in your app */
+    /*z-index: 2;*/
+}
+
+.further-info {
+    grid-row: 3;
+}
+
+.info-div {
+    margin: auto;
+    width: 75%;
+}
+
+.paragraph-header {
+    font-size: xx-large;
+}

@@ -1,40 +1,58 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
+import PubSub from './pubsub.js';
+//import events from './events.js';
 import './index.css';
 
 class AppTry extends Component {
     constructor(props) {
         super(props);
-
+        this.toggleVisibility = this.toggleVisibility.bind(this);
         this.state = {
             name: 'Portfolio', //Name of the general portfolio? I don't know where this is used.
-            width: window.innerWidth
+            width: window.innerWidth,
+            visible: true
         };
     }
 
-    componentWillMount() {
-        window.addEventListener('resize', this.handleWindowSizeChange);
+    componentDidMount() {
+        PubSub.subscribe('clicked-button', this.toggleVisibility)
     }
-
-    componentWillUnmount() {
-        window.removeEventListener('resize', this.handleWindowSizeChange);
+    toggleVisibility() {
+        this.setState({
+            visible: !this.state.visible
+        })
     }
-
-    handleWindowSizeChange = () => {
-        this.setState({width: window.innerWidth});
-    };
 
     render() {
-        const { width } = this.state;
+        //const { width } = this.state;
         //const isMobile = width <= 500;
         return (
             <div className="full_grid">
-                {/*this.state.currVideo*/}
-                {/*TODO: remake all the items as functions (e.g., showTitleItem(), showLeftSideItems())*/}
-                {/*TODO: remake items as a list of items, rather than this more prescriptive way*/}
-                {/*Top row is a link for the Bio / a header*/}
                 <div className="row_1">
                     <div>
+                        It's (name)'s turn. / Enter name to join (Second half only visible if name has been entered)
+                    </div>
+                </div>
+                <div className="row_2">
+                    <div>
+                        Enter/Leave Minigame (visible only if name has been entered), Enter/Leave changes based on state.
+                    </div>
+                </div>
+                <div className="row_3">
+                    <div>
+                        Your Name (text field)
+                    </div>
+                </div>
+                <div className="row_4">
+                    <div>
+                        <button onClick={() => PubSub.publish('clicked-button')}>Toggle Visibility</button>
+                        {this.state.visible ? <p>Enter/Leave Game (visible only if name has been entered), Enter/Leave changes based on state.</p> : <p>Nothing</p>}
+                    </div>
+                </div>
+                <div className="row_5">
+                    <div>
+                        Current players (text display)
                     </div>
                 </div>
                 {/*This row has projects-left image-div projects-right. So general idea is list of projects around the center image*/}

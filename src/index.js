@@ -3,13 +3,15 @@ import { render } from 'react-dom';
 import PubSub from './pubsub.js';
 //import events from './events.js';
 import './index.css';
+//import ReactDOM from 'react-dom';
+import CurrentNames from './CurrentNames'
 
 class AppTry extends Component {
     constructor(props) {
         super(props);
         this.toggleVisibility = this.toggleVisibility.bind(this);
         this.state = {
-            name: 'Portfolio', //Name of the general portfolio? I don't know where this is used.
+            name: 'Whose Turn', //Name of the general portfolio? I don't know where this is used.
             width: window.innerWidth,
             visible: true
         };
@@ -23,7 +25,6 @@ class AppTry extends Component {
             visible: !this.state.visible
         })
     }
-
     render() {
         //const { width } = this.state;
         //const isMobile = width <= 500;
@@ -52,7 +53,8 @@ class AppTry extends Component {
                 </div>
                 <div className="row_5">
                     <div>
-                        Current players (text display)
+                        Current players
+                        {<CurrentNames />}
                     </div>
                 </div>
                 {/*This row has projects-left image-div projects-right. So general idea is list of projects around the center image*/}

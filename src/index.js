@@ -9,24 +9,34 @@ import SetName from './SetName';
 import RemoveName from './RemoveName';
 
 class AppTry extends Component {
-    constructor(props) {
-        super(props);
-        this.toggleVisibility = this.toggleVisibility.bind(this);
-        this.state = {
-            name: 'Megan', //Name of the player.
-            width: window.innerWidth,
-            visible: true,
-            inGame: false,
-        };
-    }
+  constructor(props) {
+    super(props);
+    this.toggleVisibility = this.toggleVisibility.bind(this);
+    this.state = {
+      name: null, //Name of the player.
+      width: window.innerWidth,
+      nameChosen: false,
+      //inGame: false, //Adding this might be helpful for certain logic, but is currently not used
+      //nameChosen: false,
+    };
+  }
 
     componentDidMount() {
-        PubSub.subscribe('clicked-button', this.toggleVisibility)
+        PubSub.subscribe('join-leave-button', this.toggleVisibility);
+        // PubSub.subscribe( 'name-field-action', this.nameFieldAction);
     }
     toggleVisibility() {
         this.setState({
-          visible: !this.state.visible,
+          nameChosen: !this.state.nameChosen,
         });
+    }
+    updateName(evt) {
+      this.setState( {
+        name: evt.target.value,
+      });
+    }
+    static enterButtonClicked() {
+      PubSub.publish('join-leave-button');
     }
     render() {
         //const { width } = this.state;
@@ -45,14 +55,16 @@ class AppTry extends Component {
                 </div>
                 <div className="row_3">
                     <div>
-                        Your Name (text field)
+                      {this.state.nameChosen ? null : <textarea value={this.state.name} className="enter-name-textarea" onChange={evt => this.updateName(evt)}>Enter a Name</textarea>}
                     </div>
                 </div>
                 <div className="row_4">
                     <div>
-                      {/*The point with the next two lines is to switch what's on the button, alert the system that the button has been pushed, and also update test underneath.*/}
-                        {!this.state.visible ? <button onClick={() => PubSub.publish('clicked-button')}>Leave Game</button> : <button onClick={() => PubSub.publish('clicked-button')}>Enter Game</button>}
-                        {this.state.visible ? <p>Click button to enter game{this.state.visible ? <RemoveName name={this.state.name}/> : {}}</p> : <p>Click button to leave game {this.state.visible ? {} : <SetName name={this.state.name}/>}</p>}
+                      {/*The point with the next two lines is to switch what's on the button, alert the system that the
+                      button has been pushed, and also update test underneath. I have forgotten why there's double ternary
+                      in the lower field (maybe because of separating out visible and inGame?), but it works as is.*/}
+                        {this.state.nameChosen ? <button onClick={() => PubSub.publish('join-leave-button')}>Leave Game</button> : <button onClick={() => AppTry.enterButtonClicked()}>Enter Game</button>}
+                        {!this.state.nameChosen ? <p>Click button to enter game{!this.state.nameChosen ? <RemoveName name={this.state.name}/> : {}}</p> : <p>Click button to leave game {!this.state.nameChosen ? {} : <SetName name={this.state.name}/>}</p>}
                     </div>
                 </div>
                 <div className="row_5">

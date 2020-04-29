@@ -7,13 +7,14 @@ import './index.css';
 import CurrentNames from './CurrentNames';
 import SetName from './SetName';
 import RemoveName from './RemoveName';
+import WhoseTurn from "./WhoseTurn";
 
 class AppTry extends Component {
   constructor(props) {
     super(props);
     this.toggleVisibility = this.toggleVisibility.bind(this);
     this.state = {
-      name: null, //Name of the player.
+      name: "", //Name of the player.
       width: window.innerWidth,
       nameChosen: false,
       //inGame: false, //Adding this might be helpful for certain logic, but is currently not used
@@ -45,7 +46,7 @@ class AppTry extends Component {
             <div className="full_grid">
                 <div className="row_1">
                     <div>
-                        It's (name)'s turn. / Enter name to join (Second half only visible if name has been entered)
+                      {this.state.nameChosen ? <div>It's {<WhoseTurn />}'s turn.</div> : null}
                     </div>
                 </div>
                 <div className="row_2">

@@ -10,9 +10,9 @@ class CurrentNames extends React.Component {
         pollingInterval: 3000,
         polling: true
       };
-    this.headers = [
-      { key: 'name', label: 'Name' }
-    ];
+    // this.headers = [
+    //   { key: 'name', label: 'Name' }
+    // ];
   }
 
   componentDidMount() {
@@ -21,17 +21,17 @@ class CurrentNames extends React.Component {
   render() {
     return (
       <table>
-        <thead>
-        <tr>
-          {
-            this.headers.map(function(h) {
-              return (
-                <th key = {h.key}>{h.label}</th>
-              )
-            })
-          }
-        </tr>
-        </thead>
+        {/*<thead>*/}
+        {/*<tr>*/}
+          {/*{*/}
+            {/*this.headers.map(function(h) {*/}
+              {/*return (*/}
+                {/*<th key = {h.key}>{h.label}</th>*/}
+              {/*)*/}
+            {/*})*/}
+          {/*}*/}
+        {/*</tr>*/}
+        {/*</thead>*/}
         <tbody>
         {
           this.state.users.map(user => <tr key={user}><td>{user}</td></tr>)
@@ -64,13 +64,13 @@ class CurrentNames extends React.Component {
           .then(response => {
             return response.json();
           }).then(result => {
-          console.log("Retrieved items:");
+          console.log("Current Player JSON:");
           console.log(result);
-          console.log(this.headers);
+          //console.log(this.headers);
           this.setState({
             users: result.name
           });
-          console.log(this.state.users);
+          console.log("Current Player state.users: " + this.state.users);
         });
 
         // as last step you should call poll() method again

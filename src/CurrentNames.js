@@ -11,7 +11,7 @@ class CurrentNames extends React.Component {
   }
 
   componentDidMount() {
-    fetch('http://localhost:3001/api/getCurrPlayers/')
+    fetch('/api/getCurrPlayers/')
       .then(response => {
         return response.json();
       }).then(result => {

@@ -4,33 +4,19 @@ class CurrentNames extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {users: []};
+    this.state =
+      {
+        users: [],
+        pollingInterval: 3000,
+        polling: true
+      };
     this.headers = [
       { key: 'name', label: 'Name' }
     ];
   }
 
   componentDidMount() {
-    fetch('/api/getCurrPlayers/')
-      .then(response => {
-        return response.json();
-      }).then(result => {
-      console.log("Retrieved items:");
-      console.log(result);
-      console.log(this.headers);
-      // let temp = JSON.parse(result);
-      // console.log(temp);
-      // const items = [];
-      // const itemArray = json._embedded.collectionItems;
-      // for (var i = 0; i < itemArray.length; i++) {
-      //   itemArray[i]["link"] = itemArray[i]._links.self.href;
-      //   items.push(itemArray[i]);
-      // }
-      this.setState({
-        users: result.name
-      });
-      console.log(this.state.users);
-    });
+    this.poll();
   }
   render() {
     return (
@@ -61,6 +47,43 @@ class CurrentNames extends React.Component {
         </tbody>
       </table>
     )
+  }
+  poll () {
+    // you should keep track of the timeout scheduled and
+    // provide a cleanup if needed
+    this.state.polling && clearTimeout(this.state.polling);
+
+    //TODO: Fix this, as this should error out from _something_. Probably.
+    // if (!this.props.loading) {
+    //   this.setState({ polling: false });
+    //   return
+    // }
+
+    const polling = setTimeout(() => {
+        fetch('/api/getCurrPlayers/')
+          .then(response => {
+            return response.json();
+          }).then(result => {
+          console.log("Retrieved items:");
+          console.log(result);
+          console.log(this.headers);
+          this.setState({
+            users: result.name
+          });
+          console.log(this.state.users);
+        });
+
+        // as last step you should call poll() method again
+        // if you have asyncronous code you should not call it
+        // as a step of your async flow, as it has already is
+        // time period with setTimeout
+        this.poll()
+      }
+      , this.state.pollingInterval);
+
+    this.setState({
+      polling
+    })
   }
 }
 

@@ -1,9 +1,11 @@
 import React from 'react';
+import PubSub from './pubsub.js';
 
 class WhoseTurn extends React.Component {
 
   constructor(props) {
     super(props);
+    WhoseTurn.turnPassed = WhoseTurn.turnPassed.bind(this);
     this.state =
       {
         currPlayer: null,
@@ -14,12 +16,32 @@ class WhoseTurn extends React.Component {
 
   componentDidMount() {
     this.poll();
+    PubSub.subscribe('pass-turn-button', WhoseTurn.turnPassed);
   }
   componentWillUnmount() {
+    PubSub.unsubscribe('pass-turn-button');
     this.setState({
       polling: false,
     });
     clearTimeout(this.state.polling);
+  }
+
+  static turnPassed(msg, data) {
+    //TODO: Fix getting a, "Uncaught (in promise) SyntaxError: Unexpected token O in JSON at position 0" response. Might be on the server side.
+    fetch('api/passturn/', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: data,
+        //secondParam: 'yourOtherValue',
+      })
+    })
+      .then(response => {
+        return response.json();
+      });
   }
 
   render() {
@@ -40,15 +62,19 @@ class WhoseTurn extends React.Component {
 
     const polling = setTimeout(() => {
         fetch('/api/getWhoseTurn/')
+        //fetch('http://json.monoceroses.com:3001/api/getWhoseTurn/')
           .then(response => {
             return response.json();
           }).then(result => {
           console.log("WhoseTurn JSON:");
           console.log(result);
-            this.setState({
-              currPlayer: result,
-            });
-          console.log("WhoseTurn currPlayer: " + this.state.currPlayer);
+            if(this.state.currPlayer !== result) {
+              PubSub.publish('player-turn-update', result);
+              this.setState({
+                currPlayer: result,
+              });
+              console.log("WhoseTurn currPlayer (change has happened): " + this.state.currPlayer);
+            }
         });
 
         // as last step you should call poll() method again

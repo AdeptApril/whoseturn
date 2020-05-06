@@ -16,10 +16,10 @@ class WhoseTurnInMinigame extends React.Component {
 
   componentDidMount() {
     this.poll();
-    PubSub.subscribe('pass-turn-button', WhoseTurnInMinigame.turnPassed);
+    PubSub.subscribe('pass-minigame-turn-button', WhoseTurnInMinigame.turnPassed);
   }
   componentWillUnmount() {
-    PubSub.unsubscribe('pass-turn-button');
+    PubSub.unsubscribe('pass-minigame-turn-button');
     this.setState({
       polling: false,
     });

@@ -12,10 +12,6 @@ class SetName extends React.Component {
 
   componentDidMount() {
     console.log("SetName mounted");
-    JSON.stringify({
-      name: this.state.name,
-      //secondParam: 'yourOtherValue',
-    });
     fetch('/api/inputname/', {
       method: 'POST',
       headers: {

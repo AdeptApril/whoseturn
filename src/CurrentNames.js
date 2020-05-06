@@ -1,4 +1,5 @@
 import React from 'react';
+import PubSub from './pubsub.js';
 
 class CurrentNames extends React.Component {
 
@@ -7,6 +8,7 @@ class CurrentNames extends React.Component {
     this.state =
       {
         users: [],
+        players: [],
         pollingInterval: 3000,
         polling: true
       };
@@ -33,17 +35,15 @@ class CurrentNames extends React.Component {
         {/*</tr>*/}
         {/*</thead>*/}
         <tbody>
+        <p>Players in game:</p>
         {
           this.state.users.map(user => <tr key={user}><td>{user}</td></tr>)
-          // this.state.users.map(function(item, key)
-          // {
-          //   return (
-          //     <tr key = {key}>
-          //       <td>{item.name}</td>
-          //     </tr>
-          //   )
-          // })
         }
+        <p>Players in Minigame:</p>
+        {
+          this.state.players.map(player => <tr key={player}><td>{player}</td></tr>)
+        }
+        {/*}*/}
         </tbody>
       </table>
     )
@@ -64,13 +64,32 @@ class CurrentNames extends React.Component {
           .then(response => {
             return response.json();
           }).then(result => {
-          console.log("Current Player JSON:");
-          console.log(result);
+          // console.log("Current Player JSON:");
+          // console.log(result);
           //console.log(this.headers);
           this.setState({
             users: result.name
           });
           console.log("Current Player state.users: " + this.state.users);
+        });
+
+        //Minigame players fetch
+        fetch('/api/getCurrPlayersInMinigame/')
+          .then(response => {
+            return response.json();
+          }).then(result => {
+          // console.log("Current Minigame Player JSON:");
+          // console.log(result);
+          //console.log(this.headers);
+          this.setState({
+            players: result.name
+          });
+          console.log("Current Minigame Player state.players: " + this.state.players);
+        })
+          .then( result => {
+        if(this.state.players.length <= 0)
+          PubSub.publish("minigame-ended");
+          // PubSub.publish("player-turn-in-minigame-update");
         });
 
         // as last step you should call poll() method again

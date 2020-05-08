@@ -62,7 +62,6 @@ class WhoseTurn extends React.Component {
 
     const polling = setTimeout(() => {
         fetch('/api/getWhoseTurn/')
-        //fetch('http://json.monoceroses.com:3001/api/getWhoseTurn/')
           .then(response => {
             return response.json();
           }).then(result => {

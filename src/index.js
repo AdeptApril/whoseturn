@@ -21,7 +21,9 @@ class AppTry extends Component {
     this.playerMinigameUpdate = this.playerMinigameUpdate.bind(this);
     this.joinLeaveMinigame = this.joinLeaveMinigame.bind(this);
     this.minigameEnded = this.minigameEnded.bind(this);
+    this.adminChanged = this.adminChanged.bind(this);
     this.state = {
+      isAdmin: false,
       name: "", //Name of the player.
       nameOfPlayerWhoseTurnItIs: "",
       width: window.innerWidth,
@@ -38,9 +40,19 @@ class AppTry extends Component {
     PubSub.subscribe('player-turn-in-minigame-update', this.playerMinigameUpdate);
     PubSub.subscribe('join-leave-minigame-button', this.joinLeaveMinigame);
     PubSub.subscribe('minigame-ended', this.minigameEnded);
+    PubSub.subscribe('admin-update', this.adminChanged);
   }
 
-  minigameEnded(msg) {
+  //Admin has changed, so check to see if current player is an admin.
+  adminChanged(msg, data) {
+    if(this.state.name === data) {
+      this.setState({
+        isAdmin: true,
+      });
+    }
+  }
+
+  minigameEnded() {
     this.setState({
       inMinigame: false,
       minigameActive: false,
@@ -90,6 +102,12 @@ class AppTry extends Component {
     this.setState({
       nameChosen: !this.state.nameChosen,
     });
+    if(this.state.nameChosen === false && this.state.isAdmin === true)
+    {
+      this.setState({
+        isAdmin: false,
+      });
+    }
   }
 
   updateName(evt) {
@@ -103,6 +121,7 @@ class AppTry extends Component {
     //const isMobile = width <= 500;
     return (
       <div className="full_grid">
+        <div><img className="background-img" alt="" src={require('./assets/BackgroundImage.png')}/></div>
         <div className="row_1">
           <div>
             {this.state.nameChosen ? <div>It's {<WhoseTurn/>}'s turn.</div> : null}
@@ -139,19 +158,30 @@ class AppTry extends Component {
             {this.state.nameChosen ? <button onClick={() => PubSub.publish('join-leave-button')}>Leave Game</button> :
               <button onClick={() => PubSub.publish('join-leave-button')}>Enter Game</button>}
             {!this.state.nameChosen ?
-              <p>Click button to enter game{!this.state.nameChosen ? <RemoveName name={this.state.name}/> : {}}</p> :
-              <p>Click button to leave game {!this.state.nameChosen ? {} : <SetName name={this.state.name}/>}</p>}
+              <div>Click button to enter game{!this.state.nameChosen ? <RemoveName name={this.state.name}/> : {}}</div> :
+              <div>Click button to leave game {!this.state.nameChosen ? {} : <SetName name={this.state.name}/>}</div>}
           </div>
         </div>
         <div className="row_5">
           <div>
-            Current players
+            {/*Current players*/}
             {<CurrentNames/>}
           </div>
           <div>
             {/*{this.state.minigameActive ? <div>Current players in Minigame</div> : null}*/}
             {/*{<CurrentNamesInMinigame/>}*/}
           </div>
+        </div>
+        <div className="row_6">
+            <div>
+              <p>   </p>
+              {this.state.isAdmin ? <tr>Admin Menu</tr> : null}
+              <p>{this.state.isAdmin ?
+                <button onClick={() => PubSub.publish('pass-turn-button', this.state.name)}>Pass turn in main game</button> : null}</p>
+              <p>{this.state.isAdmin && this.state.minigameActive ?
+                <button onClick={() => PubSub.publish('pass-minigame-turn-button', this.state.name)}>Pass turn in
+                  Minigame</button> : null}</p>
+            </div>
         </div>
       </div>
     );

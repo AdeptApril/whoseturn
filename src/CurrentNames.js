@@ -7,6 +7,7 @@ class CurrentNames extends React.Component {
     super(props);
     this.state =
       {
+        admin: null,
         users: [],
         players: [],
         pollingInterval: 3000,
@@ -35,11 +36,11 @@ class CurrentNames extends React.Component {
         {/*</tr>*/}
         {/*</thead>*/}
         <tbody>
-        <p>Players in game:</p>
+        {this.state.users.length > 0 ? <tr>Players in game:</tr> : <tr/>}
         {
           this.state.users.map(user => <tr key={user}><td>{user}</td></tr>)
         }
-        <p>Players in Minigame:</p>
+        {this.state.players.length > 0 ? <tr>Players in Minigame:</tr> : <tr/>}
         {
           this.state.players.map(player => <tr key={player}><td>{player}</td></tr>)
         }
@@ -70,6 +71,24 @@ class CurrentNames extends React.Component {
           this.setState({
             users: result.name
           });
+          if(this.state.users.length > 0 && this.state.users[0] !== this.state.admin) //Check to see who the admin is if it doesn't make sense given array of users
+          {
+            fetch('/api/getAdminName/')
+            //fetch('http://json.monoceroses.com:3001/api/getWhoseTurn/')
+              .then(response => {
+                return response.json();
+              }).then(result => {
+              console.log("GetAdminName JSON:");
+              console.log(result);
+              if(this.state.currPlayer !== result.toString()) {
+                PubSub.publish('admin-update', result.toString());
+                this.setState({
+                  admin: result.toString(),
+                });
+                console.log("Admin has changed: " + this.state.admin);
+              }
+            });
+          }
           console.log("Current Player state.users: " + this.state.users);
         });
 

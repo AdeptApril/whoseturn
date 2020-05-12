@@ -47,6 +47,8 @@ code {
     /*justify-content: center;*/
 }
 
+
+/*Items below likely best to remove, but kept for use in trying to make sense of CSS*/
 .bio-title {
     font-size: xx-large;
     font-weight: bolder;

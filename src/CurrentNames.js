@@ -1,6 +1,7 @@
 import React from 'react';
 import PubSub from './pubsub.js';
 
+/* Displays current players in the game and minigame */
 class CurrentNames extends React.Component {
 
   constructor(props) {

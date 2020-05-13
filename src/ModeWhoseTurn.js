@@ -119,9 +119,9 @@ class ModeWhoseTurn extends Component {
     //const { width } = this.state;
     //const isMobile = width <= 500;
     return (
-      <div className="full_grid">
-        <div className="row_1_and_2">
-          <div className="row_1">
+      <div className="full_grid_alt">
+        <div className="row_1_and_2_alt">
+          <div className="row_1_alt">
             <div>
               {this.state.nameChosen ? <div>{this.state.name}</div> : null}
             </div>
@@ -131,7 +131,7 @@ class ModeWhoseTurn extends Component {
                 <button onClick={() => PubSub.publish('pass-turn-button', this.state.name)}>Pass turn</button> : null}
             </div>
           </div>
-          <div className="row_2">
+          <div className="row_2_alt">
             <div>
               {this.state.nameChosen && this.state.minigameActive ?
                 <div>It's {<WhoseTurnInMinigame/>}'s turn in the minigame.</div> : null}
@@ -147,14 +147,14 @@ class ModeWhoseTurn extends Component {
             </div>
           </div>
         </div>
-        <div className="row_3">
+        <div className="row_3_alt">
           <div>
             {this.state.nameChosen ? null :
               <textarea value={this.state.name} className="enter-name-textarea"
                         onChange={evt => this.updateName(evt)}>Enter a Name</textarea>}
           </div>
         </div>
-        <div className="row_4">
+        <div className="row_4_alt">
           <div>
             {/*The point with the next two lines is to switch what's on the button, alert the system that the
                       button has been pushed, and also update test underneath. I have forgotten why there's double ternary
@@ -167,7 +167,7 @@ class ModeWhoseTurn extends Component {
               <div>Click button to leave game {!this.state.nameChosen ? {} : <SetName name={this.state.name}/>}</div>}
           </div>
         </div>
-        <div className="row_5">
+        <div className="row_5_alt">
           <div>
             {/*Current players*/}
             {<CurrentNames/>}
@@ -177,7 +177,7 @@ class ModeWhoseTurn extends Component {
             {/*{<CurrentNamesInMinigame/>}*/}
           </div>
         </div>
-        <div className="row_6">
+        <div className="row_6_alt">
           <div>
             <p></p>
             {this.state.isAdmin ? <tr>Admin Menu</tr> : null}

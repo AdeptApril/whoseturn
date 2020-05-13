@@ -120,7 +120,7 @@ class ModeWhoseTurn extends Component {
     //const isMobile = width <= 500;
     return (
       <div className="full_grid">
-        <div className "row_1_and_2">
+        <div className="row_1_and_2">
           <div className="row_1">
             <div>
               {this.state.nameChosen ? <div>{this.state.name}</div> : null}

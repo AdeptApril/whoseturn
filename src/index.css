@@ -6,18 +6,22 @@
  */
 
 body {
-  background-color: black;
-  color: white;
-  margin: 0;
-  padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    background-color: #cf2727;
+    color: white;
+    margin: -5vh 0 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-image: url("./assets/BriMegAmanBoxGraphic.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-position-y: 40vh;
 }
 
-.background-img{
+.background-img {
     background-size: cover;
     position: fixed;
     margin-left: 20vh;
@@ -27,112 +31,165 @@ body {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
 .full_grid {
+    /*height: 100vh;*/
     display: grid;
 }
 
 .row_1 {
+    height: 15vh;
+    /*grid-row: 1;*/
     grid-row: 1;
+    background-color: #cf2727;
     /*display: grid;*/
     /*justify-content: center;*/
+    background-image: url("./assets/BriMegAmanMarquee.png");
+    background-repeat: no-repeat;
+    background-position: right;
+    background-position-y: 1%;
 }
 
 .row_2 {
+    height: 15vh;
     grid-row: 2;
+    background-color: #e1118b;
     /*display: grid;*/
     /*justify-content: center;*/
+    /*background-image: url("./assets/BriMegAmanMarquee.png");*/
+    /*background-repeat: no-repeat;*/
+    /*background-position: right;*/
+    /*background-position-y: 110%;*/
 }
 
+/*.marquee {*/
+/*background-size: cover;*/
+/*position: fixed;*/
+/*margin-left: 20vh;*/
+/*height: 10vh;*/
+/*width: 40vh;*/
+/*z-index: 1;*/
+/*}*/
+
+.row_3 {
+    grid-row: 3;
+    height: 15vh;
+    background-color: #761b60;
+    /*display: grid;*/
+    /*justify-content: center;*/
+    /*background-image: url("./assets/BriMegAmanMarquee.png");*/
+    /*background-repeat: no-repeat;*/
+    /*background-position: right;*/
+    /*background-position-y: 105%;*/
+}
+
+.row_4 {
+    grid-row: 4;
+}
+
+.row_5 {
+    grid-row: 5;
+}
+
+.row_6 {
+    grid-row: 6;
+    /*background-color: #761b60;*/
+    /*display: grid;*/
+    /*justify-content: center;*/
+    /*background-image: url("./assets/BriMegAmanBoxGraphic.png");*/
+    /*background-repeat: no-repeat;*/
+    /*background-position: center;*/
+    /*background-position-y: 105%;*/
+}
 
 /*Items below likely best to remove, but kept for use in trying to make sense of CSS*/
-.bio-title {
-    font-size: xx-large;
-    font-weight: bolder;
-    text-decoration: none;
-}
+/*.bio-title {*/
+/*font-size: xx-large;*/
+/*font-weight: bolder;*/
+/*text-decoration: none;*/
+/*}*/
 
-.bio-title:hover {
-    font-size: xx-large;
-    font-weight: bolder;
-    text-decoration: underline;
-}
+/*.bio-title:hover {*/
+/*font-size: xx-large;*/
+/*font-weight: bolder;*/
+/*text-decoration: underline;*/
+/*}*/
 
-.projects-left {
-  font-size: xx-large;
-    text-decoration: none;
-}
+/*.projects-left {*/
+/*font-size: xx-large;*/
+/*text-decoration: none;*/
+/*}*/
 
-.projects-left:hover {
-    font-size: xx-large;
-    text-decoration: underline;
-}
+/*.projects-left:hover {*/
+/*font-size: xx-large;*/
+/*text-decoration: underline;*/
+/*}*/
 
-.projects-right {
-    font-size: xx-large;
-    text-decoration: none;
-}
+/*.projects-right {*/
+/*font-size: xx-large;*/
+/*text-decoration: none;*/
+/*}*/
 
-.projects-right:hover {
-    font-size: xx-large;
-    text-decoration: underline;
-}
+/*.projects-right:hover {*/
+/*font-size: xx-large;*/
+/*text-decoration: underline;*/
+/*}*/
 
-.project-text {
-    z-index: 5;
-}
+/*.project-text {*/
+/*z-index: 5;*/
+/*}*/
 
-.image-div, .center-img, .background-video {
-    grid-row: 2;
-    grid-column: 2;
-}
+/*.image-div, .center-img, .background-video {*/
+/*grid-row: 2;*/
+/*grid-column: 2;*/
+/*}*/
 
-.image-div {
-  border-radius: 30%;
-    margin: 10pt;
-    height: 60vh;
-    width: 60vh;
-  overflow: hidden;
-}
+/*.image-div {*/
+/*border-radius: 30%;*/
+/*margin: 10pt;*/
+/*height: 60vh;*/
+/*width: 60vh;*/
+/*overflow: hidden;*/
+/*}*/
 
-.center-img {
-   vertical-align: middle;
-   height: 60vh;
-   width: 60vh;
-    /*z-index: -1;*/
- }
+/*.center-img {*/
+/*vertical-align: middle;*/
+/*height: 60vh;*/
+/*width: 60vh;*/
+/*!*z-index: -1;*!*/
+/*}*/
 
-.three-object {
-    margin-top: -5vh;
-    position: fixed;
-    z-index: -1;
-}
+/*.three-object {*/
+/*margin-top: -5vh;*/
+/*position: fixed;*/
+/*z-index: -1;*/
+/*}*/
 
-/*Not actually in the background at this point. Margins are due to being in the same div with an image, and other
-formatting not working to just have it be over the top*/
-#background-video{
-    vertical-align: middle;
-    width: 110vh;
-    margin-top: -62.5vh;
-    margin-left: -20vh;
-    /* float: left;*/
-    /* top: 0; */
-    /* position: absolute;  optional depending on what you want to do in your app */
-    /*z-index: 2;*/
-}
+/*!*Not actually in the background at this point. Margins are due to being in the same div with an image, and other*/
+/*formatting not working to just have it be over the top*!*/
+/*#background-video{*/
+/*vertical-align: middle;*/
+/*width: 110vh;*/
+/*margin-top: -62.5vh;*/
+/*margin-left: -20vh;*/
+/*!* float: left;*!*/
+/*!* top: 0; *!*/
+/*!* position: absolute;  optional depending on what you want to do in your app *!*/
+/*!*z-index: 2;*!*/
+/*}*/
 
-.further-info {
-    grid-row: 3;
-}
+/*.further-info {*/
+/*grid-row: 3;*/
+/*}*/
 
-.info-div {
-    margin: auto;
-    width: 75%;
-}
+/*.info-div {*/
+/*margin: auto;*/
+/*width: 75%;*/
+/*}*/
 
-.paragraph-header {
-    font-size: xx-large;
-}
+/*.paragraph-header {*/
+/*font-size: xx-large;*/
+/*}*/

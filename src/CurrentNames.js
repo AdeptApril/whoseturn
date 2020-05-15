@@ -37,7 +37,7 @@ class CurrentNames extends React.Component {
         {/*</tr>*/}
         {/*</thead>*/}
         <tbody>
-        {this.state.users.length > 0 ? <tr>Players in game:</tr> : <tr/>}
+        {this.state.users.length > 0 ? <tr><td>Players in game:</td></tr> : <tr><td/></tr>}
         {
           this.state.users.map(user => <tr key={user}><td>{user}</td></tr>)
         }
@@ -75,7 +75,6 @@ class CurrentNames extends React.Component {
           if(this.state.users.length > 0 && this.state.users[0] !== this.state.admin) //Check to see who the admin is if it doesn't make sense given array of users
           {
             fetch('/api/getAdminName/')
-            //fetch('http://json.monoceroses.com:3001/api/getWhoseTurn/')
               .then(response => {
                 return response.json();
               }).then(result => {

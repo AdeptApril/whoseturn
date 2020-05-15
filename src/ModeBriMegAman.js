@@ -13,6 +13,17 @@ import WhoseTurnInMinigame from "./WhoseTurnInMinigame";
 import EnterMinigame from "./EnterMinigame";
 import LeaveMinigame from "./LeaveMinigame";
 
+function checkAdmin() {
+  fetch('/api/getAdminName/')
+    .then(response => {
+      return response.json();
+    }).then(result => {
+    console.log("GetAdminName JSON in checkAdmin:");
+    console.log(result);
+    PubSub.publish('admin-update', result.toString());
+  });
+}
+
 class ModeBriMegAman extends Component {
   constructor(props) {
     super(props);
@@ -98,7 +109,8 @@ class ModeBriMegAman extends Component {
     }
   }
 
-  toggleVisibility() {
+  toggleVisibility() { //TODO: Rename this to somethng that makes sense, like joinLeaveGame, and add some data to say which direction. Then move checkAdmin to the entry side only. (Other ways possible)
+    checkAdmin();
     this.setState({
       nameChosen: !this.state.nameChosen,
     });
@@ -180,15 +192,15 @@ class ModeBriMegAman extends Component {
           </div>
         </div>
         <div className="row_7">
-          <div>
-            {this.state.isAdmin ? <tr>Admin Menu</tr> : null}
-            <p>{this.state.isAdmin ?
+          <table><tbody>
+            {this.state.isAdmin ? <tr><td>Admin Menu</td></tr> : null}
+            <tr><td>{this.state.isAdmin ?
               <button onClick={() => PubSub.publish('pass-turn-button', this.state.name)}>Pass turn in main
-                game</button> : null}</p>
-            <p>{this.state.isAdmin && this.state.minigameActive ?
+                game</button> : null}</td></tr>
+            <tr><td>{this.state.isAdmin && this.state.minigameActive ?
               <button onClick={() => PubSub.publish('pass-minigame-turn-button', this.state.name)}>Pass turn in
-                Minigame</button> : null}</p>
-          </div>
+                Minigame</button> : null}</td></tr>
+          </tbody></table>
         </div>
       </div>
     );

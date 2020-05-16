@@ -9,8 +9,8 @@ class CurrentNames extends React.Component {
     this.state =
       {
         admin: null,
-        users: [],
-        players: [],
+        playersInGame: [],
+        playersInMinigame: [],
         pollingInterval: 3000,
         polling: true
       };
@@ -37,13 +37,13 @@ class CurrentNames extends React.Component {
         {/*</tr>*/}
         {/*</thead>*/}
         <tbody>
-        {this.state.users.length > 0 ? <tr><td>Players in game:</td></tr> : <tr><td/></tr>}
+        {this.state.playersInGame.length > 0 ? <tr><td>Players in game:</td></tr> : <tr><td/></tr>}
         {
-          this.state.users.map(user => <tr key={user}><td>{user}</td></tr>)
+          this.state.playersInGame.map(user => <tr key={user}><td>{user}</td></tr>)
         }
-        {this.state.players.length > 0 ? <tr>Players in Minigame:</tr> : <tr/>}
+        {this.state.playersInMinigame.length > 0 ? <tr><td>Players in Minigame:</td></tr> : <tr/>}
         {
-          this.state.players.map(player => <tr key={player}><td>{player}</td></tr>)
+          this.state.playersInMinigame.map(player => <tr key={player}><td>{player}</td></tr>)
         }
         {/*}*/}
         </tbody>
@@ -70,9 +70,9 @@ class CurrentNames extends React.Component {
           // console.log(result);
           //console.log(this.headers);
           this.setState({
-            users: result.name
+            playersInGame: result.name
           });
-          if(this.state.users.length > 0 && this.state.users[0] !== this.state.admin) //Check to see who the admin is if it doesn't make sense given array of users
+          if(this.state.playersInGame.length > 0 && this.state.playersInGame[0] !== this.state.admin) //Check to see who the admin is if it doesn't make sense given array of playersInGame
           {
             fetch('/api/getAdminName/')
               .then(response => {
@@ -89,10 +89,10 @@ class CurrentNames extends React.Component {
               }
             });
           }
-          console.log("Current Player state.users: " + this.state.users);
+          console.log("Current Player state.playersInGame: " + this.state.playersInGame);
         });
 
-        //Minigame players fetch
+        //Minigame playersInMinigame fetch
         fetch('/api/getCurrPlayersInMinigame/')
           .then(response => {
             return response.json();
@@ -101,12 +101,12 @@ class CurrentNames extends React.Component {
           // console.log(result);
           //console.log(this.headers);
           this.setState({
-            players: result.name
+            playersInMinigame: result.name
           });
-          console.log("Current Minigame Player state.players: " + this.state.players);
+          console.log("Current Minigame Player state.playersInMinigame: " + this.state.playersInMinigame);
         })
           .then( result => {
-        if(this.state.players.length <= 0)
+        if(this.state.playersInMinigame.length <= 0)
           PubSub.publish("minigame-ended");
           // PubSub.publish("player-turn-in-minigame-update");
         });

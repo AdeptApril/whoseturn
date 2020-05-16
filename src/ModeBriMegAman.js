@@ -12,6 +12,7 @@ import WhoseTurn from "./WhoseTurn";
 import WhoseTurnInMinigame from "./WhoseTurnInMinigame";
 import EnterMinigame from "./EnterMinigame";
 import LeaveMinigame from "./LeaveMinigame";
+import AdminMenu from "./AdminMenu";
 
 function checkAdmin() {
   fetch('/api/getAdminName/')
@@ -20,7 +21,8 @@ function checkAdmin() {
     }).then(result => {
     console.log("GetAdminName JSON in checkAdmin:");
     console.log(result);
-    PubSub.publish('admin-update', result.toString());
+    if(result !== null)
+      PubSub.publish('admin-update', result.toString());
   });
 }
 
@@ -109,16 +111,20 @@ class ModeBriMegAman extends Component {
     }
   }
 
-  toggleVisibility() { //TODO: Rename this to somethng that makes sense, like joinLeaveGame, and add some data to say which direction. Then move checkAdmin to the entry side only. (Other ways possible)
-    checkAdmin();
-    this.setState({
-      nameChosen: !this.state.nameChosen,
-    });
-    if (this.state.nameChosen === false && this.state.isAdmin === true) {
+  toggleVisibility(msg, data) { //TODO: Rename this to somethng that makes sense, like joinLeaveGame, and add some data to say which direction. Then move checkAdmin to the entry side only. (Other ways possible)
+    if(data === "enter") {
+      checkAdmin();
       this.setState({
+        nameChosen: true,
+      });
+    }
+    else if(data === "leave") {
+      this.setState({
+        nameChosen: false,
         isAdmin: false,
       });
     }
+
   }
 
   updateName(evt) {
@@ -173,8 +179,8 @@ class ModeBriMegAman extends Component {
             {/*The point with the next two lines is to switch what's on the button, alert the system that the
                       button has been pushed, and also update test underneath. I have forgotten why there's double ternary
                       in the lower field (maybe because of separating out visible and inGame?), but it works as is.*/}
-            {this.state.nameChosen ? <button onClick={() => PubSub.publish('join-leave-button')}>Leave Game</button> :
-              <button onClick={() => PubSub.publish('join-leave-button')}>Enter Game</button>}
+            {this.state.nameChosen ? <button onClick={() => PubSub.publish('join-leave-button', 'leave')}>Leave Game</button> :
+              <button onClick={() => PubSub.publish('join-leave-button', 'enter')}>Enter Game</button>}
             {!this.state.nameChosen ?
               <div>{!this.state.nameChosen ?
                 <RemoveName name={this.state.name}/> : {}}</div> :
@@ -192,15 +198,7 @@ class ModeBriMegAman extends Component {
           </div>
         </div>
         <div className="row_7">
-          <table><tbody>
-            {this.state.isAdmin ? <tr><td>Admin Menu</td></tr> : null}
-            <tr><td>{this.state.isAdmin ?
-              <button onClick={() => PubSub.publish('pass-turn-button', this.state.name)}>Pass turn in main
-                game</button> : null}</td></tr>
-            <tr><td>{this.state.isAdmin && this.state.minigameActive ?
-              <button onClick={() => PubSub.publish('pass-minigame-turn-button', this.state.name)}>Pass turn in
-                Minigame</button> : null}</td></tr>
-          </tbody></table>
+          {this.state.isAdmin ? <AdminMenu name={this.state.name}/> : null}
         </div>
       </div>
     );

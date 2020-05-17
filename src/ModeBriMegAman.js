@@ -13,6 +13,7 @@ import WhoseTurnInMinigame from "./WhoseTurnInMinigame";
 import EnterMinigame from "./EnterMinigame";
 import LeaveMinigame from "./LeaveMinigame";
 import AdminMenu from "./AdminMenu";
+import AnimatedCardClaim from "./AnimatedCardClaim";
 
 function checkAdmin() {
   fetch('/api/getAdminName/')
@@ -172,6 +173,7 @@ static cardClaimed(msg, data) {
           <div>
             {this.state.nameChosen ?
               <button onClick={() => PubSub.publish('card-claimed-button', this.state.name)}>Claim a card</button> : null}
+            {<AnimatedCardClaim/>}
           </div>
         </div>
         <div className="row_3">

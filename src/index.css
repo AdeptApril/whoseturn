@@ -114,6 +114,20 @@ code {
     /*background-position-y: 105%;*/
 }
 
+#playersInGame {
+    position: absolute;
+}
+
+#numberOfCards {
+    position: absolute;
+    margin-left: 25vh;
+}
+
+#playersInMinigame {
+    position: absolute;
+    margin-left: 50vh;
+}
+
 .row_7 {
     height: 40vh;
 }

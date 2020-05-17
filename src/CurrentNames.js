@@ -10,6 +10,7 @@ class CurrentNames extends React.Component {
       {
         admin: null,
         playersInGame: [],
+        numberOfCards: [],
         playersInMinigame: [],
         pollingInterval: 3000,
         polling: true
@@ -24,30 +25,32 @@ class CurrentNames extends React.Component {
   }
   render() {
     return (
-      <table>
-        {/*<thead>*/}
-        {/*<tr>*/}
-          {/*{*/}
-            {/*this.headers.map(function(h) {*/}
-              {/*return (*/}
-                {/*<th key = {h.key}>{h.label}</th>*/}
-              {/*)*/}
-            {/*})*/}
-          {/*}*/}
-        {/*</tr>*/}
-        {/*</thead>*/}
-        <tbody>
-        {this.state.playersInGame.length > 0 ? <tr><td>Players in game:</td></tr> : <tr><td/></tr>}
-        {
-          this.state.playersInGame.map(user => <tr key={user}><td>{user}</td></tr>)
-        }
-        {this.state.playersInMinigame.length > 0 ? <tr><td>Players in Minigame:</td></tr> : <tr/>}
-        {
-          this.state.playersInMinigame.map(player => <tr key={player}><td>{player}</td></tr>)
-        }
-        {/*}*/}
-        </tbody>
-      </table>
+      <div>
+        <table id="playersInGame">
+          <thead>
+          {this.state.playersInGame.length > 0 ? <tr><td>Players in game:</td></tr> : <tr><td/></tr>}
+          </thead>
+          <tbody>
+          {this.state.playersInGame.map(user => <tr key={user}><td>{user}</td></tr>)}
+          </tbody>
+        </table>
+        <table id="numberOfCards">
+          <thead>
+          {this.state.playersInGame.length > 0 ? <tr><td>Number of Cards:</td></tr> : <tr><td/></tr>}
+          </thead>
+          <tbody>
+          {this.state.numberOfCards.map(cards => <tr key={cards}><td>{cards}</td></tr>)}
+          </tbody>
+        </table>
+          <table id="playersInMinigame">
+          <thead>
+          {this.state.playersInMinigame.length > 0 ? <tr><td>Players in Minigame:</td></tr> : <tr/>}
+          </thead>
+          <tbody>
+          {this.state.playersInMinigame.map(player => <tr key={player}><td>{player}</td></tr>)}
+          </tbody>
+          </table>
+      </div>
     )
   }
   poll () {
@@ -70,7 +73,8 @@ class CurrentNames extends React.Component {
           // console.log(result);
           //console.log(this.headers);
           this.setState({
-            playersInGame: result.name
+            playersInGame: result.name,
+            numberOfCards: result.cards,
           });
           if(this.state.playersInGame.length > 0 && this.state.playersInGame[0] !== this.state.admin) //Check to see who the admin is if it doesn't make sense given array of playersInGame
           {

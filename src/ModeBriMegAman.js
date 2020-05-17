@@ -35,6 +35,7 @@ class ModeBriMegAman extends Component {
     this.joinLeaveMinigame = this.joinLeaveMinigame.bind(this);
     this.minigameEnded = this.minigameEnded.bind(this);
     this.adminChanged = this.adminChanged.bind(this);
+    ModeBriMegAman.cardClaimed = ModeBriMegAman.cardClaimed.bind(this);
     this.state = {
       isAdmin: false,
       name: "", //Name of the player.
@@ -54,6 +55,24 @@ class ModeBriMegAman extends Component {
     PubSub.subscribe('join-leave-minigame-button', this.joinLeaveMinigame);
     PubSub.subscribe('minigame-ended', this.minigameEnded);
     PubSub.subscribe('admin-update', this.adminChanged);
+    PubSub.subscribe('card-claimed-button', ModeBriMegAman.cardClaimed);
+  }
+
+static cardClaimed(msg, data) {
+    fetch('/api/claimcard/', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: data,
+        //secondParam: 'yourOtherValue',
+      })
+    })
+      .then(response => {
+        return response.json();
+      });
   }
 
   //Admin has changed, so check to see if current player is an admin.
@@ -149,6 +168,10 @@ class ModeBriMegAman extends Component {
             {this.state.nameChosen && (this.state.name === this.state.nameOfPlayerWhoseTurnItIs) ?
               <button onClick={() => PubSub.publish('pass-turn-button', this.state.name)}>Pass
                 turn</button> : null}
+          </div>
+          <div>
+            {this.state.nameChosen ?
+              <button onClick={() => PubSub.publish('card-claimed-button', this.state.name)}>Claim a card</button> : null}
           </div>
         </div>
         <div className="row_3">

@@ -160,34 +160,51 @@ static cardClaimed(msg, data) {
       <div className="full_grid">
         <div className="row_1">
           <div>
-            {this.state.nameChosen ? <div>{this.state.name}</div> : null}
+            {this.state.nameChosen ? <div id="nameText">{this.state.name}</div> : null}
           </div>
         </div>
         <div className="row_2">
-          <div>
-            {this.state.nameChosen ? <div>It's {<WhoseTurn/>}'s turn.</div> : null}
+          {this.state.inMinigame ? <div id="minigameGreyOut">{null}</div> : null}
+          <div id="whoseTurn">
+            {this.state.nameChosen ? <div id="whoseTurnText">{<WhoseTurn/>}'s turn</div> : null}
+          </div>
+          <div id="passTurnButtonDiv">
             {this.state.nameChosen && (this.state.name === this.state.nameOfPlayerWhoseTurnItIs) ?
-              <button onClick={() => PubSub.publish('pass-turn-button', this.state.name)}>Pass
+              <button id="passTurnButton" onClick={() => PubSub.publish('pass-turn-button', this.state.name)}>Pass
                 turn</button> : null}
           </div>
-          <div>
+          <div id="LeaveButtonDiv">
+          {this.state.nameChosen ? <button className="joinLeaveGameButton" onClick={() => PubSub.publish('join-leave-button', 'leave')}>Leave Game</button> : null}
+          </div>
+          <div id="cardClaimedButtonDiv">
             {this.state.nameChosen ?
-              <button onClick={() => PubSub.publish('card-claimed-button', this.state.name)}>Claim a card</button> : null}
+              <button id="cardClaimedButton" onClick={() => PubSub.publish('card-claimed-button', this.state.name)}>Claim a card</button> : null}
+          </div>
+          <div id="animatedCardClaim">
             {<AnimatedCardClaim/>}
           </div>
         </div>
         <div className="row_3">
-          <div>
+          <div id="minigameBackgroundText">{this.state.minigameActive ? "Minigame" : null}</div>
+          {this.state.minigameActive ?
+          <div id="whoseTurnInMinigame">
             {this.state.nameChosen && this.state.minigameActive ?
-              <div>It's {<WhoseTurnInMinigame/>}'s turn in the minigame.</div> : null}
+              <div id="whoseTurnInMinigameText">{<WhoseTurnInMinigame/>}'s turn</div> : null}
+          </div>: null}
+          <div>
             {this.state.nameChosen && this.state.minigameActive && (this.state.name === this.state.nameOfPlayerWhoseTurnItIsInMinigame) ?
-              <button onClick={() => PubSub.publish('pass-minigame-turn-button', this.state.name)}>Pass turn in
+              <button id="passMinigameTurnButton"
+                      onClick={() => PubSub.publish('pass-minigame-turn-button', this.state.name)}>Pass turn in
                 Minigame</button> : null}
+          </div>
+          <div>
             {/*Enter/Leave minigame button, only to be displayed if already in the game. If in game, display the correct direction for the minigame button*/}
             {this.state.nameChosen ? this.state.inMinigame ?
-              <button onClick={() => PubSub.publish('join-leave-minigame-button', "leave")}>Leave
+              <button className="joinLeaveMinigameButton"
+                      onClick={() => PubSub.publish('join-leave-minigame-button', "leave")}>Leave
                 minigame</button> :
-              <button onClick={() => PubSub.publish('join-leave-minigame-button', "enter")}>Enter
+              <button className="joinLeaveMinigameButton"
+                      onClick={() => PubSub.publish('join-leave-minigame-button', "enter")}>Enter
                 minigame</button> : null}
             {/*Enter/Leave Minigame (visible only if name has been entered), Enter/Leave changes based on state.*/}
           </div>
@@ -204,8 +221,8 @@ static cardClaimed(msg, data) {
             {/*The point with the next two lines is to switch what's on the button, alert the system that the
                       button has been pushed, and also update test underneath. I have forgotten why there's double ternary
                       in the lower field (maybe because of separating out visible and inGame?), but it works as is.*/}
-            {this.state.nameChosen ? <button onClick={() => PubSub.publish('join-leave-button', 'leave')}>Leave Game</button> :
-              <button onClick={() => PubSub.publish('join-leave-button', 'enter')}>Enter Game</button>}
+            {this.state.nameChosen ? null :
+              <button className="joinLeaveGameButton" onClick={() => PubSub.publish('join-leave-button', 'enter')}>Enter Game</button>}
             {!this.state.nameChosen ?
               <div>{!this.state.nameChosen ?
                 <RemoveName name={this.state.name}/> : {}}</div> :

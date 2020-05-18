@@ -8,8 +8,7 @@
 body {
     background-color: black;
     color: white;
-    padding: 0;
-    margin: 0 0 0;
+    margin: 0 0 0 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
@@ -21,9 +20,9 @@ body {
     background-size: cover;
     position: fixed;
     margin-left: 20vh;
-    height: 100vh;
-    width: 100vh;
-    z-index: -1;
+    /*height: 40vh;*/
+    /*width: 100vh;*/
+    z-index: -10;
 }
 
 code {
@@ -58,7 +57,14 @@ code {
     background-image: url("./assets/BriMegAmanMarquee.png");
     background-repeat: no-repeat;
     background-position: right;
-    background-position-y: 1%;
+    background-position-y: 1vh;
+}
+
+#nameText {
+    position: absolute;
+    margin-top: 5vh;
+    font-size: x-large;
+    font-weight: bold;
 }
 
 .row_2 {
@@ -71,6 +77,68 @@ code {
     /*background-repeat: no-repeat;*/
     /*background-position: right;*/
     /*background-position-y: 110%;*/
+}
+
+#minigameGreyOut {
+    position: absolute;
+    height: 15vh;
+    width: 100%;
+    background-color: #111111;
+    z-index: 10;
+    opacity: 80%;
+}
+
+#whoseTurn {
+    position: absolute;
+    text-align: center;
+    height: 10vh;
+    width: 30vh;
+    border-radius: 80%;
+    margin: 2vh 0 0 25vh;
+    background-color: #ba547c;
+}
+
+#whoseTurnText {
+    color: black;
+    margin: 8% 0 0 0;
+    font-size: x-large;
+    font-weight: bold;
+}
+
+#passTurnButtonDiv {
+    position: absolute;
+}
+
+#passTurnButton {
+    position: absolute;
+    margin-left: 1vh;
+    margin-top: 2vh;
+    width: 15vh;
+    height: 5vh;
+    background-color: #ba547c;
+}
+
+#cardClaimedButtonDiv {
+    position: absolute;
+}
+#cardClaimedButton {
+    position: absolute;
+    margin-left: 1vh;
+    margin-top: 8vh;
+    width: 15vh;
+    height: 5vh;
+    background-color: #ba547c;
+}
+#animatedCardClaim {
+    position: absolute;
+}
+
+#LeaveButtonDiv {
+    position: absolute;
+    margin-left: 60vh;
+    margin-top: 4vh;
+    height: 10vh;
+    width: 10vh;
 }
 
 /*.marquee {*/
@@ -94,12 +162,65 @@ code {
     /*background-position-y: 105%;*/
 }
 
+#minigameBackgroundText {
+    position: absolute;
+    margin-top: -2vh;
+    margin-left: 5vh;
+    /*z-index: -5;*/
+    font-size: 14vh;
+    opacity: 25%;
+}
+
+#whoseTurnInMinigame {
+    position: absolute;
+    text-align: center;
+    height: 10vh;
+    width: 30vh;
+    border-radius: 80%;
+    margin: 2vh 0 0 25vh;
+    background-color: #ba547c;
+}
+
+#whoseTurnInMinigameText {
+    color: black;
+    margin: 8% 0 0 0;
+    font-size: x-large;
+    font-weight: bold;
+}
+
+/*#passMinigameTurnButtonDiv {*/
+    /*position: absolute;*/
+/*}*/
+#passMinigameTurnButton {
+    position: absolute;
+    margin-left: 1vh;
+    margin-top: 2vh;
+    width: 15vh;
+    height: 5vh;
+    background-color: #ba547c;
+}
+
+.joinLeaveMinigameButton {
+    /*//This covers both the leave and enter buttons, thus why it's a class and not an ID*/
+    position: absolute;
+    margin-left: 60vh;
+    margin-top: 4vh;
+    height: 10vh;
+    width: 10vh;
+    background-color: #ba547c;
+}
+
 .row_4 {
     grid-row: 4;
 }
 
 .row_5 {
     grid-row: 5;
+}
+
+.joinLeaveGameButton {
+    /*//This covers both the leave and enter buttons, thus why it's a class and not an ID*/
+    background-color: #ba547c;
 }
 
 .row_6 {
@@ -125,7 +246,12 @@ code {
 
 #playersInMinigame {
     position: absolute;
-    margin-left: 50vh;
+    margin-left: 48vh;
+}
+
+.stage-img {
+    margin-left: -7vh;
+    height: 2vh;
 }
 
 .row_7 {

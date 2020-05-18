@@ -1,6 +1,12 @@
 import React from 'react';
 import PubSub from './pubsub.js';
 
+const pics = {
+  mind: require('./assets/Mind.png'),
+  body: require('./assets/Body.png'),
+  soul: require('./assets/Soul.png'),
+};
+
 /* Displays current players in the game and minigame */
 class CurrentNames extends React.Component {
 
@@ -39,7 +45,7 @@ class CurrentNames extends React.Component {
           {this.state.playersInGame.length > 0 ? <tr><td>Number of Cards:</td></tr> : <tr><td/></tr>}
           </thead>
           <tbody>
-          {this.state.numberOfCards.map(cards => <tr key={cards}><td>{cards}</td></tr>)}
+          {this.state.numberOfCards.map(cards => <tr key={cards}><td>{CurrentNames.stage(cards)}</td><td>{cards}</td></tr>)}
           </tbody>
         </table>
           <table id="playersInMinigame">
@@ -109,7 +115,7 @@ class CurrentNames extends React.Component {
           });
           console.log("Current Minigame Player state.playersInMinigame: " + this.state.playersInMinigame);
         })
-          .then( result => {
+          .then( () => {
         if(this.state.playersInMinigame.length <= 0)
           PubSub.publish("minigame-ended");
           // PubSub.publish("player-turn-in-minigame-update");
@@ -126,6 +132,15 @@ class CurrentNames extends React.Component {
     this.setState({
       polling
     })
+  }
+
+  static stage(cards) {
+    if (cards < 3)
+      return (<img className="stage-img" alt="Mind" src={pics.mind}/>);
+    if (cards >= 3 && cards < 6)
+      return (<img className="stage-img" alt="Body" src={pics.body}/>);
+    else
+      return (<img className="stage-img" alt="Soul" src={pics.soul}/>)
   }
 }
 

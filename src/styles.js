@@ -4,6 +4,6 @@ export const divStyle = {
   height: 25,
   background: "#000000",
   borderRadius: "10px",
-  marginLeft: 5,
+  paddingLeft: 20,
 };
 

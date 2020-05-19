@@ -45,7 +45,7 @@ class CurrentNames extends React.Component {
           {this.state.playersInGame.length > 0 ? <tr><td>Number of Cards:</td></tr> : <tr><td/></tr>}
           </thead>
           <tbody>
-          {this.state.numberOfCards.map(cards => <tr key={cards}><td>{CurrentNames.stage(cards)}</td><td>{cards}</td></tr>)}
+          {this.state.numberOfCards.map(cards => <tr key={0}><td>{CurrentNames.stage(cards)}</td><td>{cards}</td></tr>)}
           </tbody>
         </table>
           <table id="playersInMinigame">

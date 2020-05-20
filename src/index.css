@@ -47,17 +47,24 @@ code {
     margin: -10vh 0 0;
 }
 
+.marquee {
+    /*background-size: cover;*/
+    position: absolute;
+    margin-left: 25vh;
+    margin-top: -63vh;
+    /*height: 40vh;*/
+    /*width: 40vh;*/
+    z-index: 1;
+}
+
 .row_1 {
     height: 15vh;
-    /*grid-row: 1;*/
     grid-row: 1;
     background-color: #cf2727;
-    /*display: grid;*/
-    /*justify-content: center;*/
-    background-image: url("./assets/BriMegAmanMarquee.png");
-    background-repeat: no-repeat;
-    background-position: right;
-    background-position-y: 1vh;
+    /*background-image: url("./assets/BriMegAmanMarquee.png");*/
+    /*background-repeat: no-repeat;*/
+    /*background-position: right;*/
+    /*background-position-y: 1vh;*/
 }
 
 #nameText {
@@ -71,12 +78,6 @@ code {
     height: 15vh;
     grid-row: 2;
     background-color: #e1118b;
-    /*display: grid;*/
-    /*justify-content: center;*/
-    /*background-image: url("./assets/BriMegAmanMarquee.png");*/
-    /*background-repeat: no-repeat;*/
-    /*background-position: right;*/
-    /*background-position-y: 110%;*/
 }
 
 #minigameGreyOut {
@@ -140,15 +141,6 @@ code {
     height: 10vh;
     width: 10vh;
 }
-
-/*.marquee {*/
-/*background-size: cover;*/
-/*position: fixed;*/
-/*margin-left: 20vh;*/
-/*height: 10vh;*/
-/*width: 40vh;*/
-/*z-index: 1;*/
-/*}*/
 
 .row_3 {
     grid-row: 3;

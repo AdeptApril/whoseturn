@@ -46,6 +46,7 @@ class CurrentNames extends React.Component {
           </thead>
           <tbody>
           {this.state.numberOfCards.map(cards => <tr key={0}><td>{CurrentNames.stage(cards)}</td><td>{cards}</td></tr>)}
+          {/*//TODO: Change key=cards so that cards is 0 instead. But it'll cause warnings - done so, but perhaps it'll go back and forth*/}
           </tbody>
         </table>
           <table id="playersInMinigame">
@@ -82,6 +83,7 @@ class CurrentNames extends React.Component {
             playersInGame: result.name,
             numberOfCards: result.cards,
           });
+          PubSub.publish('player-list-update', this.state.playersInGame);
           if(this.state.playersInGame.length > 0 && this.state.playersInGame[0] !== this.state.admin) //Check to see who the admin is if it doesn't make sense given array of playersInGame
           {
             fetch('/api/getAdminName/')

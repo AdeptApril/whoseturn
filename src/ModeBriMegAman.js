@@ -15,6 +15,10 @@ import LeaveMinigame from "./LeaveMinigame";
 import AdminMenu from "./AdminMenu";
 import AnimatedCardClaim from "./AnimatedCardClaim";
 
+const pics = {
+  marquee: require('./assets/BriMegAmanMarquee.png'),
+};
+
 function checkAdmin() {
   fetch('/api/getAdminName/')
     .then(response => {
@@ -100,7 +104,7 @@ static cardClaimed(msg, data) {
         minigameActive: true,
       });
     } else if (data === "leave") {
-      new LeaveMinigame(this.state.name);
+      LeaveMinigame.remove(this.state.name);
       this.setState({
         inMinigame: false,
       });
@@ -139,6 +143,7 @@ static cardClaimed(msg, data) {
       });
     }
     else if(data === "leave") {
+      RemoveName.remove(this.state.name);
       this.setState({
         nameChosen: false,
         isAdmin: false,
@@ -158,6 +163,7 @@ static cardClaimed(msg, data) {
     //const isMobile = width <= 500;
     return (
       <div className="full_grid">
+        <div><img className="marquee" alt="Marquee for BriMegAman" src={pics.marquee}/></div>
         <div className="row_1">
           <div>
             {this.state.nameChosen ? <div id="nameText">{this.state.name}</div> : null}
@@ -224,8 +230,7 @@ static cardClaimed(msg, data) {
             {this.state.nameChosen ? null :
               <button className="joinLeaveGameButton" onClick={() => PubSub.publish('join-leave-button', 'enter')}>Enter Game</button>}
             {!this.state.nameChosen ?
-              <div>{!this.state.nameChosen ?
-                <RemoveName name={this.state.name}/> : {}}</div> :
+              null :
               <div>{!this.state.nameChosen ? {} : <SetName name={this.state.name}/>}</div>}
           </div>
         </div>

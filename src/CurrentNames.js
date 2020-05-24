@@ -45,8 +45,7 @@ class CurrentNames extends React.Component {
           {this.state.playersInGame.length > 0 ? <tr><td>Number of Cards:</td></tr> : <tr><td/></tr>}
           </thead>
           <tbody>
-          {this.state.numberOfCards.map(cards => <tr key={0}><td>{CurrentNames.stage(cards)}</td><td>{cards}</td></tr>)}
-          {/*//TODO: Change key=cards so that cards is 0 instead. But it'll cause warnings - done so, but perhaps it'll go back and forth*/}
+          {this.state.numberOfCards.map(cards => <tr key={cards.index}><td>{CurrentNames.stage(cards)}</td><td>{cards}</td></tr>)}
           </tbody>
         </table>
           <table id="playersInMinigame">
@@ -141,8 +140,12 @@ class CurrentNames extends React.Component {
       return (<img className="stage-img" alt="Mind" src={pics.mind}/>);
     if (cards >= 3 && cards < 6)
       return (<img className="stage-img" alt="Body" src={pics.body}/>);
-    else
+    else {
+      if(cards >= 9) {
+        PubSub.publish('player-has-won');
+      }
       return (<img className="stage-img" alt="Soul" src={pics.soul}/>)
+    }
   }
 }
 

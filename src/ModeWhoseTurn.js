@@ -4,14 +4,15 @@ import PubSub from './pubsub.js';
 //import events from './events.js';
 import './index.css';
 //import ReactDOM from 'react-dom';
-import CurrentNames from './CurrentNames';
-import SetName from './SetName';
-import RemoveName from './RemoveName';
-import WhoseTurn from "./WhoseTurn";
+// import CurrentNames from './CurrentNames';
+// import SetName from './SetName';
+// import RemoveName from './RemoveName';
+// import WhoseTurn from "./WhoseTurn";
 // import CurrentNamesInMinigame from './CurrentNamesInMinigame';
-import WhoseTurnInMinigame from "./WhoseTurnInMinigame";
+// import WhoseTurnInMinigame from "./WhoseTurnInMinigame";
 import EnterMinigame from "./EnterMinigame";
 import LeaveMinigame from "./LeaveMinigame";
+import EndGameAnimation from "./EndGameAnimation";
 
 class ModeWhoseTurn extends Component {
   constructor(props) {
@@ -120,75 +121,76 @@ class ModeWhoseTurn extends Component {
     //const isMobile = width <= 500;
     return (
       <div className="full_grid_alt">
-        <div className="row_1_and_2_alt">
-          <div className="row_1_alt">
-            <div>
-              {this.state.nameChosen ? <div>{this.state.name}</div> : null}
-            </div>
-            <div>
-              {this.state.nameChosen ? <div>It's {<WhoseTurn/>}'s turn.</div> : null}
-              {this.state.nameChosen && (this.state.name === this.state.nameOfPlayerWhoseTurnItIs) ?
-                <button onClick={() => PubSub.publish('pass-turn-button', this.state.name)}>Pass turn</button> : null}
-            </div>
-          </div>
-          <div className="row_2_alt">
-            <div>
-              {this.state.nameChosen && this.state.minigameActive ?
-                <div>It's {<WhoseTurnInMinigame/>}'s turn in the minigame.</div> : null}
-              {this.state.nameChosen && this.state.minigameActive && (this.state.name === this.state.nameOfPlayerWhoseTurnItIsInMinigame) ?
-                <button onClick={() => PubSub.publish('pass-minigame-turn-button', this.state.name)}>Pass turn in
-                  Minigame</button> : null}
-              {/*Enter/Leave minigame button, only to be displayed if already in the game. If in game, display the correct direction for the minigame button*/}
-              {this.state.nameChosen ? this.state.inMinigame ?
-                <button onClick={() => PubSub.publish('join-leave-minigame-button', "leave")}>Leave minigame</button> :
-                <button onClick={() => PubSub.publish('join-leave-minigame-button', "enter")}>Enter
-                  minigame</button> : null}
-              {/*Enter/Leave Minigame (visible only if name has been entered), Enter/Leave changes based on state.*/}
-            </div>
-          </div>
-        </div>
-        <div className="row_3_alt">
-          <div>
-            {this.state.nameChosen ? null :
-              <textarea value={this.state.name} className="enter-name-textarea"
-                        onChange={evt => this.updateName(evt)}>Enter a Name</textarea>}
-          </div>
-        </div>
-        <div className="row_4_alt">
-          <div>
-            {/*The point with the next two lines is to switch what's on the button, alert the system that the
-                      button has been pushed, and also update test underneath. I have forgotten why there's double ternary
-                      in the lower field (maybe because of separating out visible and inGame?), but it works as is.*/}
-            {this.state.nameChosen ? <button onClick={() => PubSub.publish('join-leave-button')}>Leave Game</button> :
-              <button onClick={() => PubSub.publish('join-leave-button')}>Enter Game</button>}
-            {!this.state.nameChosen ?
-              <div>Click button to enter game{!this.state.nameChosen ?
-                <RemoveName name={this.state.name}/> : {}}</div> :
-              <div>Click button to leave game {!this.state.nameChosen ? {} : <SetName name={this.state.name}/>}</div>}
-          </div>
-        </div>
-        <div className="row_5_alt">
-          <div>
-            {/*Current players*/}
-            {<CurrentNames/>}
-          </div>
-          <div>
-            {/*{this.state.minigameActive ? <div>Current players in Minigame</div> : null}*/}
-            {/*{<CurrentNamesInMinigame/>}*/}
-          </div>
-        </div>
-        <div className="row_6_alt">
-          <div>
-            <p></p>
-            {this.state.isAdmin ? <tr>Admin Menu</tr> : null}
-            <p>{this.state.isAdmin ?
-              <button onClick={() => PubSub.publish('pass-turn-button', this.state.name)}>Pass turn in main
-                game</button> : null}</p>
-            <p>{this.state.isAdmin && this.state.minigameActive ?
-              <button onClick={() => PubSub.publish('pass-minigame-turn-button', this.state.name)}>Pass turn in
-                Minigame</button> : null}</p>
-          </div>
-        </div>
+        <EndGameAnimation/>
+        {/*<div className="row_1_and_2_alt">*/}
+          {/*<div className="row_1_alt">*/}
+            {/*<div>*/}
+              {/*{this.state.nameChosen ? <div>{this.state.name}</div> : null}*/}
+            {/*</div>*/}
+            {/*<div>*/}
+              {/*{this.state.nameChosen ? <div>It's {<WhoseTurn/>}'s turn.</div> : null}*/}
+              {/*{this.state.nameChosen && (this.state.name === this.state.nameOfPlayerWhoseTurnItIs) ?*/}
+                {/*<button onClick={() => PubSub.publish('pass-turn-button', this.state.name)}>Pass turn</button> : null}*/}
+            {/*</div>*/}
+          {/*</div>*/}
+          {/*<div className="row_2_alt">*/}
+            {/*<div>*/}
+              {/*{this.state.nameChosen && this.state.minigameActive ?*/}
+                {/*<div>It's {<WhoseTurnInMinigame/>}'s turn in the minigame.</div> : null}*/}
+              {/*{this.state.nameChosen && this.state.minigameActive && (this.state.name === this.state.nameOfPlayerWhoseTurnItIsInMinigame) ?*/}
+                {/*<button onClick={() => PubSub.publish('pass-minigame-turn-button', this.state.name)}>Pass turn in*/}
+                  {/*Minigame</button> : null}*/}
+              {/*/!*Enter/Leave minigame button, only to be displayed if already in the game. If in game, display the correct direction for the minigame button*!/*/}
+              {/*{this.state.nameChosen ? this.state.inMinigame ?*/}
+                {/*<button onClick={() => PubSub.publish('join-leave-minigame-button', "leave")}>Leave minigame</button> :*/}
+                {/*<button onClick={() => PubSub.publish('join-leave-minigame-button', "enter")}>Enter*/}
+                  {/*minigame</button> : null}*/}
+              {/*/!*Enter/Leave Minigame (visible only if name has been entered), Enter/Leave changes based on state.*!/*/}
+            {/*</div>*/}
+          {/*</div>*/}
+        {/*</div>*/}
+        {/*<div className="row_3_alt">*/}
+          {/*<div>*/}
+            {/*{this.state.nameChosen ? null :*/}
+              {/*<textarea value={this.state.name} className="enter-name-textarea"*/}
+                        {/*onChange={evt => this.updateName(evt)}>Enter a Name</textarea>}*/}
+          {/*</div>*/}
+        {/*</div>*/}
+        {/*<div className="row_4_alt">*/}
+          {/*<div>*/}
+            {/*/!*The point with the next two lines is to switch what's on the button, alert the system that the*/}
+                      {/*button has been pushed, and also update test underneath. I have forgotten why there's double ternary*/}
+                      {/*in the lower field (maybe because of separating out visible and inGame?), but it works as is.*!/*/}
+            {/*{this.state.nameChosen ? <button onClick={() => PubSub.publish('join-leave-button')}>Leave Game</button> :*/}
+              {/*<button onClick={() => PubSub.publish('join-leave-button')}>Enter Game</button>}*/}
+            {/*{!this.state.nameChosen ?*/}
+              {/*<div>Click button to enter game{!this.state.nameChosen ?*/}
+                {/*<RemoveName name={this.state.name}/> : {}}</div> :*/}
+              {/*<div>Click button to leave game {!this.state.nameChosen ? {} : <SetName name={this.state.name}/>}</div>}*/}
+          {/*</div>*/}
+        {/*</div>*/}
+        {/*<div className="row_5_alt">*/}
+          {/*<div>*/}
+            {/*/!*Current players*!/*/}
+            {/*{<CurrentNames/>}*/}
+          {/*</div>*/}
+          {/*<div>*/}
+            {/*/!*{this.state.minigameActive ? <div>Current players in Minigame</div> : null}*!/*/}
+            {/*/!*{<CurrentNamesInMinigame/>}*!/*/}
+          {/*</div>*/}
+        {/*</div>*/}
+        {/*<div className="row_6_alt">*/}
+          {/*<div>*/}
+            {/*<p></p>*/}
+            {/*{this.state.isAdmin ? <tr>Admin Menu</tr> : null}*/}
+            {/*<p>{this.state.isAdmin ?*/}
+              {/*<button onClick={() => PubSub.publish('pass-turn-button', this.state.name)}>Pass turn in main*/}
+                {/*game</button> : null}</p>*/}
+            {/*<p>{this.state.isAdmin && this.state.minigameActive ?*/}
+              {/*<button onClick={() => PubSub.publish('pass-minigame-turn-button', this.state.name)}>Pass turn in*/}
+                {/*Minigame</button> : null}</p>*/}
+          {/*</div>*/}
+        {/*</div>*/}
       </div>
     );
   }

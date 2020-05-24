@@ -14,6 +14,7 @@ import EnterMinigame from "./EnterMinigame";
 import LeaveMinigame from "./LeaveMinigame";
 import AdminMenu from "./AdminMenu";
 import AnimatedCardClaim from "./AnimatedCardClaim";
+import EndGameAnimation from "./EndGameAnimation";
 
 const pics = {
   marquee: require('./assets/BriMegAmanMarquee.png'),
@@ -164,6 +165,7 @@ static cardClaimed(msg, data) {
     return (
       <div className="full_grid">
         <div><img className="marquee" alt="Marquee for BriMegAman" src={pics.marquee}/></div>
+        <div><EndGameAnimation/></div>
         <div className="row_1">
           <div>
             {this.state.nameChosen ? <div id="nameText">{this.state.name}</div> : null}

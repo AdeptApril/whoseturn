@@ -16,7 +16,7 @@ class AdminMenu extends React.Component {
         name: this.props.name,
         playersInGame: [], //People in game
         playersInMinigame: [], //People in minigame
-        selectedPlayer: null,
+        selectedPlayer: this.props.name,
         cardNumber: 0, //This probably isn't needed, and could be removed somehow, since it's just keeping track of what number is selected in a list.
         // pollingInterval: 3000,
         // polling: true
@@ -30,6 +30,11 @@ class AdminMenu extends React.Component {
     PubSub.subscribe('end-minigame-button', AdminMenu.endMinigame);
     PubSub.subscribe('player-list-update', this.playerUpdate);
     console.log("Admin name is: " + this.state.name);
+  }
+
+  componentWillUnmount() {
+    PubSub.unsubscribe('end-minigame-button');
+    PubSub.unsubscribe('player-list-update');
   }
 
   playerUpdate(msg, data) {
@@ -103,7 +108,7 @@ class AdminMenu extends React.Component {
         <td><button onClick={() => LeaveMinigame.remove(this.state.selectedPlayer)}>Kick from Minigame</button></td>
         <td><button onClick={() => AdminMenu.setCardNumber(this.state.selectedPlayer, this.state.cardNumber)}>Set player card quantity to:</button></td>
         <td><div><select value={this.cardNumber} onChange={(event) => this.handleCardNumberChanged(event)}>
-          <option selected value="0">0</option>
+          <option defaultValue="0">0</option>
           <option value="1">1</option>
           <option value="2">2</option>
           <option value="3">3</option>

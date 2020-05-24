@@ -16,6 +16,10 @@ class AnimatedCardClaim extends React.PureComponent {
     PubSub.subscribe('card-claimed-button', this.cardClaimedAnimation);
   }
 
+  componentWillUnmount() {
+    PubSub.unsubscribe('card-claimed-button');
+  }
+
   cardClaimedAnimation() {
     this.setState({
       play: true,

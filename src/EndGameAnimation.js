@@ -21,6 +21,10 @@ class EndGameAnimation extends React.PureComponent {
     PubSub.subscribe('player-has-won', this.gameOver);
   }
 
+  componentWillUnmount() {
+    PubSub.unsubscribe('player-has-won');
+  }
+
   gameOver() {
     this.setState({
       play: true,

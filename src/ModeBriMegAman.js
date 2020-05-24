@@ -64,6 +64,16 @@ class ModeBriMegAman extends Component {
     PubSub.subscribe('card-claimed-button', ModeBriMegAman.cardClaimed);
   }
 
+  componentWillUnmount() {
+    PubSub.unsubscribe('join-leave-button');
+    PubSub.unsubscribe('player-turn-update');
+    PubSub.unsubscribe('player-turn-in-minigame-update');
+    PubSub.unsubscribe('join-leave-minigame-button');
+    PubSub.unsubscribe('minigame-ended');
+    PubSub.unsubscribe('admin-update');
+    PubSub.unsubscribe('card-claimed-button');
+  }
+
 static cardClaimed(msg, data) {
     fetch('/api/claimcard/', {
       method: 'POST',

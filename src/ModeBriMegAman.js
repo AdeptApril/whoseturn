@@ -35,7 +35,7 @@ function checkAdmin() {
 class ModeBriMegAman extends Component {
   constructor(props) {
     super(props);
-    this.toggleVisibility = this.toggleVisibility.bind(this);
+    this.joinLeaveGame = this.joinLeaveGame.bind(this);
     this.playerTurnUpdate = this.playerTurnUpdate.bind(this);
     this.playerMinigameUpdate = this.playerMinigameUpdate.bind(this);
     this.joinLeaveMinigame = this.joinLeaveMinigame.bind(this);
@@ -44,7 +44,7 @@ class ModeBriMegAman extends Component {
     ModeBriMegAman.cardClaimed = ModeBriMegAman.cardClaimed.bind(this);
     this.state = {
       isAdmin: false,
-      name: "", //Name of the player.
+      name: "", //Name of the player. Can't have value and default value, so the weird name is the starter name.
       nameOfPlayerWhoseTurnItIs: "",
       width: window.innerWidth,
       nameChosen: false,
@@ -55,7 +55,7 @@ class ModeBriMegAman extends Component {
   }
 
   componentDidMount() {
-    PubSub.subscribe('join-leave-button', this.toggleVisibility);
+    PubSub.subscribe('join-leave-button', this.joinLeaveGame);
     PubSub.subscribe('player-turn-update', this.playerTurnUpdate);
     PubSub.subscribe('player-turn-in-minigame-update', this.playerMinigameUpdate);
     PubSub.subscribe('join-leave-minigame-button', this.joinLeaveMinigame);
@@ -146,12 +146,17 @@ static cardClaimed(msg, data) {
     }
   }
 
-  toggleVisibility(msg, data) { //TODO: Rename this to somethng that makes sense, like joinLeaveGame, and add some data to say which direction. Then move checkAdmin to the entry side only. (Other ways possible)
+  joinLeaveGame(msg, data) {
     if(data === "enter") {
-      checkAdmin();
-      this.setState({
-        nameChosen: true,
-      });
+      //Disallow certain names. E.g., empty names, or names that start with space
+      if(this.state.name.length < 1 || this.state.name[0] === " ")
+      {}
+      else {
+        checkAdmin();
+        this.setState({
+          nameChosen: true,
+        });
+      }
     }
     else if(data === "leave") {
       RemoveName.remove(this.state.name);
@@ -209,13 +214,13 @@ static cardClaimed(msg, data) {
             {this.state.nameChosen && this.state.minigameActive ?
               <div id="whoseTurnInMinigameText">{<WhoseTurnInMinigame/>}'s turn</div> : null}
           </div>: null}
-          <div>
+          {/*<div>*/}
             {this.state.nameChosen && this.state.minigameActive && (this.state.name === this.state.nameOfPlayerWhoseTurnItIsInMinigame) ?
               <button id="passMinigameTurnButton"
                       onClick={() => PubSub.publish('pass-minigame-turn-button', this.state.name)}>Pass turn in
                 Minigame</button> : null}
-          </div>
-          <div>
+          {/*</div>*/}
+          {/*<div>*/}
             {/*Enter/Leave minigame button, only to be displayed if already in the game. If in game, display the correct direction for the minigame button*/}
             {this.state.nameChosen ? this.state.inMinigame ?
               <button className="joinLeaveMinigameButton"
@@ -225,32 +230,28 @@ static cardClaimed(msg, data) {
                       onClick={() => PubSub.publish('join-leave-minigame-button', "enter")}>Enter
                 minigame</button> : null}
             {/*Enter/Leave Minigame (visible only if name has been entered), Enter/Leave changes based on state.*/}
-          </div>
+          {/*</div>*/}
         </div>
         <div className="row_4">
           <div>
             {this.state.nameChosen ? null :
-              <textarea value={this.state.name} className="enter-name-textarea"
-                        onChange={evt => this.updateName(evt)}>Enter a Name</textarea>}
+              <textarea autoFocus placeholder="Enter a Name" className="enter-name-textarea" onKeyUp={(evt) => evt.keyCode === 13 ? document.getElementById("joinLeaveGameButton").click() : null }
+                        onChange={evt => this.updateName(evt)}>{this.state.name}</textarea>}
           </div>
         </div>
         <div className="row_5">
-          <div>
             {/*The point with the next two lines is to switch what's on the button, alert the system that the
                       button has been pushed, and also update test underneath. I have forgotten why there's double ternary
                       in the lower field (maybe because of separating out visible and inGame?), but it works as is.*/}
             {this.state.nameChosen ? null :
-              <button className="joinLeaveGameButton" onClick={() => PubSub.publish('join-leave-button', 'enter')}>Enter Game</button>}
+              <button id="joinLeaveGameButton" className="joinLeaveGameButton" onClick={() => PubSub.publish('join-leave-button', 'enter')}>Enter Game</button>}
             {!this.state.nameChosen ?
               null :
               <div>{!this.state.nameChosen ? {} : <SetName name={this.state.name}/>}</div>}
-          </div>
         </div>
         <div className="row_6">
-          <div>
             {/*Current players*/}
             {<CurrentNames/>}
-          </div>
           <div>
             {/*{this.state.minigameActive ? <div>Current players in Minigame</div> : null}*/}
             {/*{<CurrentNamesInMinigame/>}*/}

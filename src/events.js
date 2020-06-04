@@ -11,7 +11,7 @@
 This is a file that likely would usefully exist if the structure of the program was different (and perhaps it should be).
 But since it's not doing that, may as well have it be a text list of all the publish/subscribe events and where they're used.
 ModeBriMegAman.js (ModeWhoseTurn.js may have similar functionality, or may be used for entirely unrelated testing purposes.)
-    PubSub.subscribe('join-leave-button', this.toggleVisibility);
+    PubSub.subscribe('join-leave-button', this.joinLeaveGame);
     PubSub.subscribe('player-turn-update', this.playerTurnUpdate);
     PubSub.subscribe('player-turn-in-minigame-update', this.playerMinigameUpdate);
     PubSub.subscribe('join-leave-minigame-button', this.joinLeaveMinigame);

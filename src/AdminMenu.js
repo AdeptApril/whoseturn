@@ -16,7 +16,7 @@ class AdminMenu extends React.Component {
         name: this.props.name,
         playersInGame: [], //People in game
         playersInMinigame: [], //People in minigame
-        selectedPlayer: this.props.name,
+        selectedPlayer: this.props.name, //<- was what was there originally, but the idea is to require a selected name before popping anything up, so TODO: Make selected player be nothing, and graphics change as needed.
         cardNumber: 0, //This probably isn't needed, and could be removed somehow, since it's just keeping track of what number is selected in a list.
         // pollingInterval: 3000,
         // polling: true
@@ -104,7 +104,8 @@ class AdminMenu extends React.Component {
       <tr><td><button onClick={() => PubSub.publish('end-minigame-button', this.state.name)}>End Minigame</button></td></tr>
       <tr>
         <td><div><select value={this.state.selectedPlayer} onChange={(event) => this.handleSelectedPlayerChanged(event)}>{playersInList}</select></div></td>
-        <td><button onClick={() => RemoveName.remove(this.state.selectedPlayer)}>Kick from game</button></td>
+        {this.state.selectedPlayer === null ? "Please select a player to adjust" : //Move the rest of this out to the AdminSubMenu class. Or find some way for it to pop up only after a player is selected
+        <td><button onClick={() => RemoveName.remove(this.state.selectedPlayer)}>Kick from game</button></td>}
         <td><button onClick={() => LeaveMinigame.remove(this.state.selectedPlayer)}>Kick from Minigame</button></td>
         <td><button onClick={() => AdminMenu.setCardNumber(this.state.selectedPlayer, this.state.cardNumber)}>Set player card quantity to:</button></td>
         <td><div><select value={this.cardNumber} onChange={(event) => this.handleCardNumberChanged(event)}>

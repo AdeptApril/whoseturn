@@ -8,7 +8,8 @@
 body {
     background-color: black;
     color: white;
-    margin: 0 0 0 0;
+    margin: 0;
+    padding: 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
@@ -16,14 +17,22 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-.background-img {
-    background-size: cover;
-    position: fixed;
-    margin-left: 20vh;
-    /*height: 40vh;*/
-    /*width: 100vh;*/
-    z-index: -10;
-}
+/*.background-img {*/
+/*    !*background-size: cover;*!*/
+/*    position: relative;*/
+/*    !*height: 40vh;*!*/
+/*    !*width: 100vh;*!*/
+/*    z-index: -10;*/
+/*}*/
+
+/*!*hr {*! This doesn't seem to work usefully, so removing for now'*/
+/*    display: block;*/
+/*    height: 1px;*/
+/*    border: 0;*/
+/*    border-top: 1px solid #ccc;*/
+/*    margin: 1em 0;*/
+/*    padding: 0;*/
+/*}*/
 
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
@@ -32,26 +41,28 @@ code {
 
 .full_grid {
     /*height: 100vh;*/
+    position: absolute;
     background-color: #cf2727;
     display: grid;
-    margin: -10vh 0 0;
+    top: 0;
+    width: 100%;
     background-image: url("./assets/BriMegAmanBoxGraphic.png");
     background-repeat: no-repeat;
     background-position: center;
     background-position-y: 40vh;
 }
 
-.full_grid_alt {
-    background-color: black;
-    display: grid;
-    margin: -10vh 0 0;
-}
+/*.full_grid_alt {*/
+/*    background-color: black;*/
+/*    display: grid;*/
+/*    margin: -10vh 0 0;*/
+/*}*/
 
 .marquee {
     /*background-size: cover;*/
     position: absolute;
-    margin-left: 25vh;
-    margin-top: -63vh;
+    left: 30%;
+    top: 0;
     /*height: 40vh;*/
     /*width: 40vh;*/
     z-index: 1;
@@ -69,7 +80,7 @@ code {
 
 #nameText {
     position: absolute;
-    margin-top: 5vh;
+    top: 5vh;
     font-size: x-large;
     font-weight: bold;
 }
@@ -95,7 +106,7 @@ code {
     height: 10vh;
     width: 30vh;
     border-radius: 80%;
-    margin: 2vh 0 0 25vh;
+    margin: 2vh 0 0 30%;
     background-color: #ba547c;
 }
 
@@ -109,10 +120,9 @@ code {
 #passTurnButtonDiv {
     position: absolute;
 }
-
 #passTurnButton {
-    position: absolute;
-    margin-left: 1vh;
+    position: relative;
+    margin-left: 6%;
     margin-top: 2vh;
     width: 15vh;
     height: 5vh;
@@ -123,9 +133,9 @@ code {
     position: absolute;
 }
 #cardClaimedButton {
-    position: absolute;
-    margin-left: 1vh;
-    margin-top: 8vh;
+    position: relative;
+    left: 6%;
+    top: 8vh;
     width: 15vh;
     height: 5vh;
     background-color: #ba547c;
@@ -136,13 +146,14 @@ code {
 
 #LeaveButtonDiv {
     position: absolute;
-    margin-left: 60vh;
+    margin-left: 80%;
     margin-top: 4vh;
     height: 10vh;
-    width: 10vh;
+    width: 10vw;
 }
 
 .row_3 {
+    /*position: relative;*/
     grid-row: 3;
     height: 15vh;
     background-color: #761b60;
@@ -155,27 +166,34 @@ code {
 }
 
 #minigameBackgroundText {
-    position: absolute;
-    margin-top: -2vh;
-    margin-left: 5vh;
+    position: relative;
+    top: -1vh;
+    left: 5%;
+    width: 60%;
     /*z-index: -5;*/
-    font-size: 14vh;
+    height: 14vh;
+    font-size: 12vh;
+    max-width: 100%;
     opacity: 25%;
 }
 
 #whoseTurnInMinigame {
-    position: absolute;
+    position: relative;
+    top: -13vh;
+    left: 30vw;
     text-align: center;
     height: 10vh;
-    width: 30vh;
+    width: 30vw;
     border-radius: 80%;
-    margin: 2vh 0 0 25vh;
+    /*margin: 2vh 0 0 25vh;*/
     background-color: #ba547c;
 }
 
 #whoseTurnInMinigameText {
     color: black;
-    margin: 8% 0 0 0;
+    position: relative;
+    top: 20%;
+    /*margin: 0 0 0 0;*/
     font-size: x-large;
     font-weight: bold;
 }
@@ -185,20 +203,26 @@ code {
 /*}*/
 #passMinigameTurnButton {
     position: absolute;
-    margin-left: 1vh;
-    margin-top: 2vh;
-    width: 15vh;
-    height: 5vh;
+    left: 1vw;
+    top: 2vh;
+    width: 15vw;
+    height: 10vh;
     background-color: #ba547c;
 }
 
 .joinLeaveMinigameButton {
     /*//This covers both the leave and enter buttons, thus why it's a class and not an ID*/
-    position: absolute;
-    margin-left: 60vh;
-    margin-top: 4vh;
-    height: 10vh;
-    width: 10vh;
+    /*position: absolute;*/
+    /*margin-left: 60vh;*/
+    /*margin-top: 4vh;*/
+    /*height: 10vh;*/
+    /*width: 10vh;*/
+    /*background-color: #ba547c;*/
+    position: relative;
+    left: 75%;
+    top: -10vh;
+    height: 8vh;
+    width: 20vw;
     background-color: #ba547c;
 }
 
@@ -208,6 +232,15 @@ code {
 
 .row_5 {
     grid-row: 5;
+}
+
+.tableRow {
+        display: block;
+        /*height: 1px;*/
+        /*border: 0;*/
+        border-top: 1px solid #000000;
+        /*margin: 0 0;*/
+        /*padding: 0;*/
 }
 
 .joinLeaveGameButton {
@@ -233,17 +266,27 @@ code {
 
 #numberOfCards {
     position: absolute;
-    margin-left: 25vh;
+    margin-left: 35vw;
 }
 
 #playersInMinigame {
     position: absolute;
-    margin-left: 48vh;
+    margin-left: 65vw;
 }
 
 .stage-img {
-    margin-left: -7vh;
     height: 2vh;
+    position: relative;
+    left: -6vh;
+    /*top: 0;*/
+    /*!*margin-left: -7vh;*!*/
+    /*height: 2vh;*/
+    /*border: 0;*/
+    /*border-top: 1px solid #000000;*/
+    /*!*border-left: 1px solid #000000;*!*/
+    /*!*border-right: 1px solid #000000;*!*/
+    /*margin: 0 0;*/
+    /*padding: 0.5em;*/
 }
 
 .row_7 {

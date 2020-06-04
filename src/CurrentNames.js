@@ -37,7 +37,7 @@ class CurrentNames extends React.Component {
           {this.state.playersInGame.length > 0 ? <tr><td>Players in game:</td></tr> : <tr><td/></tr>}
           </thead>
           <tbody>
-          {this.state.playersInGame.map(user => <tr key={user}><td>{user}</td></tr>)}
+          {this.state.playersInGame.map(user => <tr className="tableRow" key={user}><td>{user}</td></tr>)}
           </tbody>
         </table>
         <table id="numberOfCards">
@@ -45,7 +45,7 @@ class CurrentNames extends React.Component {
           {this.state.playersInGame.length > 0 ? <tr><td>Number of Cards:</td></tr> : <tr><td/></tr>}
           </thead>
           <tbody>
-          {this.state.numberOfCards.map(cards => <tr key={cards.index}><td>{CurrentNames.stage(cards)}</td><td>{cards}</td></tr>)}
+          {this.state.numberOfCards.map(cards => <tr className="tableRow" key={cards.index}><td>{CurrentNames.stage(cards)}</td><td>{cards}</td></tr>)}
           </tbody>
         </table>
           <table id="playersInMinigame">
@@ -53,7 +53,7 @@ class CurrentNames extends React.Component {
           {this.state.playersInMinigame.length > 0 ? <tr><td>Players in Minigame:</td></tr> : <tr/>}
           </thead>
           <tbody>
-          {this.state.playersInMinigame.map(player => <tr key={player}><td>{player}</td></tr>)}
+          {this.state.playersInMinigame.map(player => <tr className="tableRow" key={player}><td>{player}</td></tr>)}
           </tbody>
           </table>
       </div>

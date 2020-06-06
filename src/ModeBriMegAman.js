@@ -188,16 +188,19 @@ static cardClaimed(msg, data) {
         </div>
         <div className="row_2">
           {this.state.inMinigame ? <div id="minigameGreyOut">{null}</div> : null}
+          {this.state.nameChosen ?
           <div id="whoseTurn">
             <div id="whoseTurnHeader">Current turn:</div>
-            {this.state.nameChosen ? <div id="whoseTurnText">{
-              <svg width="30vw" height="15vh" viewBox="0 0 150 15"><text><WhoseTurn/></text></svg>
-            }</div> : null}
-          </div>
+            {this.state.nameChosen ? <div id="whoseTurnText">
+              {/*<svg width="30vw" height="5vh" viewBox="0 0 150 15"><text x="6" y="10">*/}
+                <WhoseTurn/>
+              {/*</text></svg>*/}
+            </div> : null}
+          </div> : null}
           {/*<div id="passTurnButtonDiv">*/}
             {this.state.nameChosen && (this.state.name === this.state.nameOfPlayerWhoseTurnItIs) ?
               <button id="passTurnButton" onClick={() => PubSub.publish('pass-turn-button', this.state.name)}>
-                <svg width="25vw" height="5vh" viewBox="0 0 70 15"><text x="5" y="10">Pass turn</text></svg>
+                <svg height='100%' width='100%' viewBox="0 0 70 15"><text x="5" y="10">Pass turn</text></svg>
               </button> : null}
           {/*</div>*/}
           <div>
@@ -221,9 +224,9 @@ static cardClaimed(msg, data) {
           <div id="whoseTurnInMinigame">
             <div id="whoseTurnMinigameHeader">Minigame turn:</div>
             {this.state.nameChosen && this.state.minigameActive ?
-              <div id="whoseTurnInMinigameText">{
-                <svg width="30vw" height="10vh" viewBox="0 0 150 10"><text x="6" y="4"><WhoseTurnInMinigame/></text></svg>
-              }</div> : null}
+              <div id="whoseTurnInMinigameText">
+                  <WhoseTurnInMinigame/>
+              </div> : null}
           </div>: null}
           {/*<div>*/}
             {this.state.nameChosen && this.state.minigameActive && (this.state.name === this.state.nameOfPlayerWhoseTurnItIsInMinigame) ?

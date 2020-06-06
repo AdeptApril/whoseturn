@@ -120,6 +120,7 @@ code {
     top: 17vh;
     left: 30vw;
     background-color: #ba547c;
+    z-index: 8;
 }
 #whoseTurnHeader {
     position: absolute;
@@ -131,10 +132,8 @@ code {
 #whoseTurnText {
     position: absolute;
     color: black;
-    top: 0;
+    top: 2.5vh;
     left: 2vw;
-    width: 30vw;
-    height: 15vh;
     font-size: x-large;
     font-weight: bold;
     z-index: 15;
@@ -167,6 +166,7 @@ code {
 }
 #animatedCardClaim {
     position: absolute;
+    z-index: 50;
 }
 
 #LeaveButton {
@@ -224,7 +224,8 @@ code {
 #whoseTurnInMinigameText {
     position: absolute;
     color: black;
-    top: 1vh;
+    top: 2.5vh;
+    left: 1vw;
     font-size: x-large;
     font-weight: bold;
     z-index: 15;

@@ -104,9 +104,15 @@ class AdminMenu extends React.Component {
       <tr><td><button onClick={() => PubSub.publish('end-minigame-button', this.state.name)}>End Minigame</button></td></tr>
       <tr>
         <td><div><select value={this.state.selectedPlayer} onChange={(event) => this.handleSelectedPlayerChanged(event)}>{playersInList}</select></div></td>
+      </tr>
+      <tr>
         {this.state.selectedPlayer === null ? "Please select a player to adjust" : //Move the rest of this out to the AdminSubMenu class. Or find some way for it to pop up only after a player is selected
         <td><button onClick={() => RemoveName.remove(this.state.selectedPlayer)}>Kick from game</button></td>}
+      </tr>
+      <tr>
         <td><button onClick={() => LeaveMinigame.remove(this.state.selectedPlayer)}>Kick from Minigame</button></td>
+      </tr>
+      <tr>
         <td><button onClick={() => AdminMenu.setCardNumber(this.state.selectedPlayer, this.state.cardNumber)}>Set player card quantity to:</button></td>
         <td><div><select value={this.cardNumber} onChange={(event) => this.handleCardNumberChanged(event)}>
           <option defaultValue="0">0</option>

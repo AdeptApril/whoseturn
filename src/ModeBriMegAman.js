@@ -189,20 +189,28 @@ static cardClaimed(msg, data) {
         <div className="row_2">
           {this.state.inMinigame ? <div id="minigameGreyOut">{null}</div> : null}
           <div id="whoseTurn">
-            {this.state.nameChosen ? <div id="whoseTurnText">{<WhoseTurn/>}'s turn</div> : null}
+            <div id="whoseTurnHeader">Current turn:</div>
+            {this.state.nameChosen ? <div id="whoseTurnText">{
+              <svg width="30vw" height="15vh" viewBox="0 0 150 15"><text><WhoseTurn/></text></svg>
+            }</div> : null}
           </div>
-          <div id="passTurnButtonDiv">
+          {/*<div id="passTurnButtonDiv">*/}
             {this.state.nameChosen && (this.state.name === this.state.nameOfPlayerWhoseTurnItIs) ?
-              <button id="passTurnButton" onClick={() => PubSub.publish('pass-turn-button', this.state.name)}>Pass
-                turn</button> : null}
+              <button id="passTurnButton" onClick={() => PubSub.publish('pass-turn-button', this.state.name)}>
+                <svg width="25vw" height="5vh" viewBox="0 0 70 15"><text x="5" y="10">Pass turn</text></svg>
+              </button> : null}
+          {/*</div>*/}
+          <div>
+          {this.state.nameChosen ? <button id="LeaveButton" className="joinLeaveGameButton" onClick={() => PubSub.publish('join-leave-button', 'leave')}>
+            <svg width="25vw" height="5vh" viewBox="0 0 75 15"><text x="0" y="10">Leave game</text></svg>
+          </button> : null}
           </div>
-          <div id="LeaveButtonDiv">
-          {this.state.nameChosen ? <button className="joinLeaveGameButton" onClick={() => PubSub.publish('join-leave-button', 'leave')}>Leave Game</button> : null}
-          </div>
-          <div id="cardClaimedButtonDiv">
+          {/*<div id="cardClaimedButtonDiv">*/}
             {this.state.nameChosen ?
-              <button id="cardClaimedButton" onClick={() => PubSub.publish('card-claimed-button', this.state.name)}>Claim a card</button> : null}
-          </div>
+              <button id="cardClaimedButton" onClick={() => PubSub.publish('card-claimed-button', this.state.name)}>
+                <svg width="25vw" height="5vh" viewBox="0 0 75 15"><text x="0" y="10">Claim a card</text></svg>
+              </button> : null}
+          {/*</div>*/}
           <div id="animatedCardClaim">
             {<AnimatedCardClaim/>}
           </div>
@@ -211,24 +219,27 @@ static cardClaimed(msg, data) {
           <div id="minigameBackgroundText">{this.state.minigameActive ? "Minigame" : null}</div>
           {this.state.minigameActive ?
           <div id="whoseTurnInMinigame">
+            <div id="whoseTurnMinigameHeader">Minigame turn:</div>
             {this.state.nameChosen && this.state.minigameActive ?
-              <div id="whoseTurnInMinigameText">{<WhoseTurnInMinigame/>}'s turn</div> : null}
+              <div id="whoseTurnInMinigameText">{
+                <svg width="30vw" height="10vh" viewBox="0 0 150 10"><text x="6" y="4"><WhoseTurnInMinigame/></text></svg>
+              }</div> : null}
           </div>: null}
           {/*<div>*/}
             {this.state.nameChosen && this.state.minigameActive && (this.state.name === this.state.nameOfPlayerWhoseTurnItIsInMinigame) ?
-              <button id="passMinigameTurnButton"
-                      onClick={() => PubSub.publish('pass-minigame-turn-button', this.state.name)}>Pass turn in
-                Minigame</button> : null}
+              <button id="passMinigameTurnButton" onClick={() => PubSub.publish('pass-minigame-turn-button', this.state.name)}>
+                <svg width="25vw" height="5vh" viewBox="0 0 75 15"><text x="5" y="10">Pass turn</text></svg>
+              </button> : null}
           {/*</div>*/}
           {/*<div>*/}
             {/*Enter/Leave minigame button, only to be displayed if already in the game. If in game, display the correct direction for the minigame button*/}
             {this.state.nameChosen ? this.state.inMinigame ?
-              <button className="joinLeaveMinigameButton"
-                      onClick={() => PubSub.publish('join-leave-minigame-button', "leave")}>Leave
-                minigame</button> :
-              <button className="joinLeaveMinigameButton"
-                      onClick={() => PubSub.publish('join-leave-minigame-button', "enter")}>Enter
-                minigame</button> : null}
+              <button className="joinLeaveMinigameButton" onClick={() => PubSub.publish('join-leave-minigame-button', "leave")}>
+                <svg width="25vw" height="5vh" viewBox="0 0 100 15"><text x="0" y="10">Leave minigame</text></svg>
+              </button> :
+              <button className="joinLeaveMinigameButton" onClick={() => PubSub.publish('join-leave-minigame-button', "enter")}>
+                <svg width="25vw" height="5vh" viewBox="0 0 95 15"><text x="0" y="10">Enter minigame</text></svg>
+              </button> : null}
             {/*Enter/Leave Minigame (visible only if name has been entered), Enter/Leave changes based on state.*/}
           {/*</div>*/}
         </div>

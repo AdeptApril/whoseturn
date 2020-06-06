@@ -17,6 +17,16 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
+text {
+    position: relative;
+    /*top: 5vh;*/
+/*    font-family: 'Bowlby One SC', cursive;*/
+}
+
+svg {
+    width: 100%;
+}
+
 /*.background-img {*/
 /*    !*background-size: cover;*!*/
 /*    position: relative;*/
@@ -61,7 +71,7 @@ code {
 .marquee {
     /*background-size: cover;*/
     position: absolute;
-    left: 30%;
+    right: 1vw;
     top: 0;
     /*height: 40vh;*/
     /*width: 40vh;*/
@@ -106,50 +116,66 @@ code {
     height: 10vh;
     width: 30vh;
     border-radius: 80%;
-    margin: 2vh 0 0 30%;
+    /*margin: 2vh 0 0 30%;*/
+    top: 17vh;
+    left: 30vw;
     background-color: #ba547c;
 }
-
-#whoseTurnText {
+#whoseTurnHeader {
+    position: absolute;
     color: black;
-    margin: 8% 0 0 0;
+    top: -2vh;
+    left: 12vw;
+    z-index: 10;
+}
+#whoseTurnText {
+    position: absolute;
+    color: black;
+    top: 0;
+    left: 2vw;
+    width: 30vw;
+    height: 15vh;
     font-size: x-large;
     font-weight: bold;
+    z-index: 15;
 }
 
-#passTurnButtonDiv {
-    position: absolute;
-}
+/*#passTurnButtonDiv {*/
+/*    position: absolute;*/
+/*}*/
 #passTurnButton {
     position: relative;
-    margin-left: 6%;
-    margin-top: 2vh;
-    width: 15vh;
+    left: 1vw;
+    top: 2vh;
+    width: 20vw;
     height: 5vh;
     background-color: #ba547c;
+    z-index: 7;
 }
 
-#cardClaimedButtonDiv {
-    position: absolute;
-}
+/*#cardClaimedButtonDiv {*/
+/*    position: absolute;*/
+/*}*/
 #cardClaimedButton {
-    position: relative;
-    left: 6%;
-    top: 8vh;
-    width: 15vh;
+    position: absolute;
+    left: 1vw;
+    top: 23vh;
+    width: 20vw;
     height: 5vh;
     background-color: #ba547c;
+    z-index: 20;
 }
 #animatedCardClaim {
     position: absolute;
 }
 
-#LeaveButtonDiv {
+#LeaveButton {
     position: absolute;
-    margin-left: 80%;
-    margin-top: 4vh;
-    height: 10vh;
-    width: 10vw;
+    right: 1vw;
+    top: 19vh;
+    height: 5vh;
+    width: 25vw;
+    z-index: 20;
 }
 
 .row_3 {
@@ -159,7 +185,7 @@ code {
     background-color: #761b60;
     /*display: grid;*/
     /*justify-content: center;*/
-    /*background-image: url("./assets/BriMegAmanMarquee.png");*/
+    /*background-image: url("./assets/BriMeg2AmanMarquee.png");*/
     /*background-repeat: no-repeat;*/
     /*background-position: right;*/
     /*background-position-y: 105%;*/
@@ -170,7 +196,7 @@ code {
     top: -1vh;
     left: 5%;
     width: 60%;
-    /*z-index: -5;*/
+    z-index: 0;
     height: 14vh;
     font-size: 12vh;
     max-width: 100%;
@@ -178,24 +204,30 @@ code {
 }
 
 #whoseTurnInMinigame {
-    position: relative;
-    top: -13vh;
-    left: 30vw;
+    position: absolute;
     text-align: center;
     height: 10vh;
-    width: 30vw;
+    width: 30vh;
     border-radius: 80%;
-    /*margin: 2vh 0 0 25vh;*/
+    top: 32vh;
+    left: 30vw;
     background-color: #ba547c;
 }
 
-#whoseTurnInMinigameText {
+#whoseTurnMinigameHeader {
+    position: absolute;
     color: black;
-    position: relative;
-    top: 20%;
-    /*margin: 0 0 0 0;*/
+    top: -2vh;
+    left: 10vw;
+    z-index: 10;
+}
+#whoseTurnInMinigameText {
+    position: absolute;
+    color: black;
+    top: 1vh;
     font-size: x-large;
     font-weight: bold;
+    z-index: 15;
 }
 
 /*#passMinigameTurnButtonDiv {*/
@@ -204,26 +236,22 @@ code {
 #passMinigameTurnButton {
     position: absolute;
     left: 1vw;
-    top: 2vh;
-    width: 15vw;
-    height: 10vh;
+    top: 35vh;
+    width: 20vw;
+    height: 5vh;
     background-color: #ba547c;
+    z-index: 20;
 }
 
 .joinLeaveMinigameButton {
     /*//This covers both the leave and enter buttons, thus why it's a class and not an ID*/
-    /*position: absolute;*/
-    /*margin-left: 60vh;*/
-    /*margin-top: 4vh;*/
-    /*height: 10vh;*/
-    /*width: 10vh;*/
-    /*background-color: #ba547c;*/
-    position: relative;
-    left: 75%;
-    top: -10vh;
-    height: 8vh;
-    width: 20vw;
+    position: absolute;
+    right: 1vw;
+    top: 35vh;
+    height: 5vh;
+    width: 25vw;
     background-color: #ba547c;
+    z-index: 20;
 }
 
 .row_4 {
@@ -277,7 +305,9 @@ code {
 .stage-img {
     height: 2vh;
     position: relative;
-    left: -6vh;
+    left: -10vw;
+    margin: 0;
+    padding: 0;
     /*top: 0;*/
     /*!*margin-left: -7vh;*!*/
     /*height: 2vh;*/

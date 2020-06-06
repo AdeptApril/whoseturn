@@ -46,7 +46,7 @@ class WhoseTurn extends React.Component {
 
   render() {
     return (
-      this.state.currPlayer
+      this.state.currPlayer !== null ? this.state.currPlayer : null
     )
   }
   poll () {

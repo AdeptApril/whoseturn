@@ -170,7 +170,7 @@ static cardClaimed(msg, data) {
 
   updateName(evt) {
     this.setState({
-      name: evt.target.value,
+      name: evt.target.value.trim(),
     });
   }
 
@@ -200,7 +200,8 @@ static cardClaimed(msg, data) {
           {/*<div id="passTurnButtonDiv">*/}
             {this.state.nameChosen && (this.state.name === this.state.nameOfPlayerWhoseTurnItIs) ?
               <button id="passTurnButton" onClick={() => PubSub.publish('pass-turn-button', this.state.name)}>
-                <svg height='100%' width='100%' viewBox="0 0 70 15"><text x="5" y="10">Pass turn</text></svg>
+                {/*<svg height='100%' width='100%' viewBox="0 0 70 15"><text x="5" y="10">Pass turn</text></svg>*/}
+                Pass turn
               </button> : null}
           {/*</div>*/}
           <div>
@@ -211,7 +212,8 @@ static cardClaimed(msg, data) {
           {/*<div id="cardClaimedButtonDiv">*/}
             {this.state.nameChosen ?
               <button id="cardClaimedButton" onClick={() => PubSub.publish('card-claimed-button', this.state.name)}>
-                <svg width="25vw" height="5vh" viewBox="0 0 75 15"><text x="0" y="10">Claim a card</text></svg>
+                {/*<svg width="20vw" height="7vh" viewBox="0 0 75 15"><text x="0" y="0" id="cardClaimedText">Claim card</text></svg>*/}
+                Claim card
               </button> : null}
           {/*</div>*/}
           <div id="animatedCardClaim">
@@ -231,7 +233,8 @@ static cardClaimed(msg, data) {
           {/*<div>*/}
             {this.state.nameChosen && this.state.minigameActive && (this.state.name === this.state.nameOfPlayerWhoseTurnItIsInMinigame) ?
               <button id="passMinigameTurnButton" onClick={() => PubSub.publish('pass-minigame-turn-button', this.state.name)}>
-                <svg width="25vw" height="5vh" viewBox="0 0 75 15"><text x="5" y="10">Pass turn</text></svg>
+                {/*<svg width="25vw" height="5vh" viewBox="0 0 75 15"><text x="5" y="10">Pass turn</text></svg>*/}
+                Pass turn
               </button> : null}
           {/*</div>*/}
           {/*<div>*/}

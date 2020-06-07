@@ -145,9 +145,10 @@ code {
 #passTurnButton {
     position: relative;
     left: 1vw;
-    top: 2vh;
+    top: 0.5vh;
     width: 20vw;
-    height: 5vh;
+    height: 7vh;
+    font-size: 2.5vh; /*Perhaps have font-size be dependent on window width; if it's wide enough to be bigger, then have it be bigger*/
     background-color: #ba547c;
     z-index: 7;
 }
@@ -160,14 +161,20 @@ code {
     left: 1vw;
     top: 23vh;
     width: 20vw;
-    height: 5vh;
+    height: 7vh;
     background-color: #ba547c;
+    font-size: 2.5vh;
     z-index: 20;
 }
 #animatedCardClaim {
     position: absolute;
     z-index: 50;
 }
+/*#cardClaimedText {*/
+/*    position: relative;*/
+/*    !*top: 0vh;*!*/
+/*    !*left: 10vw;*!*/
+/*}*/
 
 #LeaveButton {
     position: absolute;

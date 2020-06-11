@@ -9,7 +9,7 @@ class WhoseTurn extends React.Component {
     this.state =
       {
         currPlayer: null,
-        pollingInterval: 3000,
+        pollingInterval: 1000,
         polling: true
       };
   }

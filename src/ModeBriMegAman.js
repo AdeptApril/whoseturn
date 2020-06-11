@@ -206,7 +206,8 @@ static cardClaimed(msg, data) {
           {/*</div>*/}
           <div>
           {this.state.nameChosen ? <button id="LeaveButton" className="joinLeaveGameButton" onClick={() => PubSub.publish('join-leave-button', 'leave')}>
-            <svg width="25vw" height="5vh" viewBox="0 0 75 15"><text x="0" y="10">Leave game</text></svg>
+            {/*<svg width="25vw" height="5vh" viewBox="0 0 75 15"><text x="0" y="10">Leave game</text></svg>*/}
+            Leave game
           </button> : null}
           </div>
           {/*<div id="cardClaimedButtonDiv">*/}
@@ -221,10 +222,10 @@ static cardClaimed(msg, data) {
           </div>
         </div>
         <div className="row_3">
-          <div id="minigameBackgroundText">{this.state.minigameActive ? "Minigame" : null}</div>
+          {/*<div id="minigameBackgroundText">{this.state.minigameActive ? "Minigame" : null}</div>*/}
           {this.state.minigameActive ?
           <div id="whoseTurnInMinigame">
-            <div id="whoseTurnMinigameHeader">Minigame turn:</div>
+            <div id="whoseTurnMinigameHeader">Minigame:</div>
             {this.state.nameChosen && this.state.minigameActive ?
               <div id="whoseTurnInMinigameText">
                   <WhoseTurnInMinigame/>
@@ -241,10 +242,12 @@ static cardClaimed(msg, data) {
             {/*Enter/Leave minigame button, only to be displayed if already in the game. If in game, display the correct direction for the minigame button*/}
             {this.state.nameChosen ? this.state.inMinigame ?
               <button className="joinLeaveMinigameButton" onClick={() => PubSub.publish('join-leave-minigame-button', "leave")}>
-                <svg width="25vw" height="5vh" viewBox="0 0 100 15"><text x="0" y="10">Leave minigame</text></svg>
+                {/*<svg width="25vw" height="5vh" viewBox="0 0 100 15"><text x="0" y="10">Leave minigame</text></svg>*/}
+                Leave minigame
               </button> :
               <button className="joinLeaveMinigameButton" onClick={() => PubSub.publish('join-leave-minigame-button', "enter")}>
-                <svg width="25vw" height="5vh" viewBox="0 0 95 15"><text x="0" y="10">Enter minigame</text></svg>
+                {/*<svg width="25vw" height="5vh" viewBox="0 0 95 15"><text x="0" y="10">Enter minigame</text></svg>*/}
+                Enter minigame
               </button> : null}
             {/*Enter/Leave Minigame (visible only if name has been entered), Enter/Leave changes based on state.*/}
           {/*</div>*/}

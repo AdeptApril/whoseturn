@@ -17,6 +17,7 @@ class AdminMenu extends React.Component {
         playersInGame: [], //People in game
         playersInMinigame: [], //People in minigame
         selectedPlayer: this.props.name, //<- was what was there originally, but the idea is to require a selected name before popping anything up, so TODO: Make selected player be nothing, and graphics change as needed.
+        modifyPlayer: false,
         cardNumber: 0, //This probably isn't needed, and could be removed somehow, since it's just keeping track of what number is selected in a list.
         // pollingInterval: 3000,
         // polling: true
@@ -89,6 +90,7 @@ class AdminMenu extends React.Component {
 
   handleCardNumberChanged(event)
   {
+    AdminMenu.setCardNumber(this.state.selectedPlayer, event.target.value);
     this.setState({ cardNumber: event.target.value });
   }
 
@@ -102,32 +104,48 @@ class AdminMenu extends React.Component {
       <tr><td><button onClick={() => PubSub.publish('pass-turn-button', this.state.name)}>Pass turn in main game</button></td></tr>
       <tr><td><button onClick={() => PubSub.publish('pass-minigame-turn-button', this.state.name)}>Pass turn in Minigame</button></td></tr>
       <tr><td><button onClick={() => PubSub.publish('end-minigame-button', this.state.name)}>End Minigame</button></td></tr>
+      </tbody>
+        {!this.state.modifyPlayer ? <tr>
+          <button id="playerAdjustmentMenu" onClick={() => this.setState({
+            modifyPlayer: true,
+          })}>
+            Open player adjustment menu</button></tr>
+          :
+          <tbody>
+          <tr><button id="playerAdjustmentMenu" onClick={() => this.setState({
+          modifyPlayer: false,
+        })}>
+          Close player adjustment menu</button></tr>
+          {/*//Move the rest of this out to the AdminSubMenu class. Or find some way for it to pop up only after a player is selected*/}
       <tr>
         <td><div><select value={this.state.selectedPlayer} onChange={(event) => this.handleSelectedPlayerChanged(event)}>{playersInList}</select></div></td>
       </tr>
-      <tr>
-        {this.state.selectedPlayer === null ? "Please select a player to adjust" : //Move the rest of this out to the AdminSubMenu class. Or find some way for it to pop up only after a player is selected
-        <td><button onClick={() => RemoveName.remove(this.state.selectedPlayer)}>Kick from game</button></td>}
-      </tr>
-      <tr>
-        <td><button onClick={() => LeaveMinigame.remove(this.state.selectedPlayer)}>Kick from Minigame</button></td>
-      </tr>
-      <tr>
-        <td><button onClick={() => AdminMenu.setCardNumber(this.state.selectedPlayer, this.state.cardNumber)}>Set player card quantity to:</button></td>
+        <tr>
+          <td>
+            <button onClick={() => RemoveName.remove(this.state.selectedPlayer)}>Kick from game</button>
+          </td>
+        </tr>
+        <tr>
+        <td> < button onClick={() => LeaveMinigame.remove(this.state.selectedPlayer)}>Kick from Minigame</button></td>
+        </tr>
+        <tr>
+        {/*<td><button onClick={() => AdminMenu.setCardNumber(this.state.selectedPlayer, this.state.cardNumber)}>Set player card quantity to:</button></td>*/}
+        <td>Set player card quantity to:</td>
         <td><div><select value={this.cardNumber} onChange={(event) => this.handleCardNumberChanged(event)}>
-          <option defaultValue="0">0</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
-          <option value="7">7</option>
-          <option value="8">8</option>
-          <option value="9">9</option>
+        <option defaultValue="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
         </select></div></td>
-      </tr>
-      </tbody></table>
+        </tr>
+      </tbody>}
+      </table>
     )
   }
 }

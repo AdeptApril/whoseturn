@@ -6,8 +6,9 @@
  */
 
 body {
+    min-width: 275px; /*Below this, everything starts overlapping. TODO: Test if this actually works on mobile.*/
     background-color: black;
-    color: white;
+    color: black;
     margin: 0;
     padding: 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -73,8 +74,8 @@ code {
     position: absolute;
     right: 1vw;
     top: 0;
-    /*height: 40vh;*/
-    /*width: 40vh;*/
+    height: 9vh;
+    /*width: 40vw;*/
     z-index: 1;
 }
 
@@ -89,8 +90,9 @@ code {
 }
 
 #nameText {
+    color: white;
     position: absolute;
-    top: 5vh;
+    top: 8vh;
     font-size: x-large;
     font-weight: bold;
 }
@@ -114,7 +116,7 @@ code {
     position: absolute;
     text-align: center;
     height: 10vh;
-    width: 30vh;
+    width: 35vw;
     border-radius: 80%;
     /*margin: 2vh 0 0 30%;*/
     top: 17vh;
@@ -126,15 +128,15 @@ code {
     position: absolute;
     color: black;
     top: -2vh;
-    left: 12vw;
+    left: 2vw;
     z-index: 10;
 }
 #whoseTurnText {
     position: absolute;
     color: black;
-    top: 2.5vh;
+    top: 2vh;
     left: 2vw;
-    font-size: x-large;
+    font-size: 7vw;
     font-weight: bold;
     z-index: 15;
 }
@@ -179,8 +181,8 @@ code {
 #LeaveButton {
     position: absolute;
     right: 1vw;
-    top: 19vh;
-    height: 5vh;
+    top: 17vh;
+    height: 9vh;
     width: 25vw;
     z-index: 20;
 }
@@ -198,23 +200,23 @@ code {
     /*background-position-y: 105%;*/
 }
 
-#minigameBackgroundText {
-    position: relative;
-    top: -1vh;
-    left: 5%;
-    width: 60%;
-    z-index: 0;
-    height: 14vh;
-    font-size: 12vh;
-    max-width: 100%;
-    opacity: 25%;
-}
+/*#minigameBackgroundText {*/
+/*    position: relative;*/
+/*    top: -1vh;*/
+/*    left: 1vw;*/
+/*    width: 60%;*/
+/*    z-index: 0;*/
+/*    height: 14vh;*/
+/*    font-size: 4vh;*/
+/*    max-width: 100%;*/
+/*    opacity: 25%;*/
+/*}*/
 
 #whoseTurnInMinigame {
     position: absolute;
     text-align: center;
     height: 10vh;
-    width: 30vh;
+    width: 25vw;
     border-radius: 80%;
     top: 32vh;
     left: 30vw;
@@ -225,7 +227,7 @@ code {
     position: absolute;
     color: black;
     top: -2vh;
-    left: 10vw;
+    left: 1vw;
     z-index: 10;
 }
 #whoseTurnInMinigameText {
@@ -233,7 +235,7 @@ code {
     color: black;
     top: 2.5vh;
     left: 1vw;
-    font-size: x-large;
+    font-size: 7vw;
     font-weight: bold;
     z-index: 15;
 }
@@ -244,9 +246,9 @@ code {
 #passMinigameTurnButton {
     position: absolute;
     left: 1vw;
-    top: 35vh;
+    top: 34vh;
     width: 20vw;
-    height: 5vh;
+    height: 7vh;
     background-color: #ba547c;
     z-index: 20;
 }
@@ -255,8 +257,8 @@ code {
     /*//This covers both the leave and enter buttons, thus why it's a class and not an ID*/
     position: absolute;
     right: 1vw;
-    top: 35vh;
-    height: 5vh;
+    top: 33vh;
+    height: 9vh;
     width: 25vw;
     background-color: #ba547c;
     z-index: 20;

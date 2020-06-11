@@ -18,7 +18,7 @@ class CurrentNames extends React.Component {
         playersInGame: [],
         numberOfCards: [],
         playersInMinigame: [],
-        pollingInterval: 3000,
+        pollingInterval: 1000,
         polling: true
       };
     // this.headers = [
@@ -34,7 +34,7 @@ class CurrentNames extends React.Component {
       <div>
         <table id="playersInGame">
           <thead>
-          {this.state.playersInGame.length > 0 ? <tr><td>Players in game:</td></tr> : <tr><td/></tr>}
+          {this.state.playersInGame.length > 0 ? <tr><td>Players:</td></tr> : <tr><td/></tr>}
           </thead>
           <tbody>
           {this.state.playersInGame.map(user => <tr className="tableRow" key={user}><td>{user}</td></tr>)}
@@ -50,7 +50,7 @@ class CurrentNames extends React.Component {
         </table>
           <table id="playersInMinigame">
           <thead>
-          {this.state.playersInMinigame.length > 0 ? <tr><td>Players in Minigame:</td></tr> : <tr/>}
+          {this.state.playersInMinigame.length > 0 ? <tr><td>Minigame players:</td></tr> : <tr/>}
           </thead>
           <tbody>
           {this.state.playersInMinigame.map(player => <tr className="tableRow" key={player}><td>{player}</td></tr>)}

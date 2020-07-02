@@ -28,6 +28,7 @@ class AppEntry extends Component {
   //       {this.state.mode === "ModeBriMegAman" ? <ModeBriMegAman/> : null}
   //     </div>
       <ModeBriMegAman/>
+      // <ModeWhoseTurn/>
     );
   }
 }

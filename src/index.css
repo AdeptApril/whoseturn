@@ -63,11 +63,13 @@ code {
     background-position-y: 40vh;
 }
 
-/*.full_grid_alt {*/
-/*    background-color: black;*/
-/*    display: grid;*/
-/*    margin: -10vh 0 0;*/
-/*}*/
+#full_grid_alt {
+    background-color: black;
+    color: white;
+    font-size: xx-large;
+    display: grid;
+    /*margin: -10vh 0 0;*/
+}
 
 .marquee {
     /*background-size: cover;*/

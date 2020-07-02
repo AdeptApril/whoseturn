@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import PubSub from './pubsub.js';
 //import events from './events.js';
 import './index.css';
-//import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom';
 // import CurrentNames from './CurrentNames';
 // import SetName from './SetName';
 // import RemoveName from './RemoveName';
@@ -13,6 +13,9 @@ import './index.css';
 import EnterMinigame from "./EnterMinigame";
 import LeaveMinigame from "./LeaveMinigame";
 import EndGameAnimation from "./EndGameAnimation";
+import { w3cwebsocket as W3CWebSocket } from 'websocket';
+
+const client = new W3CWebSocket('ws://127.0.0.1:3001');
 
 class ModeWhoseTurn extends Component {
   constructor(props) {
@@ -36,6 +39,13 @@ class ModeWhoseTurn extends Component {
   }
 
   componentDidMount() {
+    client.onopen = () => {
+      console.log("WebSocket client connected");
+    };
+    client.onmessage = (message) => {
+      const dataFromServer = JSON.parse(message.data);
+      console.log("got reply: ", dataFromServer);
+    };
     PubSub.subscribe('join-leave-button', this.toggleVisibility);
     PubSub.subscribe('player-turn-update', this.playerTurnUpdate);
     PubSub.subscribe('player-turn-in-minigame-update', this.playerMinigameUpdate);
@@ -116,12 +126,18 @@ class ModeWhoseTurn extends Component {
     });
   }
 
+  onButtonClicked = (value) => {
+    console.log("sending message");
+    LeaveMinigame.add(client, value);
+  };
+
   render() {
     //const { width } = this.state;
     //const isMobile = width <= 500;
     return (
-      <div className="full_grid_alt">
-        <EndGameAnimation/>
+      <div id="full_grid_alt">
+        <button onClick={() => this.onButtonClicked("April")}>Send join game</button>
+        {/*<EndGameAnimation/>*/}
         {/*<div className="row_1_and_2_alt">*/}
           {/*<div className="row_1_alt">*/}
             {/*<div>*/}

@@ -12,6 +12,7 @@ class CurrentNames extends React.Component {
 
   constructor(props) {
     super(props);
+    this.minigamePlayersUpdate = this.minigamePlayersUpdate.bind(this);
     this.state =
       {
         admin: null,
@@ -27,8 +28,24 @@ class CurrentNames extends React.Component {
   }
 
   componentDidMount() {
+    PubSub.subscribe('minigame-players-update', this.minigamePlayersUpdate);
     this.poll();
   }
+
+  componentWillUnmount() {
+    PubSub.unsubscribe('minigame-players-update', this.minigamePlayersUpdate);
+  }
+
+  minigamePlayersUpdate(msg, data) {
+    console.log("minigame-players-update MANAGED TO FIRE! YAY!");
+      this.setState({
+        playersInMinigame: data.name,
+      });
+      console.log("Current Minigame Player state.playersInMinigame: " + this.state.playersInMinigame);
+      if(this.state.playersInMinigame.length <= 0)
+        PubSub.publish("minigame-ended");
+  }
+
   render() {
     return (
       <div>
@@ -103,24 +120,24 @@ class CurrentNames extends React.Component {
           console.log("Current Player state.playersInGame: " + this.state.playersInGame);
         });
 
-        //Minigame playersInMinigame fetch
-        fetch('/api/getCurrPlayersInMinigame/')
-          .then(response => {
-            return response.json();
-          }).then(result => {
-          // console.log("Current Minigame Player JSON:");
-          // console.log(result);
-          //console.log(this.headers);
-          this.setState({
-            playersInMinigame: result.name
-          });
-          console.log("Current Minigame Player state.playersInMinigame: " + this.state.playersInMinigame);
-        })
-          .then( () => {
-        if(this.state.playersInMinigame.length <= 0)
-          PubSub.publish("minigame-ended");
-          // PubSub.publish("player-turn-in-minigame-update");
-        });
+        // //Minigame playersInMinigame fetch
+        // fetch('/api/getCurrPlayersInMinigame/')
+        //   .then(response => {
+        //     return response.json();
+        //   }).then(result => {
+        //   // console.log("Current Minigame Player JSON:");
+        //   // console.log(result);
+        //   //console.log(this.headers);
+        //   this.setState({
+        //     playersInMinigame: result.name
+        //   });
+        //   console.log("Current Minigame Player state.playersInMinigame: " + this.state.playersInMinigame);
+        // })
+        //   .then( () => {
+        // if(this.state.playersInMinigame.length <= 0)
+        //   PubSub.publish("minigame-ended");
+        //   // PubSub.publish("player-turn-in-minigame-update");
+        // });
 
         // as last step you should call poll() method again
         // if you have asyncronous code you should not call it

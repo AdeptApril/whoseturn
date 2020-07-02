@@ -10,11 +10,13 @@ import RemoveName from './RemoveName';
 import WhoseTurn from "./WhoseTurn";
 // import CurrentNamesInMinigame from './CurrentNamesInMinigame';
 import WhoseTurnInMinigame from "./WhoseTurnInMinigame";
-import EnterMinigame from "./EnterMinigame";
 import LeaveMinigame from "./LeaveMinigame";
 import AdminMenu from "./AdminMenu";
 import AnimatedCardClaim from "./AnimatedCardClaim";
 import EndGameAnimation from "./EndGameAnimation";
+import { w3cwebsocket as W3CWebSocket } from 'websocket';
+
+const client = new W3CWebSocket('ws://127.0.0.1:3001');
 
 const pics = {
   marquee: require('./assets/BriMegAmanMarquee.png'),
@@ -55,6 +57,21 @@ class ModeBriMegAman extends Component {
   }
 
   componentDidMount() {
+    client.onopen = () => {
+      console.log("WebSocket client connected");
+    };
+    client.onmessage = (message) => {
+      const dataFromServer = JSON.parse(message.data);
+      console.log("Received from server: ", dataFromServer);
+      switch (dataFromServer.type) {
+        case 'minigamePlayers':
+          PubSub.publish('minigame-players-update', dataFromServer.players);
+          break;
+        default:
+          console.log('WebSocket received: %s', dataFromServer);
+          break;
+      }
+    };
     PubSub.subscribe('join-leave-button', this.joinLeaveGame);
     PubSub.subscribe('player-turn-update', this.playerTurnUpdate);
     PubSub.subscribe('player-turn-in-minigame-update', this.playerMinigameUpdate);
@@ -109,13 +126,14 @@ static cardClaimed(msg, data) {
 
   joinLeaveMinigame(msg, data) {
     if (data === "enter") {
-      new EnterMinigame(this.state.name);
+      // new EnterMinigame(this.state.name);
+      LeaveMinigame.add(client, this.state.name);
       this.setState({
         inMinigame: true,
         minigameActive: true,
       });
     } else if (data === "leave") {
-      LeaveMinigame.remove(this.state.name);
+      LeaveMinigame.remove(client, this.state.name);
       this.setState({
         inMinigame: false,
       });

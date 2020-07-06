@@ -21,7 +21,7 @@ class LeaveMinigame {
   static add(client, inName) {
     console.log("EnterLeaveMinigame called");
     client.send(JSON.stringify({
-      type: "enterminigame",
+      type: "enterMinigame",
       name: inName,
     }))
   }
@@ -29,7 +29,7 @@ class LeaveMinigame {
   static remove(client, inName) {
     console.log("Leaving minigame");
     client.send(JSON.stringify({
-      type: "leaveminigame",
+      type: "leaveMinigame",
       name: inName,
     }))
     // fetch('/api/leaveminigame/', {

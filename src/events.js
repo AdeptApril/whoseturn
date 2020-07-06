@@ -21,18 +21,19 @@ ModeBriMegAman.js (ModeWhoseTurn.js may have similar functionality, or may be us
     PubSub.publish('pass-turn-button', this.state.name)
     PubSub.publish('join-leave-button', 'leave')
     PubSub.publish('card-claimed-button', this.state.name)
-    PubSub.publish('pass-minigame-turn-button', this.state.name)
+    // PubSub.publish('pass-minigame-turn-button', this.state.name) //Removed in favor of a websockets call
     PubSub.publish('join-leave-minigame-button', "leave")
     PubSub.publish('join-leave-minigame-button', "enter")
     PubSub.publish('join-leave-button', 'enter')
     PubSub.publish('minigame-players-update', message.players);
+    PubSub.publish('player-turn-in-minigame-update', dataFromServer.playerName);
 
 AdminMenu.js
     PubSub.subscribe('end-minigame-button', AdminMenu.endMinigame);
     PubSub.subscribe('player-list-update', this.playerUpdate);
     PubSub.publish('minigame-ended');
     PubSub.publish('pass-turn-button', this.state.name)
-    PubSub.publish('pass-minigame-turn-button', this.state.name)
+    // PubSub.publish('pass-minigame-turn-button', this.state.name) //Removed in favor of a websockets call
     PubSub.publish('end-minigame-button', this.state.name)
 
 AnimatedCardClaim.js
@@ -53,7 +54,8 @@ WhoseTurn.js
     PubSub.publish('player-turn-update', result);
 
 WhoseTurnInMinigame.js
-    PubSub.subscribe('pass-minigame-turn-button', WhoseTurnInMinigame.turnPassed);
-    PubSub.publish('player-turn-in-minigame-update', result);
+    // PubSub.subscribe('pass-minigame-turn-button', WhoseTurnInMinigame.turnPassed); //Removed in favor of a websockets call
+    PubSub.subscribe('player-turn-in-minigame-update', WhoseTurnInMinigame.updateMiniTurn);
+    // PubSub.publish('player-turn-in-minigame-update', result); //Used when getting a polling response; not used with websockets.
 
  */

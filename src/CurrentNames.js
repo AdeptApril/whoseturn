@@ -19,7 +19,7 @@ class CurrentNames extends React.Component {
         playersInGame: [],
         numberOfCards: [],
         playersInMinigame: [],
-        pollingInterval: 1000,
+        pollingInterval: 3000,
         polling: true
       };
     // this.headers = [

@@ -67,6 +67,9 @@ class ModeBriMegAman extends Component {
         case 'minigamePlayers':
           PubSub.publish('minigame-players-update', dataFromServer.players);
           break;
+        case 'whoseTurnInMinigame':
+          PubSub.publish('player-turn-in-minigame-update', dataFromServer.playerName);
+          break;
         default:
           console.log('WebSocket received: %s', dataFromServer);
           break;
@@ -251,7 +254,8 @@ static cardClaimed(msg, data) {
           </div>: null}
           {/*<div>*/}
             {this.state.nameChosen && this.state.minigameActive && (this.state.name === this.state.nameOfPlayerWhoseTurnItIsInMinigame) ?
-              <button id="passMinigameTurnButton" onClick={() => PubSub.publish('pass-minigame-turn-button', this.state.name)}>
+              <button id="passMinigameTurnButton" onClick={() => WhoseTurnInMinigame.miniTurnPassed(client, this.state.name)}>
+                {/*<button id="passMinigameTurnButton" onClick={() => PubSub.publish('pass-minigame-turn-button', this.state.name)}>*/}
                 {/*<svg width="25vw" height="5vh" viewBox="0 0 75 15"><text x="5" y="10">Pass turn</text></svg>*/}
                 Pass turn
               </button> : null}

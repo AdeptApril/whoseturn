@@ -28,6 +28,23 @@ class SetName extends React.Component {
       });
   }
 
+  static inputName(name) {
+    fetch('/api/inputname/', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: name,
+        //secondParam: 'yourOtherValue',
+      })
+    })
+      .then(response => {
+        return response.json();
+      });
+  }
+
   render() {
     return (
       null

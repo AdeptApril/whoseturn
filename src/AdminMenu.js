@@ -2,18 +2,20 @@ import React from 'react';
 import PubSub from './pubsub.js';
 import RemoveName from "./RemoveName";
 import LeaveMinigame from "./LeaveMinigame";
+import WhoseTurnInMinigame from "./WhoseTurnInMinigame";
 
 /* Displays current playersInMinigame in the game and minigame */
 class AdminMenu extends React.Component {
 
   constructor(props) {
     super(props);
-    AdminMenu.endMinigame = AdminMenu.endMinigame.bind(this);
+    this.endMinigame = this.endMinigame.bind(this);
     this.playerUpdate = this.playerUpdate.bind(this);
     this.handleSelectedPlayerChanged = this.handleSelectedPlayerChanged.bind(this);
     this.state =
       {
         name: this.props.name,
+        client: this.props.client,
         playersInGame: [], //People in game
         playersInMinigame: [], //People in minigame
         selectedPlayer: this.props.name, //<- was what was there originally, but the idea is to require a selected name before popping anything up, so TODO: Make selected player be nothing, and graphics change as needed.
@@ -28,7 +30,7 @@ class AdminMenu extends React.Component {
   }
 
   componentDidMount() {
-    PubSub.subscribe('end-minigame-button', AdminMenu.endMinigame);
+    PubSub.subscribe('end-minigame-button', this.endMinigame);
     PubSub.subscribe('player-list-update', this.playerUpdate);
     console.log("Admin name is: " + this.state.name);
   }
@@ -47,21 +49,26 @@ class AdminMenu extends React.Component {
   }
 
   //Admin has changed, so check to see if current player is an admin.
-  static endMinigame(msg, data) {
-    fetch('/api/endminigame/', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        name: data,
-        //secondParam: 'yourOtherValue',
-      })
-    })
-      .then(response => {
-        return response.json();
-      });
+  endMinigame(msg, adminName) {
+    // fetch('/api/endminigame/', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Accept': 'application/json',
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify({
+    //     name: data,
+    //     //secondParam: 'yourOtherValue',
+    //   })
+    // })
+    //   .then(response => {
+    //     return response.json();
+    //   });
+    console.log("Ending Minigame through Admin Menu");
+    this.state.client.send(JSON.stringify({
+      type: 'endMinigame',
+      name: adminName,
+    }));
     PubSub.publish('minigame-ended');
   }
 
@@ -102,7 +109,8 @@ class AdminMenu extends React.Component {
       <table><tbody>
       <tr><td>Admin Menu</td></tr>
       <tr><td><button onClick={() => PubSub.publish('pass-turn-button', this.state.name)}>Pass turn in main game</button></td></tr>
-      <tr><td><button onClick={() => PubSub.publish('pass-minigame-turn-button', this.state.name)}>Pass turn in Minigame</button></td></tr>
+      <tr><td><button onClick={() => WhoseTurnInMinigame.miniTurnPassed(this.state.client, this.state.name)}>Pass turn in Minigame</button></td></tr>
+      {/*<tr><td><button onClick={() => PubSub.publish('pass-minigame-turn-button', this.state.name)}>Pass turn in Minigame</button></td></tr>*/}
       <tr><td><button onClick={() => PubSub.publish('end-minigame-button', this.state.name)}>End Minigame</button></td></tr>
       </tbody>
         {!this.state.modifyPlayer ? <tr>

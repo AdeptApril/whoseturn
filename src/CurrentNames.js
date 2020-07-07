@@ -37,7 +37,6 @@ class CurrentNames extends React.Component {
   }
 
   minigamePlayersUpdate(msg, data) {
-    console.log("minigame-players-update MANAGED TO FIRE! YAY!");
       this.setState({
         playersInMinigame: data.name,
       });
@@ -108,7 +107,15 @@ class CurrentNames extends React.Component {
               }).then(result => {
               console.log("GetAdminName JSON:");
               console.log(result);
-              if(this.state.currPlayer !== result.toString()) {
+              if(result === null)
+              {
+                PubSub.publish('admin-update', null);
+                this.setState({
+                  admin: null,
+                });
+                console.log("Admin has changed to null");
+              }
+              else if(this.state.currPlayer !== result.toString()) {
                 PubSub.publish('admin-update', result.toString());
                 this.setState({
                   admin: result.toString(),

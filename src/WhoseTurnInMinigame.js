@@ -10,8 +10,8 @@ class WhoseTurnInMinigame extends React.Component {
     this.state =
       {
         currPlayer: null,
-        pollingInterval: 1000,
-        polling: true
+        // pollingInterval: 1000,
+        // polling: true
       };
   }
 
@@ -21,6 +21,7 @@ class WhoseTurnInMinigame extends React.Component {
     PubSub.subscribe('player-turn-in-minigame-update', this.updateMiniTurn);
   }
   componentWillUnmount() {
+    PubSub.unsubscribe('player-turn-in-minigame-update');
     // PubSub.unsubscribe('pass-minigame-turn-button');
     // this.setState({
     //   polling: false,

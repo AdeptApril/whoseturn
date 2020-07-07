@@ -66,6 +66,8 @@ class ModeBriMegAman extends Component {
       switch (dataFromServer.type) {
         case 'minigamePlayers':
           PubSub.publish('minigame-players-update', dataFromServer.players);
+          if(dataFromServer.players === null)
+            PubSub.publish('minigame-ended');
           break;
         case 'whoseTurnInMinigame':
           PubSub.publish('player-turn-in-minigame-update', dataFromServer.playerName);
@@ -289,7 +291,7 @@ static cardClaimed(msg, data) {
               <button id="joinLeaveGameButton" className="joinLeaveGameButton" onClick={() => PubSub.publish('join-leave-button', 'enter')}>Enter Game</button>}
             {!this.state.nameChosen ?
               null :
-              <div>{!this.state.nameChosen ? {} : <SetName name={this.state.name}/>}</div>}
+              <div>{!this.state.nameChosen ? {} : SetName.inputName(this.state.name)}</div>}
         </div>
         <div className="row_6">
             {/*Current players*/}
@@ -300,7 +302,7 @@ static cardClaimed(msg, data) {
           </div>
         </div>
         <div className="row_7">
-          {this.state.isAdmin ? <AdminMenu name={this.state.name}/> : null}
+          {this.state.isAdmin ? <AdminMenu client = {client} name={this.state.name}/> : null}
         </div>
       </div>
     );

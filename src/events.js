@@ -27,6 +27,7 @@ ModeBriMegAman.js (ModeWhoseTurn.js may have similar functionality, or may be us
     PubSub.publish('join-leave-button', 'enter')
     PubSub.publish('minigame-players-update', message.players);
     PubSub.publish('player-turn-in-minigame-update', dataFromServer.playerName);
+    PubSub.publish('minigame-ended'); //Used when receiving new data of minigame players, but the player list is null
 
 AdminMenu.js
     PubSub.subscribe('end-minigame-button', AdminMenu.endMinigame);

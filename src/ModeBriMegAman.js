@@ -36,6 +36,7 @@ function checkAdmin() {
 }
 
 class ModeBriMegAman extends Component {
+  timerID = 0;
   constructor(props) {
     super(props);
     this.joinLeaveGame = this.joinLeaveGame.bind(this);
@@ -60,6 +61,10 @@ class ModeBriMegAman extends Component {
   componentDidMount() {
     client.onopen = () => {
       console.log("WebSocket client connected");
+      this.keepAlive();
+    };
+    client.onclose = () => {
+      this.cancelKeepAlive();
     };
     client.onmessage = (message) => {
       const dataFromServer = JSON.parse(message.data);
@@ -95,6 +100,21 @@ class ModeBriMegAman extends Component {
     PubSub.unsubscribe('minigame-ended');
     PubSub.unsubscribe('admin-update');
     PubSub.unsubscribe('card-claimed-button');
+  }
+
+  keepAlive() {
+    let timeout = 20000;
+    if (client.readyState === client.OPEN) {
+      client.send(JSON.stringify({
+        type: "keepAlive",
+      }))
+    }
+    this.timerID = setTimeout(this.keepAlive, timeout);
+  }
+  cancelKeepAlive() {
+    if (this.timerID) {
+      clearTimeout(this.timerID);
+    }
   }
 
 static cardClaimed(msg, data) {

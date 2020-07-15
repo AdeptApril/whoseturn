@@ -16,7 +16,8 @@ import AnimatedCardClaim from "./AnimatedCardClaim";
 import EndGameAnimation from "./EndGameAnimation";
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
 
-// const client = new W3CWebSocket('ws://127.0.0.1:3001'); //TODO: Find a way to make it so that this doesn't have to be changed for deployment
+// const client = new W3CWebSocket('ws://127.0.0.1:3001');
+// TODO: Find a way to make it so that this doesn't have to be changed for deployment
 const client = new W3CWebSocket('ws://brimegaman.monoceroses.com:80');
 
 const pics = {
@@ -36,7 +37,6 @@ function checkAdmin() {
 }
 
 class ModeBriMegAman extends Component {
-  timerID = 0;
   constructor(props) {
     super(props);
     this.joinLeaveGame = this.joinLeaveGame.bind(this);
@@ -59,12 +59,33 @@ class ModeBriMegAman extends Component {
   }
 
   componentDidMount() {
+    this.connect();
+  }
+
+  timerID = 0;
+  timeout = 250;
+  keepAliveTimeout = 20000; //20000 is 20 seconds
+
+  connect = () => {
+    let that = this; //Keep an older version of "this".
+    let connectInterval;
+
     client.onopen = () => {
       console.log("WebSocket client connected");
-      this.keepAlive();
+      clearTimeout(connectInterval);
+      this.timerID = setInterval( ModeBriMegAman.keepAlive, this.keepAliveTimeout);
     };
-    client.onclose = () => {
-      this.cancelKeepAlive();
+    client.onclose = e => {
+        console.log(
+          `Socket is closed. Reconnect will be attempted in ${Math.min(
+            10000 / 1000,
+            (that.timeout + that.timeout) / 1000
+          )} second.`,
+          e.reason
+        );
+
+        that.timeout = that.timeout + that.timeout; //increment retry interval
+        connectInterval = setTimeout(this.check, Math.min(10000, that.timeout)); //call check function after timeout
     };
     client.onmessage = (message) => {
       const dataFromServer = JSON.parse(message.data);
@@ -90,7 +111,7 @@ class ModeBriMegAman extends Component {
     PubSub.subscribe('minigame-ended', this.minigameEnded);
     PubSub.subscribe('admin-update', this.adminChanged);
     PubSub.subscribe('card-claimed-button', ModeBriMegAman.cardClaimed);
-  }
+  };
 
   componentWillUnmount() {
     PubSub.unsubscribe('join-leave-button');
@@ -100,21 +121,29 @@ class ModeBriMegAman extends Component {
     PubSub.unsubscribe('minigame-ended');
     PubSub.unsubscribe('admin-update');
     PubSub.unsubscribe('card-claimed-button');
+    this.cancelKeepAlive();
   }
 
-  keepAlive() {
-    let timeout = 20000;
+  check = () => {
+    const { ws } = client;
+    if (!ws || ws.readyState === WebSocket.CLOSED) this.connect(); //check if websocket instance is closed, if so call `connect` function.
+  };
+
+  cancelKeepAlive() {
+    if (this.timerID) {
+      clearInterval(this.timerID);
+    }
+  }
+
+  static keepAlive() {
+    // let timeout = 2000;
+    console.log("Sending Keep-alive");
     if (client.readyState === client.OPEN) {
       client.send(JSON.stringify({
         type: "keepAlive",
       }))
     }
-    this.timerID = setTimeout(this.keepAlive, timeout);
-  }
-  cancelKeepAlive() {
-    if (this.timerID) {
-      clearTimeout(this.timerID);
-    }
+    // this.timerID = setTimeout(this.keepAlive, timeout);
   }
 
 static cardClaimed(msg, data) {

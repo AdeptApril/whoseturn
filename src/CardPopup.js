@@ -291,12 +291,27 @@ class CardPopup extends React.Component {
       level: props.level,
       cardText: "default",
     };
-    if(this.state.level === 1)
+    // console.log("LEVEL IS SET TO: " + this.state.level);
+  }
+
+  componentDidMount() {
+    //Grab a random card, depending on the player's current level
+    let min = 1;
+    if(this.state.level === 1) {
+      let max = level1Cards.length;
+      let rand =  min + Math.floor((Math.random() * (max-min)));
       this.setState({cardText: level1Cards.find(item => item.id === rand).text});
-    else if(this.state.level === 2)
+    }
+    else if(this.state.level === 2) {
+      let max = level2Cards.length;
+      let rand = min + Math.floor((Math.random() * (max - min)));
       this.setState({cardText: level2Cards.find(item => item.id === rand).text});
-    if(this.state.level === 3)
+    }
+    if(this.state.level === 3) {
+      let max = level3Cards.length;
+      let rand = min + Math.floor((Math.random() * (max - min)));
       this.setState({cardText: level3Cards.find(item => item.id === rand).text});
+    }
   }
 
   render() {

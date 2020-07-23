@@ -20,7 +20,8 @@ class CurrentNames extends React.Component {
         numberOfCards: [],
         playersInMinigame: [],
         pollingInterval: 3000,
-        polling: true
+        polling: true,
+        playerName: props.playerName,
       };
     // this.headers = [
     //   { key: 'name', label: 'Name' }
@@ -98,6 +99,10 @@ class CurrentNames extends React.Component {
             playersInGame: result.name,
             numberOfCards: result.cards,
           });
+          // console.log("Result name: " + result.name + ", state name: " + this.state.playerName);
+          if(result.name.toString() === this.state.playerName) {
+            PubSub.publish('player-level-update', Math.floor(result.cards / 3) + 1);
+          }
           PubSub.publish('player-list-update', this.state.playersInGame);
           if(this.state.playersInGame.length > 0 && this.state.playersInGame[0] !== this.state.admin) //Check to see who the admin is if it doesn't make sense given array of playersInGame
           {

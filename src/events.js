@@ -18,6 +18,7 @@ ModeBriMegAman.js (ModeWhoseTurn.js may have similar functionality, or may be us
     PubSub.subscribe('minigame-ended', this.minigameEnded);
     PubSub.subscribe('admin-update', this.adminChanged);
     PubSub.subscribe('card-claimed-button', ModeBriMegAman.cardClaimed);
+    PubSub.subscribe('player-level-update', this.levelUpdate);
     PubSub.publish('pass-turn-button', this.state.name)
     PubSub.publish('join-leave-button', 'leave')
     PubSub.publish('card-claimed-button', this.state.name)
@@ -46,6 +47,7 @@ CurrentNames.js
     PubSub.publish('admin-update', result.toString());
     PubSub.publish("minigame-ended");
     PubSub.publish('player-has-won');
+    PubSub.publish('player-level-update', (result.cards/3)+1);
 
 EndGameAnimation.js
     PubSub.subscribe('player-has-won', this.gameOver);

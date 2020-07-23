@@ -47,6 +47,7 @@ class ModeBriMegAman extends Component {
     this.minigameEnded = this.minigameEnded.bind(this);
     this.adminChanged = this.adminChanged.bind(this);
     this.toggleCard = this.toggleCard.bind(this);
+    this.levelUpdate = this.levelUpdate.bind(this);
     ModeBriMegAman.cardClaimed = ModeBriMegAman.cardClaimed.bind(this);
     this.state = {
       isAdmin: false,
@@ -115,6 +116,7 @@ class ModeBriMegAman extends Component {
     PubSub.subscribe('minigame-ended', this.minigameEnded);
     PubSub.subscribe('admin-update', this.adminChanged);
     PubSub.subscribe('card-claimed-button', ModeBriMegAman.cardClaimed);
+    PubSub.subscribe('player-level-update', this.levelUpdate);
   };
 
   componentWillUnmount() {
@@ -125,7 +127,15 @@ class ModeBriMegAman extends Component {
     PubSub.unsubscribe('minigame-ended');
     PubSub.unsubscribe('admin-update');
     PubSub.unsubscribe('card-claimed-button');
+    PubSub.unsubscribe('player-level-update', this.levelUpdate);
     this.cancelKeepAlive();
+  }
+
+  levelUpdate(msg, levelIn) {
+    this.setState({
+      level: levelIn,
+    });
+    // console.log("Level updated to: %s", levelIn);
   }
 
   toggleCard() {
@@ -369,7 +379,9 @@ static cardClaimed(msg, data) {
         </div>
         <div className="row_6">
             {/*Current players*/}
-            {<CurrentNames/>}
+            {!this.state.nameChosen ?
+              null :
+              <CurrentNames playerName={this.state.name}/>}
           <div>
             {/*{this.state.minigameActive ? <div>Current players in Minigame</div> : null}*/}
             {/*{<CurrentNamesInMinigame/>}*/}

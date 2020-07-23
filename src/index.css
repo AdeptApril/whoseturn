@@ -183,10 +183,20 @@ code {
 #LeaveButton {
     position: absolute;
     right: 1vw;
-    top: 17vh;
-    height: 9vh;
+    top: 15.5vh;
+    height: 7vh;
     width: 25vw;
     z-index: 20;
+}
+
+#DrawCardButton {
+    position: absolute;
+    right: 1vw;
+    top: 23vh;
+    height: 7vh;
+    width: 25vw;
+    z-index: 20;
+    background-color: #ba547c;
 }
 
 .row_3 {
@@ -264,6 +274,35 @@ code {
     width: 25vw;
     background-color: #ba547c;
     z-index: 20;
+}
+
+.popup {
+    position: fixed;
+    width: 50vw;
+    height: 60vh;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    z-index: 40;
+    background-color: rgba(0,0,0, 0.5);
+    color: white;
+}
+.popup\_inner {
+    position: absolute;
+    left: 25%;
+    right: 25%;
+    top: 25%;
+    bottom: 25%;
+    margin: auto;
+    border-radius: 20px;
+    background: white;
+}
+#innerCardPopupButton{
+    position: absolute;
+    left: 35%;
+    margin-top: 45vh;
 }
 
 .row_4 {

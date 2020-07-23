@@ -14,11 +14,12 @@ import LeaveMinigame from "./LeaveMinigame";
 import AdminMenu from "./AdminMenu";
 import AnimatedCardClaim from "./AnimatedCardClaim";
 import EndGameAnimation from "./EndGameAnimation";
+import CardPopup from "./CardPopup";
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
 
-// const client = new W3CWebSocket('ws://127.0.0.1:3001');
+const client = new W3CWebSocket('ws://127.0.0.1:3001');
 // TODO: Find a way to make it so that this doesn't have to be changed for deployment
-const client = new W3CWebSocket('ws://brimegaman.monoceroses.com:80');
+// const client = new W3CWebSocket('ws://brimegaman.monoceroses.com:80');
 
 const pics = {
   marquee: require('./assets/BriMegAmanMarquee.png'),
@@ -45,6 +46,7 @@ class ModeBriMegAman extends Component {
     this.joinLeaveMinigame = this.joinLeaveMinigame.bind(this);
     this.minigameEnded = this.minigameEnded.bind(this);
     this.adminChanged = this.adminChanged.bind(this);
+    this.toggleCard = this.toggleCard.bind(this);
     ModeBriMegAman.cardClaimed = ModeBriMegAman.cardClaimed.bind(this);
     this.state = {
       isAdmin: false,
@@ -55,7 +57,9 @@ class ModeBriMegAman extends Component {
       minigameActive: false,
       nameOfPlayerWhoseTurnItIsInMinigame: null,
       inMinigame: false, //Adding this might be helpful for certain logic, but is currently not used
-    };
+      showCard: false,
+      level: 1,
+  };
   }
 
   componentDidMount() {
@@ -122,6 +126,13 @@ class ModeBriMegAman extends Component {
     PubSub.unsubscribe('admin-update');
     PubSub.unsubscribe('card-claimed-button');
     this.cancelKeepAlive();
+  }
+
+  toggleCard() {
+    console.log("Toggling Card display");
+    this.setState({
+      showCard: !this.state.showCard
+    });
   }
 
   check = () => {
@@ -292,6 +303,19 @@ static cardClaimed(msg, data) {
           {/*</div>*/}
           <div id="animatedCardClaim">
             {<AnimatedCardClaim/>}
+          </div>
+          <div>
+            {this.state.nameChosen ?
+              <div><button id="DrawCardButton" onClick={this.toggleCard.bind(this)}>Draw Card</button>
+              {this.state.showCard ?
+                  <CardPopup
+                    text='Click "Close Button" to hide popup'
+                    level={this.state.level}
+                    closePopup={this.toggleCard.bind(this)}
+                  />
+                  : null
+              }</div>
+            : null}
           </div>
         </div>
         <div className="row_3">

@@ -17,9 +17,9 @@ import EndGameAnimation from "./EndGameAnimation";
 import CardPopup from "./CardPopup";
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
 
-const client = new W3CWebSocket('ws://127.0.0.1:3001');
+// const client = new W3CWebSocket('ws://127.0.0.1:3001');
 // TODO: Find a way to make it so that this doesn't have to be changed for deployment
-// const client = new W3CWebSocket('ws://brimegaman.monoceroses.com:80');
+const client = new W3CWebSocket('ws://brimegaman.monoceroses.com:80');
 
 const pics = {
   marquee: require('./assets/BriMegAmanMarquee.png'),

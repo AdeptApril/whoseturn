@@ -1,117 +1,117 @@
 import React from 'react';
 import './index.css';
 
-const level1Cards = [
-  {id:1, text:"Dennis is asshole. Why Charlie Hate? Answer: Because Dennis is a bastard man."},
-  {id:2, text:"Puzzle: Put this bottle back together"},
-  {id:3, text:"Advance to Level 2"},
-  // {id:4, text:""},
-  // {id:5, text:""},
-  // {id:6, text:""},
-  // {id:7, text:""},
-  // {id:8, text:""},
-  // {id:9, text:""},
-  // {id:10, text:""},
-  // {id:11, text:""},
-  // {id:12, text:""},
-  // {id:13, text:""},
-  // {id:14, text:""},
-  // {id:15, text:""},
-  // {id:16, text:""},
-  // {id:17, text:""},
-  // {id:18, text:""},
-  // {id:19, text:""},
-  // {id:20, text:""},
-  // {id:21, text:""},
-  // {id:22, text:""},
-  // {id:23, text:""},
-  // {id:24, text:""},
-  // {id:25, text:""},
-  // {id:26, text:""},
-  // {id:27, text:""},
-  // {id:28, text:""},
-  // {id:29, text:""},
-  // {id:30, text:""},
-  // {id:31, text:""},
-  // {id:32, text:""},
-  // {id:33, text:""},
-  // {id:34, text:""},
-  // {id:35, text:""},
-  // {id:36, text:""},
-  // {id:37, text:""},
-  // {id:38, text:""},
-  // {id:39, text:""},
-  // {id:40, text:""},
-  // {id:41, text:""},
-  // {id:42, text:""},
-  // {id:43, text:""},
-  // {id:44, text:""},
-  // {id:45, text:""},
-  // {id:46, text:""},
-  // {id:47, text:""},
-  // {id:48, text:""},
-  // {id:49, text:""},
-  // {id:50, text:""},
-  // {id:51, text:""},
-  // {id:52, text:""},
-  // {id:53, text:""},
-  // {id:54, text:""},
-  // {id:55, text:""},
-  // {id:56, text:""},
-  // {id:57, text:""},
-  // {id:58, text:""},
-  // {id:59, text:""},
-  // {id:60, text:""},
-  // {id:61, text:""},
-  // {id:62, text:""},
-  // {id:63, text:""},
-  // {id:64, text:""},
-  // {id:65, text:""},
-  // {id:66, text:""},
-  // {id:67, text:""},
-  // {id:68, text:""},
-  // {id:69, text:""},
-  // {id:70, text:""},
-  // {id:71, text:""},
-  // {id:72, text:""},
-  // {id:73, text:""},
-  // {id:74, text:""},
-  // {id:75, text:""},
-  // {id:76, text:""},
-  // {id:77, text:""},
-  // {id:78, text:""},
-  // {id:79, text:""},
-  // {id:80, text:""},
-  // {id:81, text:""},
-  // {id:82, text:""},
-  // {id:83, text:""},
-  // {id:84, text:""},
-  // {id:85, text:""},
-  // {id:86, text:""},
-  // {id:87, text:""},
-  // {id:88, text:""},
-  // {id:89, text:""},
-  // {id:90, text:""},
-  // {id:91, text:""},
-  // {id:92, text:""},
-  // {id:93, text:""},
-  // {id:94, text:""},
-  // {id:95, text:""},
-  // {id:96, text:""},
-  // {id:97, text:""},
-  // {id:98, text:""},
-  // {id:99, text:""},
-  // {id:100, text:""},
-  // {id:101, text:""},
-  // {id:102, text:""},
-  // {id:103, text:""},
-  // {id:104, text:""},
-  // {id:105, text:""},
-  // {id:106, text:""},
-  // {id:107, text:""},
-  // {id:108, text:""},
-  // {id:109, text:""},
-];
+// const level1Cards = [
+//   {id:1, text:"Dennis is asshole. Why Charlie Hate? Answer: Because Dennis is a bastard man."},
+//   {id:2, text:"Puzzle: Put this bottle back together"},
+//   {id:3, text:"Advance to Level 2"},
+//   // {id:4, text:""},
+//   // {id:5, text:""},
+//   // {id:6, text:""},
+//   // {id:7, text:""},
+//   // {id:8, text:""},
+//   // {id:9, text:""},
+//   // {id:10, text:""},
+//   // {id:11, text:""},
+//   // {id:12, text:""},
+//   // {id:13, text:""},
+//   // {id:14, text:""},
+//   // {id:15, text:""},
+//   // {id:16, text:""},
+//   // {id:17, text:""},
+//   // {id:18, text:""},
+//   // {id:19, text:""},
+//   // {id:20, text:""},
+//   // {id:21, text:""},
+//   // {id:22, text:""},
+//   // {id:23, text:""},
+//   // {id:24, text:""},
+//   // {id:25, text:""},
+//   // {id:26, text:""},
+//   // {id:27, text:""},
+//   // {id:28, text:""},
+//   // {id:29, text:""},
+//   // {id:30, text:""},
+//   // {id:31, text:""},
+//   // {id:32, text:""},
+//   // {id:33, text:""},
+//   // {id:34, text:""},
+//   // {id:35, text:""},
+//   // {id:36, text:""},
+//   // {id:37, text:""},
+//   // {id:38, text:""},
+//   // {id:39, text:""},
+//   // {id:40, text:""},
+//   // {id:41, text:""},
+//   // {id:42, text:""},
+//   // {id:43, text:""},
+//   // {id:44, text:""},
+//   // {id:45, text:""},
+//   // {id:46, text:""},
+//   // {id:47, text:""},
+//   // {id:48, text:""},
+//   // {id:49, text:""},
+//   // {id:50, text:""},
+//   // {id:51, text:""},
+//   // {id:52, text:""},
+//   // {id:53, text:""},
+//   // {id:54, text:""},
+//   // {id:55, text:""},
+//   // {id:56, text:""},
+//   // {id:57, text:""},
+//   // {id:58, text:""},
+//   // {id:59, text:""},
+//   // {id:60, text:""},
+//   // {id:61, text:""},
+//   // {id:62, text:""},
+//   // {id:63, text:""},
+//   // {id:64, text:""},
+//   // {id:65, text:""},
+//   // {id:66, text:""},
+//   // {id:67, text:""},
+//   // {id:68, text:""},
+//   // {id:69, text:""},
+//   // {id:70, text:""},
+//   // {id:71, text:""},
+//   // {id:72, text:""},
+//   // {id:73, text:""},
+//   // {id:74, text:""},
+//   // {id:75, text:""},
+//   // {id:76, text:""},
+//   // {id:77, text:""},
+//   // {id:78, text:""},
+//   // {id:79, text:""},
+//   // {id:80, text:""},
+//   // {id:81, text:""},
+//   // {id:82, text:""},
+//   // {id:83, text:""},
+//   // {id:84, text:""},
+//   // {id:85, text:""},
+//   // {id:86, text:""},
+//   // {id:87, text:""},
+//   // {id:88, text:""},
+//   // {id:89, text:""},
+//   // {id:90, text:""},
+//   // {id:91, text:""},
+//   // {id:92, text:""},
+//   // {id:93, text:""},
+//   // {id:94, text:""},
+//   // {id:95, text:""},
+//   // {id:96, text:""},
+//   // {id:97, text:""},
+//   // {id:98, text:""},
+//   // {id:99, text:""},
+//   // {id:100, text:""},
+//   // {id:101, text:""},
+//   // {id:102, text:""},
+//   // {id:103, text:""},
+//   // {id:104, text:""},
+//   // {id:105, text:""},
+//   // {id:106, text:""},
+//   // {id:107, text:""},
+//   // {id:108, text:""},
+//   // {id:109, text:""},
+// ];
 
 const level2Cards = [
   {id:1, text:"Some fish card that might contains some words in  “You must dance in the dance in rounds”"},
@@ -280,9 +280,14 @@ const level3Cards = [
   {id:56, text:"Every time you buy or accept a drink you must chug it (once you start drinking it you can’t stop)"},
 ];
 
+// const API_KEY = 'AIzaSyCGi_Gofp8TC2lZaejSoHrhYelK6zhT18I';
+// const shareUrl = 'https://docs.google.com/spreadsheets/d/1dQtOfi_e_W0CLvBDp3mByXcERS-QoO5FBrOmkaBTXcE/edit?usp=sharing';
+// const { rows, isFetching } = useGoogleSpreadsheet(shareUrl, API_KEY);
+
 class CardPopup extends React.Component {
   constructor(props) {
     super(props);
+    this.getLevel1Cards = this.getLevel1Cards.bind(this);
     let min = 1;
     let max = level2Cards.length;
     let rand =  min + Math.floor((Math.random() * (max-min)));
@@ -290,17 +295,30 @@ class CardPopup extends React.Component {
     this.state = {
       level: props.level,
       cardText: "default",
+      level1FromGoogle: null,
     };
     // console.log("LEVEL IS SET TO: " + this.state.level);
   }
 
   componentDidMount() {
     //Grab a random card, depending on the player's current level
+    // this.getLevel1Cards().then(result => this.setCard(result), null);
+    this.getLevel1Cards();
+  }
+
+  setCard(level1Questions) {
+    console.log("Level 1 Questions: ");
+    console.log(level1Questions);
     let min = 1;
     if(this.state.level === 1) {
-      let max = level1Cards.length;
-      let rand =  min + Math.floor((Math.random() * (max-min)));
-      this.setState({cardText: level1Cards.find(item => item.id === rand).text});
+      // let max = level1Cards.length;
+      let max = level1Questions.length -2;
+      let rand =  (min + Math.floor((Math.random() * (1+max-min))/2))*2;
+      //2, 4, 6 are questions, 3,5,7 are answers to those questions. I have no idea if it'll always be like this, as I don't know the Google format.
+      //TODO: See what the format is supposed to be. This may cause problems in the future.
+      // this.setState({cardText: level1Cards.find(item => item.id === rand).text});
+      // this.setState({cardText: level1Questions.find(item => item.id === rand).text});
+      this.setState({cardText: level1Questions[rand].content.$t});
     }
     else if(this.state.level === 2) {
       let max = level2Cards.length;
@@ -324,6 +342,25 @@ class CardPopup extends React.Component {
         </div>
       </div>
     );
+  }
+
+  async getLevel1Cards() {
+
+    await fetch('https://spreadsheets.google.com/feeds/cells/1dQtOfi_e_W0CLvBDp3mByXcERS-QoO5FBrOmkaBTXcE/1/public/values?alt=json', {
+      method: 'GET',
+      apiKey: 'AIzaSyCGi_Gofp8TC2lZaejSoHrhYelK6zhT18I',
+    })
+      .then(response => {
+        return response.json();
+      }).then(result => {
+      this.setState({level1FromGoogle: result});
+      console.log("Google JSON:");
+      console.log(result);
+      console.log("Entry: ");
+      console.log(result.feed.entry);
+      // return result;
+      this.setCard(result.feed.entry);
+    });
   }
 }
 

@@ -288,6 +288,7 @@ code {
     z-index: 40;
     background-color: rgba(0,0,0, 0.5);
     color: white;
+    white-space: pre-wrap;
 }
 .popup\_inner {
     position: absolute;

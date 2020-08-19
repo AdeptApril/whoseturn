@@ -280,6 +280,8 @@ const level3Cards = [
   {id:56, text:"Every time you buy or accept a drink you must chug it (once you start drinking it you can’t stop)"},
 ];
 
+let x = null;
+
 // const API_KEY = 'AIzaSyCGi_Gofp8TC2lZaejSoHrhYelK6zhT18I';
 // const shareUrl = 'https://docs.google.com/spreadsheets/d/1dQtOfi_e_W0CLvBDp3mByXcERS-QoO5FBrOmkaBTXcE/edit?usp=sharing';
 // const { rows, isFetching } = useGoogleSpreadsheet(shareUrl, API_KEY);
@@ -294,8 +296,11 @@ class CardPopup extends React.Component {
     console.log(rand.toString());
     this.state = {
       level: props.level,
-      cardText: "default",
+      cardText: "Question Loading...",
+      question: "Question Loading...",
       level1FromGoogle: null,
+      answer: null,
+      timeLeftUntilReveal: 10,
     };
     // console.log("LEVEL IS SET TO: " + this.state.level);
   }
@@ -304,6 +309,9 @@ class CardPopup extends React.Component {
     //Grab a random card, depending on the player's current level
     // this.getLevel1Cards().then(result => this.setCard(result), null);
     this.getLevel1Cards();
+  }
+  componentWillUnmount() {
+    clearInterval(x);
   }
 
   setCard(level1Questions) {
@@ -318,7 +326,25 @@ class CardPopup extends React.Component {
       //TODO: See what the format is supposed to be. This may cause problems in the future.
       // this.setState({cardText: level1Cards.find(item => item.id === rand).text});
       // this.setState({cardText: level1Questions.find(item => item.id === rand).text});
-      this.setState({cardText: level1Questions[rand].content.$t});
+      this.setState({
+        cardText: level1Questions[rand].content.$t,
+        question: level1Questions[rand].content.$t,
+        answer: level1Questions[rand+1].content.$t,});
+      x = setInterval(() => {
+        console.log("setInterval called in CardPopup with time at " + this.state.timeLeftUntilReveal);
+        this.setState( {
+          // Need to have the CSS have white-space: pre-wrap; in order for the new lines to show up
+          cardText: this.state.question + '\n\n\n' + this.state.timeLeftUntilReveal + " seconds until answer revealed",
+          timeLeftUntilReveal: this.state.timeLeftUntilReveal - 1,
+        });
+        // If the count down is finished, give the answer
+        if (this.state.timeLeftUntilReveal < 0) {
+          this.setState( {
+            cardText: this.state.question + '\n\n\n' + this.state.answer,
+          });
+          clearInterval(x);
+        }
+      }, 1000);
     }
     else if(this.state.level === 2) {
       let max = level2Cards.length;

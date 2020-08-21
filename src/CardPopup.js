@@ -290,6 +290,7 @@ class CardPopup extends React.Component {
   constructor(props) {
     super(props);
     this.getLevel1Cards = this.getLevel1Cards.bind(this);
+    this.revealAnswer = this.revealAnswer.bind(this);
     let min = 1;
     let max = level2Cards.length;
     let rand =  min + Math.floor((Math.random() * (max-min)));
@@ -301,6 +302,7 @@ class CardPopup extends React.Component {
       level1FromGoogle: null,
       answer: null,
       timeLeftUntilReveal: 10,
+      answerRevealed: false,
     };
     // console.log("LEVEL IS SET TO: " + this.state.level);
   }
@@ -311,6 +313,15 @@ class CardPopup extends React.Component {
     this.getLevel1Cards();
   }
   componentWillUnmount() {
+    clearInterval(x);
+  }
+
+  revealAnswer()
+  {
+    this.setState( {
+      cardText: this.state.question + '\n\n\n' + this.state.answer,
+      answerRevealed: true,
+    });
     clearInterval(x);
   }
 
@@ -327,7 +338,7 @@ class CardPopup extends React.Component {
       // this.setState({cardText: level1Cards.find(item => item.id === rand).text});
       // this.setState({cardText: level1Questions.find(item => item.id === rand).text});
       this.setState({
-        cardText: level1Questions[rand].content.$t,
+        cardText: level1Questions[rand].content.$t + '\n\n\n\n',
         question: level1Questions[rand].content.$t,
         answer: level1Questions[rand+1].content.$t,});
       x = setInterval(() => {
@@ -341,6 +352,7 @@ class CardPopup extends React.Component {
         if (this.state.timeLeftUntilReveal < 0) {
           this.setState( {
             cardText: this.state.question + '\n\n\n' + this.state.answer,
+            answerRevealed: true,
           });
           clearInterval(x);
         }
@@ -363,6 +375,7 @@ class CardPopup extends React.Component {
       <div className='popup'>
         {this.state.cardText}
         <div className='popup\_inner'>
+          {this.state.answerRevealed ? null : <button id="revealAnswer" onClick={this.revealAnswer}>Reveal Answer</button>}
           {/*<h1>{this.props.text}</h1>*/}
           <button id="innerCardPopupButton" onClick={this.props.closePopup}>close</button>
         </div>

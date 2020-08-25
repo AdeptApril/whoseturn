@@ -21,6 +21,7 @@ class AdminMenu extends React.Component {
         selectedPlayer: this.props.name, //<- was what was there originally, but the idea is to require a selected name before popping anything up, so TODO: Make selected player be nothing, and graphics change as needed.
         modifyPlayer: false,
         cardNumber: 0, //This probably isn't needed, and could be removed somehow, since it's just keeping track of what number is selected in a list.
+        cardTimer: null,
         // pollingInterval: 3000,
         // polling: true
       };
@@ -48,22 +49,14 @@ class AdminMenu extends React.Component {
     });
   }
 
+  updateCardTimer(evt) {
+    this.setState({
+      cardTimer: evt.target.value.trim(),
+    });
+  }
+
   //Admin has changed, so check to see if current player is an admin.
   endMinigame(msg, adminName) {
-    // fetch('/api/endminigame/', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Accept': 'application/json',
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify({
-    //     name: data,
-    //     //secondParam: 'yourOtherValue',
-    //   })
-    // })
-    //   .then(response => {
-    //     return response.json();
-    //   });
     console.log("Ending Minigame through Admin Menu");
     this.state.client.send(JSON.stringify({
       type: 'endMinigame',
@@ -112,6 +105,8 @@ class AdminMenu extends React.Component {
       <tr><td><button onClick={() => WhoseTurnInMinigame.miniTurnPassed(this.state.client, this.state.name)}>Pass turn in Minigame</button></td></tr>
       {/*<tr><td><button onClick={() => PubSub.publish('pass-minigame-turn-button', this.state.name)}>Pass turn in Minigame</button></td></tr>*/}
       <tr><td><button onClick={() => PubSub.publish('end-minigame-button', this.state.name)}>End Minigame</button></td></tr>
+      <tr><td><textarea autoFocus placeholder="Set card wait time" className="enter-card-wait-textarea" onKeyUp={(evt) => evt.keyCode === 13 ? document.getElementById("setCardTimerButton").click() : null }
+                onChange={evt => this.updateCardTimer(evt)}>{this.state.cardTimer}</textarea></td><td><button id="setCardTimerButton" onClick={() => PubSub.publish('set-card-timer', this.state.cardTimer)}>Set timer</button></td></tr>
       </tbody>
         {!this.state.modifyPlayer ? <tr>
           <button id="playerAdjustmentMenu" onClick={() => this.setState({

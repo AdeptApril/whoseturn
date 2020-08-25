@@ -48,6 +48,7 @@ class ModeBriMegAman extends Component {
     this.adminChanged = this.adminChanged.bind(this);
     this.toggleCard = this.toggleCard.bind(this);
     this.levelUpdate = this.levelUpdate.bind(this);
+    this.cardTimerUpdate = this.cardTimerUpdate.bind(this);
     ModeBriMegAman.cardClaimed = ModeBriMegAman.cardClaimed.bind(this);
     this.state = {
       isAdmin: false,
@@ -60,6 +61,7 @@ class ModeBriMegAman extends Component {
       inMinigame: false, //Adding this might be helpful for certain logic, but is currently not used
       showCard: false,
       level: 1,
+      cardTime: 10, //Default, in seconds, for how long the card is displayed
   };
   }
 
@@ -117,6 +119,7 @@ class ModeBriMegAman extends Component {
     PubSub.subscribe('admin-update', this.adminChanged);
     PubSub.subscribe('card-claimed-button', ModeBriMegAman.cardClaimed);
     PubSub.subscribe('player-level-update', this.levelUpdate);
+    PubSub.subscribe('set-card-timer', this.cardTimerUpdate);
   };
 
   componentWillUnmount() {
@@ -128,6 +131,7 @@ class ModeBriMegAman extends Component {
     PubSub.unsubscribe('admin-update');
     PubSub.unsubscribe('card-claimed-button');
     PubSub.unsubscribe('player-level-update', this.levelUpdate);
+    PubSub.unsubscribe('set-card-timer');
     this.cancelKeepAlive();
   }
 
@@ -259,7 +263,12 @@ static cardClaimed(msg, data) {
         isAdmin: false,
       });
     }
+  }
 
+  cardTimerUpdate(msg, data) {
+    this.setState({
+      cardTime: data,
+    });
   }
 
   updateName(evt) {
@@ -321,6 +330,7 @@ static cardClaimed(msg, data) {
                   <CardPopup
                     text='Click "Close Button" to hide popup'
                     level={this.state.level}
+                    cardTime={this.state.cardTime}
                     closePopup={this.toggleCard.bind(this)}
                   />
                   : null

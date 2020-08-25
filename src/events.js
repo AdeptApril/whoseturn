@@ -19,6 +19,7 @@ ModeBriMegAman.js (ModeWhoseTurn.js may have similar functionality, or may be us
     PubSub.subscribe('admin-update', this.adminChanged);
     PubSub.subscribe('card-claimed-button', ModeBriMegAman.cardClaimed);
     PubSub.subscribe('player-level-update', this.levelUpdate);
+    PubSub.subscribe('set-card-timer', this.cardTimerUpdate);
     PubSub.publish('pass-turn-button', this.state.name)
     PubSub.publish('join-leave-button', 'leave')
     PubSub.publish('card-claimed-button', this.state.name)
@@ -37,6 +38,7 @@ AdminMenu.js
     PubSub.publish('pass-turn-button', this.state.name)
     // PubSub.publish('pass-minigame-turn-button', this.state.name) //Removed in favor of a websockets call
     PubSub.publish('end-minigame-button', this.state.name)
+    PubSub.publish('set-card-timer', this.state.cardTimer)
 
 AnimatedCardClaim.js
     PubSub.subscribe('card-claimed-button', this.cardClaimedAnimation);

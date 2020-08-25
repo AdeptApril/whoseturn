@@ -301,7 +301,7 @@ class CardPopup extends React.Component {
       question: "Question Loading...",
       level1FromGoogle: null,
       answer: null,
-      timeLeftUntilReveal: 10,
+      timeLeftUntilReveal: props.cardTime,
       answerRevealed: false,
     };
     // console.log("LEVEL IS SET TO: " + this.state.level);
@@ -341,22 +341,25 @@ class CardPopup extends React.Component {
         cardText: level1Questions[rand].content.$t + '\n\n\n\n',
         question: level1Questions[rand].content.$t,
         answer: level1Questions[rand+1].content.$t,});
-      x = setInterval(() => {
-        console.log("setInterval called in CardPopup with time at " + this.state.timeLeftUntilReveal);
-        this.setState( {
-          // Need to have the CSS have white-space: pre-wrap; in order for the new lines to show up
-          cardText: this.state.question + '\n\n\n' + this.state.timeLeftUntilReveal + " seconds until answer revealed",
-          timeLeftUntilReveal: this.state.timeLeftUntilReveal - 1,
-        });
-        // If the count down is finished, give the answer
-        if (this.state.timeLeftUntilReveal < 0) {
-          this.setState( {
-            cardText: this.state.question + '\n\n\n' + this.state.answer,
-            answerRevealed: true,
+      //If there's something weird (time less than 0), or time set to 0 intentionally, turn off the timer and just have "reveal answer"
+      if(this.state.timeLeftUntilReveal > 0 ) {
+        x = setInterval(() => {
+          console.log("setInterval called in CardPopup with time at " + this.state.timeLeftUntilReveal);
+          this.setState({
+            // Need to have the CSS have white-space: pre-wrap; in order for the new lines to show up
+            cardText: this.state.question + '\n\n\n' + this.state.timeLeftUntilReveal + " seconds until answer revealed",
+            timeLeftUntilReveal: this.state.timeLeftUntilReveal - 1,
           });
-          clearInterval(x);
-        }
-      }, 1000);
+          // If the count down is finished, give the answer
+          if (this.state.timeLeftUntilReveal < 0) {
+            this.setState({
+              cardText: this.state.question + '\n\n\n' + this.state.answer,
+              answerRevealed: true,
+            });
+            clearInterval(x);
+          }
+        }, 1000);
+      }
     }
     else if(this.state.level === 2) {
       let max = level2Cards.length;

@@ -4,6 +4,7 @@ import RemoveName from "./RemoveName";
 import LeaveMinigame from "./LeaveMinigame";
 import WhoseTurnInMinigame from "./WhoseTurnInMinigame";
 import CardPopup from "./CardPopup";
+import SetName from "./SetName";
 
 /* Displays current playersInMinigame in the game and minigame */
 class AdminMenu extends React.Component {
@@ -15,6 +16,7 @@ class AdminMenu extends React.Component {
     this.handleSelectedPlayerChanged = this.handleSelectedPlayerChanged.bind(this);
     this.openCard = this.openCard.bind(this);
     this.closeCard = this.closeCard.bind(this);
+    this.updateName = this.updateName.bind(this);
     this.state =
       {
         name: this.props.name,
@@ -25,6 +27,7 @@ class AdminMenu extends React.Component {
         modifyPlayer: false,
         cardNumber: 0, //This probably isn't needed, and could be removed somehow, since it's just keeping track of what number is selected in a list.
         cardTimer: props.cardTime,
+        addingPlayer: null,
         showCard: false,
         level: 1,
         // pollingInterval: 3000,
@@ -103,6 +106,12 @@ class AdminMenu extends React.Component {
       });
   }
 
+  updateName(evt) {
+    this.setState({
+      addingPlayer: evt.target.value.trim(),
+    });
+  }
+
   handleSelectedPlayerChanged(event)
   {
     this.setState({ selectedPlayer: event.target.value });
@@ -152,9 +161,11 @@ class AdminMenu extends React.Component {
         })}>
           Close player adjustment menu</button></tr>
           {/*//Move the rest of this out to the AdminSubMenu class. Or find some way for it to pop up only after a player is selected*/}
-      <tr>
-        <td><div><select value={this.state.selectedPlayer} onChange={(event) => this.handleSelectedPlayerChanged(event)}>{playersInList}</select></div></td>
-      </tr>
+          <tr><td><textarea autoFocus placeholder="New Player Name" className="admin-add-player-textarea" onKeyUp={(evt) => evt.keyCode === 13 ? document.getElementById("adminAddPlayerButton").click() : null }
+                        onChange={evt => this.updateName(evt)}>{this.state.addingPlayer}</textarea></td><td colSpan="3"><button id="adminAddPlayerButton" onClick={() => SetName.inputName(this.state.addingPlayer)}>add player</button></td></tr>
+        <tr>
+          <td><div><select value={this.state.selectedPlayer} onChange={(event) => this.handleSelectedPlayerChanged(event)}>{playersInList}</select></div></td>
+        </tr>
         <tr>
           <td>
             <button onClick={() => RemoveName.remove(this.state.selectedPlayer)}>Kick from game</button>

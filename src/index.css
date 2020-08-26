@@ -375,6 +375,13 @@ code {
     height: 40vh;
 }
 
+.admin-draw-card-button {
+}
+
+.admin-draw-card-button-cell {
+
+}
+
 /*Items below likely best to remove, but kept for use in trying to make sense of CSS*/
 /*.bio-title {*/
 /*font-size: xx-large;*/

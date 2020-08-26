@@ -3,6 +3,7 @@ import PubSub from './pubsub.js';
 import RemoveName from "./RemoveName";
 import LeaveMinigame from "./LeaveMinigame";
 import WhoseTurnInMinigame from "./WhoseTurnInMinigame";
+import CardPopup from "./CardPopup";
 
 /* Displays current playersInMinigame in the game and minigame */
 class AdminMenu extends React.Component {
@@ -12,6 +13,8 @@ class AdminMenu extends React.Component {
     this.endMinigame = this.endMinigame.bind(this);
     this.playerUpdate = this.playerUpdate.bind(this);
     this.handleSelectedPlayerChanged = this.handleSelectedPlayerChanged.bind(this);
+    this.openCard = this.openCard.bind(this);
+    this.closeCard = this.closeCard.bind(this);
     this.state =
       {
         name: this.props.name,
@@ -21,7 +24,9 @@ class AdminMenu extends React.Component {
         selectedPlayer: this.props.name, //<- was what was there originally, but the idea is to require a selected name before popping anything up, so TODO: Make selected player be nothing, and graphics change as needed.
         modifyPlayer: false,
         cardNumber: 0, //This probably isn't needed, and could be removed somehow, since it's just keeping track of what number is selected in a list.
-        cardTimer: null,
+        cardTimer: props.cardTime,
+        showCard: false,
+        level: 1,
         // pollingInterval: 3000,
         // polling: true
       };
@@ -52,6 +57,21 @@ class AdminMenu extends React.Component {
   updateCardTimer(evt) {
     this.setState({
       cardTimer: evt.target.value.trim(),
+    });
+  }
+
+  openCard(level) {
+    console.log("Toggling Card display");
+    this.setState({
+      showCard: true,
+      level: level,
+    });
+  }
+
+  closeCard() {
+    console.log("Toggling Card display");
+    this.setState({
+      showCard: false,
     });
   }
 
@@ -102,17 +122,29 @@ class AdminMenu extends React.Component {
       <table><tbody>
       <tr><td>Admin Menu</td></tr>
       <tr><td><button onClick={() => PubSub.publish('pass-turn-button', this.state.name)}>Pass turn in main game</button></td></tr>
+      {this.state.showCard ?
+        <CardPopup
+          text='Click "Close Button" to hide popup'
+          level={this.state.level}
+          cardTime={this.state.cardTimer}
+          closePopup={this.closeCard.bind(this)}
+        /> : null}
+      <tr><td className="admin-draw-card-button-cell">Draw card for level:</td>
+        <td><button className="admin-draw-card-button" onClick={() => this.openCard(1)}>1</button></td>
+        <td><button className="admin-draw-card-button" onClick={() => this.openCard(2)}>2</button></td>
+        <td><button className="admin-draw-card-button" onClick={() => this.openCard(3)}>3</button></td>
+      </tr>
       <tr><td><button onClick={() => WhoseTurnInMinigame.miniTurnPassed(this.state.client, this.state.name)}>Pass turn in Minigame</button></td></tr>
       {/*<tr><td><button onClick={() => PubSub.publish('pass-minigame-turn-button', this.state.name)}>Pass turn in Minigame</button></td></tr>*/}
       <tr><td><button onClick={() => PubSub.publish('end-minigame-button', this.state.name)}>End Minigame</button></td></tr>
       <tr><td><textarea autoFocus placeholder="Set card wait time" className="enter-card-wait-textarea" onKeyUp={(evt) => evt.keyCode === 13 ? document.getElementById("setCardTimerButton").click() : null }
-                onChange={evt => this.updateCardTimer(evt)}>{this.state.cardTimer}</textarea></td><td><button id="setCardTimerButton" onClick={() => PubSub.publish('set-card-timer', this.state.cardTimer)}>Set timer</button></td></tr>
+                onChange={evt => this.updateCardTimer(evt)}>{this.state.cardTimer}</textarea></td><td colSpan="3"><button id="setCardTimerButton" onClick={() => PubSub.publish('set-card-timer', this.state.cardTimer)}>Set timer</button></td></tr>
       </tbody>
-        {!this.state.modifyPlayer ? <tr>
+        {!this.state.modifyPlayer ? <tr><td colSpan="4">
           <button id="playerAdjustmentMenu" onClick={() => this.setState({
             modifyPlayer: true,
           })}>
-            Open player adjustment menu</button></tr>
+            Open player adjustment menu</button></td></tr>
           :
           <tbody>
           <tr><button id="playerAdjustmentMenu" onClick={() => this.setState({

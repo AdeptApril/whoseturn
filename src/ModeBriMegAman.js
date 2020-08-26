@@ -398,7 +398,7 @@ static cardClaimed(msg, data) {
           </div>
         </div>
         <div className="row_7">
-          {this.state.isAdmin ? <AdminMenu client = {client} name={this.state.name}/> : null}
+          {this.state.isAdmin ? <AdminMenu cardTime={this.state.cardTime} client = {client} name={this.state.name}/> : null}
         </div>
       </div>
     );

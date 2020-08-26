@@ -303,7 +303,7 @@ code {
 #innerCardPopupButton{
     position: absolute;
     left: 35%;
-    margin-top: 45vh;
+    top: 55vh;
 }
 
 .row_4 {

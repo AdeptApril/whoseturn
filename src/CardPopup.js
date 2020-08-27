@@ -378,7 +378,7 @@ class CardPopup extends React.Component {
       <div className='popup'>
         {this.state.cardText}
         <div className='popup\_inner'>
-          {this.state.answerRevealed ? null : <button id="revealAnswer" onClick={this.revealAnswer}>Reveal Answer</button>}
+          {this.state.answerRevealed || this.state.level !== 1 ? null : <button id="revealAnswer" onClick={this.revealAnswer}>Reveal Answer</button>}
           {/*<h1>{this.props.text}</h1>*/}
           <button id="innerCardPopupButton" onClick={this.props.closePopup}>close</button>
         </div>

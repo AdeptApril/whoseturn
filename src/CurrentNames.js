@@ -88,6 +88,7 @@ class CurrentNames extends React.Component {
     // }
 
     const polling = setTimeout(() => {
+      console.log("Getting current players");
         fetch('/api/getCurrPlayers/')
           .then(response => {
             return response.json();
@@ -99,9 +100,12 @@ class CurrentNames extends React.Component {
             playersInGame: result.name,
             numberOfCards: result.cards,
           });
-          // console.log("Result name: " + result.name + ", state name: " + this.state.playerName);
-          if(result.name.toString() === this.state.playerName) {
-            PubSub.publish('player-level-update', Math.floor(result.cards / 3) + 1);
+          console.log("Result name: " + result.name + ", state name: " + this.state.playerName);
+          for(let i = 0; i < result.name.length; i++){
+            if(result.name[i].toString() === this.state.playerName) {
+              PubSub.publish('player-level-update', (Math.floor(result.cards[i] / 3) + 1));
+              // console.log("Player level is now " + (Math.floor(result.cards[i] / 3) + 1));
+            }
           }
           PubSub.publish('player-list-update', this.state.playersInGame);
           if(this.state.playersInGame.length > 0 && this.state.playersInGame[0] !== this.state.admin) //Check to see who the admin is if it doesn't make sense given array of playersInGame

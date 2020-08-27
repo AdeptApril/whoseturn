@@ -139,9 +139,9 @@ class AdminMenu extends React.Component {
           closePopup={this.closeCard.bind(this)}
         /> : null}
       <tr><td className="admin-draw-card-button-cell">Draw card for level:</td>
-        <td><button className="admin-draw-card-button" onClick={() => this.openCard(1)}>1</button></td>
-        <td><button className="admin-draw-card-button" onClick={() => this.openCard(2)}>2</button></td>
-        <td><button className="admin-draw-card-button" onClick={() => this.openCard(3)}>3</button></td>
+        <td><button className="admin-draw-card-button" onClick={() => this.openCard(1)}>Mind</button></td>
+        <td><button className="admin-draw-card-button" onClick={() => this.openCard(2)}>Body</button></td>
+        <td><button className="admin-draw-card-button" onClick={() => this.openCard(3)}>Spirit</button></td>
       </tr>
       <tr><td><button onClick={() => WhoseTurnInMinigame.miniTurnPassed(this.state.client, this.state.name)}>Pass turn in Minigame</button></td></tr>
       {/*<tr><td><button onClick={() => PubSub.publish('pass-minigame-turn-button', this.state.name)}>Pass turn in Minigame</button></td></tr>*/}

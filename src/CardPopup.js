@@ -403,6 +403,14 @@ class CardPopup extends React.Component {
       // return result;
       this.setCard(result.feed.entry);
     });
+
+    fetch('/api/getCardMind/')
+      .then(response => {
+        return response.json();
+      }).then(result => {
+        console.log(result);
+        console.log("Mind question: " + result.question + ", Mind answer: " + result.answer);
+      })
   }
 }
 

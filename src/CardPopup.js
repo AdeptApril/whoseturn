@@ -289,7 +289,8 @@ let x = null;
 class CardPopup extends React.Component {
   constructor(props) {
     super(props);
-    this.getLevel1Cards = this.getLevel1Cards.bind(this);
+    // this.getLevel1Cards = this.getLevel1Cards.bind(this);
+    this.getLevel1Card = this.getLevel1Card.bind(this);
     this.revealAnswer = this.revealAnswer.bind(this);
     let min = 1;
     let max = level2Cards.length;
@@ -310,7 +311,10 @@ class CardPopup extends React.Component {
   componentDidMount() {
     //Grab a random card, depending on the player's current level
     // this.getLevel1Cards().then(result => this.setCard(result), null);
-    this.getLevel1Cards();
+    // this.getLevel1Cards();
+
+    //Grab a card from the server, which should be a single random question.
+    this.getLevel1Card();
   }
   componentWillUnmount() {
     clearInterval(x);
@@ -331,16 +335,19 @@ class CardPopup extends React.Component {
     let min = 1;
     if(this.state.level === 1) {
       // let max = level1Cards.length;
-      let max = level1Questions.length -2;
-      let rand =  (min + Math.floor((Math.random() * (1+max-min))/2))*2;
+      // let max = level1Questions.length -2;
+      // let rand =  (min + Math.floor((Math.random() * (1+max-min))/2))*2;
       //2, 4, 6 are questions, 3,5,7 are answers to those questions. I have no idea if it'll always be like this, as I don't know the Google format.
       //TODO: See what the format is supposed to be. This may cause problems in the future.
       // this.setState({cardText: level1Cards.find(item => item.id === rand).text});
       // this.setState({cardText: level1Questions.find(item => item.id === rand).text});
       this.setState({
-        cardText: level1Questions[rand].content.$t + '\n\n\n\n',
-        question: level1Questions[rand].content.$t,
-        answer: level1Questions[rand+1].content.$t,});
+        // cardText: level1Questions[rand].content.$t + '\n\n\n\n',
+        // question: level1Questions[rand].content.$t,
+        // answer: level1Questions[rand+1].content.$t,});
+        cardText: level1Questions.question + '\n\n\n\n',
+        question: level1Questions.question,
+        answer: level1Questions.answer,});
       //If there's something weird (time less than 0), or time set to 0 intentionally, turn off the timer and just have "reveal answer"
       if(this.state.timeLeftUntilReveal > 0 ) {
         x = setInterval(() => {
@@ -386,32 +393,44 @@ class CardPopup extends React.Component {
     );
   }
 
-  async getLevel1Cards() {
+  async getLevel1Card() {
 
-    await fetch('https://spreadsheets.google.com/feeds/cells/1dQtOfi_e_W0CLvBDp3mByXcERS-QoO5FBrOmkaBTXcE/1/public/values?alt=json', {
-      method: 'GET',
-      apiKey: 'AIzaSyCGi_Gofp8TC2lZaejSoHrhYelK6zhT18I',
-    })
+    await fetch('/api/getCardMind/')
       .then(response => {
         return response.json();
       }).then(result => {
-      this.setState({level1FromGoogle: result});
-      console.log("Google JSON:");
-      console.log(result);
-      console.log("Entry: ");
-      console.log(result.feed.entry);
-      // return result;
-      this.setCard(result.feed.entry);
-    });
-
-    fetch('/api/getCardMind/')
-      .then(response => {
-        return response.json();
-      }).then(result => {
+        this.setCard(result);
         console.log(result);
         console.log("Mind question: " + result.question + ", Mind answer: " + result.answer);
-      })
+    })
   }
+
+  // async getLevel1Cards() {
+  //
+  //   await fetch('https://spreadsheets.google.com/feeds/cells/1dQtOfi_e_W0CLvBDp3mByXcERS-QoO5FBrOmkaBTXcE/1/public/values?alt=json', {
+  //     method: 'GET',
+  //     apiKey: 'AIzaSyCGi_Gofp8TC2lZaejSoHrhYelK6zhT18I',
+  //   })
+  //     .then(response => {
+  //       return response.json();
+  //     }).then(result => {
+  //     this.setState({level1FromGoogle: result});
+  //     console.log("Google JSON:");
+  //     console.log(result);
+  //     console.log("Entry: ");
+  //     console.log(result.feed.entry);
+  //     // return result;
+  //     this.setCard(result.feed.entry);
+  //   });
+  //
+  //   fetch('/api/getCardMind/')
+  //     .then(response => {
+  //       return response.json();
+  //     }).then(result => {
+  //       console.log(result);
+  //       console.log("Mind question: " + result.question + ", Mind answer: " + result.answer);
+  //     })
+  // }
 }
 
 export default CardPopup;

@@ -34,11 +34,13 @@ ModeBriMegAman.js (ModeWhoseTurn.js may have similar functionality, or may be us
 AdminMenu.js
     PubSub.subscribe('end-minigame-button', AdminMenu.endMinigame);
     PubSub.subscribe('player-list-update', this.playerUpdate);
+    PubSub.subscribe('add-question', this.addCard)};
     PubSub.publish('minigame-ended');
     PubSub.publish('pass-turn-button', this.state.name)
     // PubSub.publish('pass-minigame-turn-button', this.state.name) //Removed in favor of a websockets call
     PubSub.publish('end-minigame-button', this.state.name)
     PubSub.publish('set-card-timer', this.state.cardTimer)
+    PubSub.publish('add-question', "mind", this.state.admin, this.state.question, this.state.answer)}
 
 AnimatedCardClaim.js
     PubSub.subscribe('card-claimed-button', this.cardClaimedAnimation);

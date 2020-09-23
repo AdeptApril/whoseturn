@@ -17,6 +17,7 @@ class AdminMenu extends React.Component {
     this.openCard = this.openCard.bind(this);
     this.closeCard = this.closeCard.bind(this);
     this.updateName = this.updateName.bind(this);
+    this.addCard = this.addCard.bind(this);
     this.state =
       {
         name: this.props.name,
@@ -30,6 +31,8 @@ class AdminMenu extends React.Component {
         addingPlayer: null,
         showCard: false,
         level: 1,
+        question: "",
+        answer: "",
         // pollingInterval: 3000,
         // polling: true
       };
@@ -41,12 +44,14 @@ class AdminMenu extends React.Component {
   componentDidMount() {
     PubSub.subscribe('end-minigame-button', this.endMinigame);
     PubSub.subscribe('player-list-update', this.playerUpdate);
+    PubSub.subscribe('add-question', this.addCard);
     console.log("Admin name is: " + this.state.name);
   }
 
   componentWillUnmount() {
     PubSub.unsubscribe('end-minigame-button');
     PubSub.unsubscribe('player-list-update');
+    PubSub.unsubscribe('add-question');
   }
 
   playerUpdate(msg, data) {
@@ -60,6 +65,18 @@ class AdminMenu extends React.Component {
   updateCardTimer(evt) {
     this.setState({
       cardTimer: evt.target.value.trim(),
+    });
+  }
+
+  updateQuestion(evt) {
+    this.setState({
+      question: evt.target.value.trim(),
+    });
+  }
+
+  updateAnswer(evt) {
+    this.setState({
+      answer: evt.target.value.trim(),
     });
   }
 
@@ -99,6 +116,29 @@ class AdminMenu extends React.Component {
       body: JSON.stringify({
         name: inName,
         cardNumber: inCardNumber,
+      })
+    })
+      .then(response => {
+        return response.json();
+      });
+  }
+
+  addCard(msg, inLevel) {
+    let inName = this.state.name;
+    let inQuestion = this.state.question;
+    let inAnswer = this.state.answer;
+    console.log(inName + " sending a new card for the " + inLevel + " level. The question is: " + inQuestion + " - with the answer - " + inAnswer);
+    fetch('/api/addCard/', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: inName,
+        level: inLevel,
+        question: inQuestion,
+        answer: inAnswer,
       })
     })
       .then(response => {
@@ -148,6 +188,11 @@ class AdminMenu extends React.Component {
       <tr><td><button onClick={() => PubSub.publish('end-minigame-button', this.state.name)}>End Minigame</button></td></tr>
       <tr><td><textarea autoFocus placeholder="Set card wait time" className="enter-card-wait-textarea" onKeyUp={(evt) => evt.keyCode === 13 ? document.getElementById("setCardTimerButton").click() : null }
                 onChange={evt => this.updateCardTimer(evt)}>{this.state.cardTimer}</textarea></td><td colSpan="3"><button id="setCardTimerButton" onClick={() => PubSub.publish('set-card-timer', this.state.cardTimer)}>Set timer</button></td></tr>
+      <tr><td><textarea autoFocus placeholder="Add question to mind level" className="enter-question-textarea" onKeyUp={(evt) => evt.keyCode === 13 ? document.getElementById("addQuestionButton").click() : null }
+                        onChange={evt => this.updateQuestion(evt)}>{this.state.question}</textarea>
+        <td><textarea autoFocus placeholder="the answer" className="enter-question-textarea" onKeyUp={(evt) => evt.keyCode === 13 ? document.getElementById("addQuestionButton").click() : null }
+                      onChange={evt => this.updateAnswer(evt)}>{this.state.answer}</textarea></td>
+      </td><td colSpan="3"><button id="addQuestionButton" onClick={() => PubSub.publish('add-question', "mind")}>Add question</button></td></tr>
       </tbody>
         {!this.state.modifyPlayer ? <tr><td colSpan="4">
           <button id="playerAdjustmentMenu" onClick={() => this.setState({

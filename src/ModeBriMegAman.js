@@ -52,7 +52,7 @@ class ModeBriMegAman extends Component {
     ModeBriMegAman.cardClaimed = ModeBriMegAman.cardClaimed.bind(this);
     this.state = {
       isAdmin: false,
-      name: "", //Name of the player. Can't have value and default value, so the weird name is the starter name.
+      name: "", //Name of the player.
       nameOfPlayerWhoseTurnItIs: "",
       width: window.innerWidth,
       nameChosen: false,
